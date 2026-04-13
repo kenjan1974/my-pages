@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沖繩自駕指南 — 台灣駕駛必知</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — Okinawa Theme
+   Tone: Tropical sea, coral reefs, traditional ryukyu tiles
+   Palette: Deep ocean teal + warm sand + coral accent
+   Typography: Noto Serif TC (display) + Noto Sans TC (body)
+   ============================================================ */
+:root, [data-theme="light"] {
+  --color-bg:             #f5f3ee;
+  --color-surface:        #f9f7f2;
+  --color-surface-2:      #fdfcf9;
+  --color-surface-offset: #ede9e1;
+  --color-surface-dynamic:#e4dfd5;
+  --color-divider:        #d8d2c8;
+  --color-border:         #cfc9be;
+  --color-text:           #2a2218;
+  --color-text-muted:     #7a6e60;
+  --color-text-faint:     #b8b0a4;
+  --color-text-inverse:   #faf9f5;
+  /* Ocean Teal Primary */
+  --color-primary:        #0d7377;
+  --color-primary-hover:  #095a5e;
+  --color-primary-active: #053f43;
+  --color-primary-highlight: #c5dede;
+  /* Coral Accent */
+  --color-coral:          #e05c4a;
+  --color-coral-hover:    #c44232;
+  --color-coral-light:    #fdecea;
+  /* Sand Gold */
+  --color-sand:           #c8943a;
+  --color-sand-light:     #fdf4e3;
+  /* Warning Red */
+  --color-warning:        #c0392b;
+  --color-warning-light:  #fdf0ef;
+  /* Success */
+  --color-success:        #1e7e34;
+  --color-success-light:  #edf7ed;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+  --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-sm: 0 1px 3px oklch(0.2 0.02 60 / 0.08);
+  --shadow-md: 0 4px 12px oklch(0.2 0.02 60 / 0.1);
+  --shadow-lg: 0 12px 32px oklch(0.2 0.02 60 / 0.14);
+  --content-narrow: 640px;
+  --content-default: 960px;
+  --content-wide: 1200px;
+  --font-display: 'Noto Serif TC', 'Georgia', serif;
+  --font-body: 'Noto Sans TC', 'system-ui', sans-serif;
+
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+  --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+  --text-hero: clamp(2.5rem, 1rem + 5vw, 5rem);
+
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
+  --space-12: 3rem; --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
+}
+
+[data-theme="dark"] {
+  --color-bg:             #16130f;
+  --color-surface:        #1c1914;
+  --color-surface-2:      #211e18;
+  --color-surface-offset: #1e1b16;
+  --color-surface-dynamic:#2a2720;
+  --color-divider:        #28251e;
+  --color-border:         #38352d;
+  --color-text:           #ded9d0;
+  --color-text-muted:     #8a8278;
+  --color-text-faint:     #6a6259;
+  --color-text-inverse:   #2a2218;
+  --color-primary:        #3da8ad;
+  --color-primary-hover:  #1b8f95;
+  --color-primary-active: #0d7377;
+  --color-primary-highlight: #1e3638;
+  --color-coral:          #f07060;
+  --color-coral-hover:    #e05c4a;
+  --color-coral-light:    #3a2520;
+  --color-sand:           #e0a84a;
+  --color-sand-light:     #352c1a;
+  --color-warning:        #e74c3c;
+  --color-warning-light:  #3a1a18;
+  --color-success:        #2ecc71;
+  --color-success-light:  #1a3020;
+  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.25);
+  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.35);
+  --shadow-lg: 0 12px 32px oklch(0 0 0 / 0.45);
+}
+
+/* ============================================================
+   BASE RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+body {
+  min-height: 100dvh;
+  line-height: 1.7;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+img, picture, svg { display: block; max-width: 100%; height: auto; }
+ul[role="list"], ol[role="list"] { list-style: none; }
+h1,h2,h3,h4,h5,h6 { text-wrap: balance; line-height: 1.2; }
+p, li { text-wrap: pretty; }
+::selection { background: oklch(from var(--color-primary) l c h / 0.2); }
+:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container { max-width: var(--content-default); margin-inline: auto; padding-inline: var(--space-6); }
+.container--wide { max-width: var(--content-wide); margin-inline: auto; padding-inline: var(--space-6); }
+
+/* ============================================================
+   STICKY NAV
+   ============================================================ */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: oklch(from var(--color-bg) l c h / 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-divider);
+  padding: var(--space-3) 0;
+  transition: background 0.3s ease;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+}
+.nav-links a {
+  display: block;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border-radius: var(--radius-full);
+  transition: color var(--transition-interactive), background var(--transition-interactive);
+}
+.nav-links a:hover { color: var(--color-text); background: var(--color-surface-offset); }
+.theme-toggle {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+  transition: color var(--transition-interactive), background var(--transition-interactive);
+}
+.theme-toggle:hover { color: var(--color-text); background: var(--color-surface-offset); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-20) 0 var(--space-16);
+  background: linear-gradient(160deg, #0d4a5f 0%, #0d7377 45%, #1a9b6e 100%);
+  color: white;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 80% 20%, oklch(0.85 0.05 200 / 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, oklch(0.7 0.1 30 / 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+/* Wave pattern at bottom */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 60px;
+  background: var(--color-bg);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+.hero-content { position: relative; z-index: 1; text-align: center; }
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: oklch(0.85 0.08 180);
+  background: oklch(1 0 0 / 0.1);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid oklch(1 0 0 / 0.2);
+  margin-bottom: var(--space-6);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: var(--space-5);
+  text-shadow: 0 2px 16px oklch(0 0 0 / 0.2);
+}
+.hero h1 span { color: oklch(0.92 0.1 80); }
+.hero-subtitle {
+  font-size: var(--text-lg);
+  font-weight: 300;
+  opacity: 0.85;
+  max-width: 52ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-8);
+  line-height: 1.6;
+}
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+}
+.hero-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  background: oklch(1 0 0 / 0.1);
+  border: 1px solid oklch(1 0 0 / 0.2);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+}
+
+/* ============================================================
+   QUICK REMINDER BAR
+   ============================================================ */
+.reminder-bar {
+  background: var(--color-warning);
+  color: white;
+  padding: var(--space-3) 0;
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.reminder-bar span { opacity: 0.8; margin-inline: var(--space-2); }
+
+/* ============================================================
+   SECTION HEADINGS
+   ============================================================ */
+.section { padding: clamp(var(--space-12), 6vw, var(--space-20)) 0; }
+.section + .section { padding-top: 0; }
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-divider);
+}
+.section-number {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  line-height: 0.9;
+  color: var(--color-primary);
+  opacity: 0.12;
+  user-select: none;
+  min-width: 2ch;
+}
+.section-title-group { flex: 1; }
+.section-tag {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ============================================================
+   DOCUMENTS — 三寶 CARDS
+   ============================================================ */
+.trio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+.trio-card {
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.trio-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-coral));
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+.trio-card-icon {
+  width: 48px; height: 48px;
+  background: var(--color-primary-highlight);
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: var(--space-4);
+}
+.trio-card h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+  color: var(--color-text);
+}
+.trio-card p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; }
+.trio-card .tag {
+  display: inline-block;
+  margin-top: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-primary-highlight);
+  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+.warning-card {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  background: var(--color-warning-light);
+  border: 1px solid oklch(from var(--color-warning) l c h / 0.25);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-6);
+  margin-top: var(--space-6);
+}
+.warning-icon {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  background: var(--color-warning);
+  border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  color: white;
+}
+.warning-card p { font-size: var(--text-sm); color: var(--color-text); line-height: 1.65; }
+.warning-card strong { color: var(--color-warning); }
+
+/* ============================================================
+   CORE DIFF — Left/Right comparison
+   ============================================================ */
+.lr-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+@media (max-width: 560px) { .lr-compare { grid-template-columns: 1fr; } }
+.lr-card {
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  position: relative;
+}
+.lr-card.taiwan {
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+}
+.lr-card.japan {
+  background: linear-gradient(135deg, var(--color-primary-highlight), var(--color-surface));
+  border: 1.5px solid oklch(from var(--color-primary) l c h / 0.3);
+}
+.lr-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+}
+.lr-label.taiwan { background: var(--color-surface-offset); color: var(--color-text-muted); }
+.lr-label.japan { background: var(--color-primary); color: white; }
+.lr-item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid oklch(from var(--color-text) l c h / 0.06);
+  font-size: var(--text-sm);
+}
+.lr-item:last-child { border-bottom: none; }
+.lr-key { font-weight: 600; min-width: 6em; flex-shrink: 0; color: var(--color-text-muted); }
+.lr-val { color: var(--color-text); }
+.lr-val.highlight { color: var(--color-primary); font-weight: 700; }
+.vs-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text-faint);
+}
+.tip-row {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-sand-light);
+  border: 1px solid oklch(from var(--color-sand) l c h / 0.25);
+  border-radius: var(--radius-xl);
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+}
+.tip-row .tip-icon { flex-shrink: 0; font-size: 1.3rem; }
+
+/* ============================================================
+   SIGNS SECTION — image placeholder grid
+   ============================================================ */
+.signs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+.sign-card {
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-interactive), transform var(--transition-interactive);
+}
+.sign-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.sign-img {
+  aspect-ratio: 1;
+  background: var(--color-surface-offset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.sign-img img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  padding: var(--space-4);
+}
+.sign-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: var(--color-text-faint);
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  text-align: center;
+  padding: var(--space-3);
+}
+.sign-img-placeholder svg { opacity: 0.3; }
+.sign-info { padding: var(--space-4); }
+.sign-info h4 {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+.sign-info p { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.5; }
+.sign-badge {
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.badge-tw { background: var(--color-surface-offset); color: var(--color-text-muted); }
+.badge-jp { background: var(--color-primary-highlight); color: var(--color-primary); }
+.badge-diff { background: var(--color-coral-light); color: var(--color-coral); }
+
+/* Lane section */
+.lane-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+.lane-card {
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+.lane-img {
+  aspect-ratio: 4/2;
+  background: #1a1a1a;
+  overflow: hidden;
+  position: relative;
+  cursor: zoom-in;
+}
+.lane-img img { width: 100%; height: 100%; object-fit: cover; }
+.lane-img:has(img)::after {
+  content: '🔍';
+  position: absolute;
+  bottom: var(--space-2);
+  right: var(--space-2);
+  background: oklch(0 0 0 / 0.55);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms;
+}
+.lane-img:has(img):hover::after { opacity: 1; }
+
+/* Lightbox */
+#lb-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: oklch(0 0 0 / 0.88);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+#lb-overlay.open { display: flex; }
+#lb-overlay img {
+  max-width: min(92vw, 1200px);
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 80px oklch(0 0 0 / 0.6);
+  animation: lb-in 200ms cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes lb-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+#lb-caption {
+  position: fixed;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  color: oklch(1 0 0 / 0.75);
+  font-size: var(--text-xs);
+  font-family: var(--font-body);
+  text-align: center;
+  max-width: 80vw;
+  pointer-events: none;
+}
+#lb-close {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-5);
+  background: oklch(1 0 0 / 0.12);
+  border: 1px solid oklch(1 0 0 / 0.2);
+  color: #fff;
+  border-radius: var(--radius-full);
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background var(--transition-interactive);
+}
+#lb-close:hover { background: oklch(1 0 0 / 0.22); }
+.lane-img-placeholder {
+  width: 100%; height: 100%;
+  background: #222;
+  display: flex; align-items: center; justify-content: center;
+  color: #666;
+  font-size: var(--text-xs);
+}
+.lane-info { padding: var(--space-4) var(--space-5); }
+.lane-info h4 { font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-1); }
+.lane-info p { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.5; }
+
+/* Signal section */
+.signal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: var(--space-4);
+}
+.signal-card {
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+.signal-img {
+  aspect-ratio: 4/3;
+  background: var(--color-surface-offset);
+  overflow: hidden;
+}
+.signal-img img { width: 100%; height: 100%; object-fit: contain; padding: var(--space-4); }
+.signal-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-faint);
+  font-size: var(--text-xs);
+}
+.signal-info { padding: var(--space-4) var(--space-5); }
+.signal-info h4 { font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-1); }
+.signal-info p { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.5; }
+
+/* ============================================================
+   COMPARISON TABLE
+   ============================================================ */
+.compare-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+.compare-table thead {
+  background: var(--color-primary);
+  color: white;
+}
+.compare-table th {
+  padding: var(--space-4) var(--space-5);
+  text-align: left;
+  font-weight: 600;
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.compare-table td {
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-divider);
+  vertical-align: middle;
+  color: var(--color-text);
+}
+.compare-table tbody tr:last-child td { border-bottom: none; }
+.compare-table tbody tr:nth-child(even) td { background: var(--color-surface); }
+.compare-table tbody tr:nth-child(odd) td { background: var(--color-surface-2); }
+.compare-table .jp-cell { color: var(--color-primary); font-weight: 600; }
+.compare-table .warn-cell { color: var(--color-warning); font-weight: 600; }
+
+/* ============================================================
+   RULES GRID
+   ============================================================ */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: var(--space-5);
+}
+.rule-card {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+.rule-icon {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+}
+.rule-icon.red { background: var(--color-coral-light); }
+.rule-icon.teal { background: var(--color-primary-highlight); }
+.rule-icon.sand { background: var(--color-sand-light); }
+.rule-icon.green { background: var(--color-success-light); }
+.rule-text h4 { font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-1); }
+.rule-text p { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.55; }
+
+/* ============================================================
+   PENALTY TABLE
+   ============================================================ */
+.penalty-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+}
+.penalty-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.penalty-table thead { background: var(--color-coral); color: white; }
+.penalty-table th { padding: var(--space-4) var(--space-5); text-align: left; font-weight: 600; font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; }
+.penalty-table td { padding: var(--space-3) var(--space-5); border-bottom: 1px solid var(--color-divider); }
+.penalty-table tbody tr:last-child td { border-bottom: none; }
+.penalty-table tbody tr:nth-child(even) td { background: var(--color-surface); }
+.penalty-table tbody tr:nth-child(odd) td { background: var(--color-surface-2); }
+.penalty-badge {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.penalty-badge.high { background: var(--color-warning-light); color: var(--color-warning); }
+.penalty-badge.med { background: var(--color-sand-light); color: var(--color-sand); }
+
+/* ============================================================
+   QUICK REFERENCE (Checklist)
+   ============================================================ */
+.checklist-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+@media (max-width: 540px) { .checklist-grid { grid-template-columns: 1fr; } }
+.checklist-col {
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+}
+.checklist-col h3 {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.checklist-col h3.ok { color: var(--color-success); }
+.checklist-col h3.no { color: var(--color-coral); }
+.checklist-item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-2) 0;
+  font-size: var(--text-sm);
+  border-bottom: 1px solid oklch(from var(--color-text) l c h / 0.05);
+}
+.checklist-item:last-child { border-bottom: none; }
+.check-dot { flex-shrink: 0; width: 18px; height: 18px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 900; margin-top: 2px; }
+.check-dot.ok { background: var(--color-success-light); color: var(--color-success); }
+.check-dot.no { background: var(--color-coral-light); color: var(--color-coral); }
+
+/* ============================================================
+   EMERGENCY / FUEL
+   ============================================================ */
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: var(--space-5);
+}
+.info-card {
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+}
+.info-card h3 { font-size: var(--text-base); font-weight: 700; margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2); }
+.info-number {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+.fuel-rows { display: flex; flex-direction: column; gap: var(--space-2); }
+.fuel-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+}
+.fuel-dot { width: 14px; height: 14px; border-radius: var(--radius-full); flex-shrink: 0; }
+.fuel-dot.red { background: #e05c4a; }
+.fuel-dot.yellow { background: #f0b429; }
+.fuel-dot.green { background: #2ecc71; }
+.fuel-row.danger { background: var(--color-coral-light); }
+.fuel-name { font-weight: 600; }
+.fuel-jp { color: var(--color-text-muted); font-size: var(--text-xs); }
+.fuel-note { font-size: var(--text-xs); color: var(--color-text-muted); margin-left: auto; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  background: var(--color-surface-offset);
+  border-top: 1px solid var(--color-divider);
+  padding: var(--space-10) 0 var(--space-8);
+  margin-top: var(--space-16);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+.footer-logo { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-2); }
+.footer-note { max-width: 60ch; margin-inline: auto; line-height: 1.7; }
+
+/* ============================================================
+   SCROLL REVEAL ANIMATION
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero { padding: var(--space-16) 0 var(--space-12); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- SKIP LINK -->
+<a href="#main" class="sr-only" style="position:absolute;left:-9999px;top:0;z-index:9999;padding:var(--space-3) var(--space-5);background:var(--color-primary);color:white;border-radius:var(--radius-md);text-decoration:none">跳至主要內容</a>
+
+<!-- NAV -->
+<nav class="site-nav" role="navigation" aria-label="主選單">
+  <div class="container--wide nav-inner">
+    <a href="#" class="nav-logo">
+      <!-- SVG Logo: car + wave symbol -->
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect width="28" height="28" rx="8" fill="var(--color-primary)"/>
+        <!-- Steering wheel -->
+        <circle cx="14" cy="13" r="6.5" stroke="white" stroke-width="1.8" fill="none"/>
+        <circle cx="14" cy="13" r="2" fill="white"/>
+        <line x1="14" y1="6.5" x2="14" y2="9.5" stroke="white" stroke-width="1.5"/>
+        <line x1="14" y1="16.5" x2="14" y2="19.5" stroke="white" stroke-width="1.5"/>
+        <line x1="7.5" y1="13" x2="10.5" y2="13" stroke="white" stroke-width="1.5"/>
+        <line x1="17.5" y1="13" x2="20.5" y2="13" stroke="white" stroke-width="1.5"/>
+        <!-- Wave at bottom -->
+        <path d="M5 22 Q8.5 20 11 22 Q13.5 24 17 22 Q20.5 20 23 22" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+      沖繩自駕
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#documents">文件準備</a></li>
+      <li><a href="#core-diff">核心差異</a></li>
+      <li><a href="#signs">道路標誌</a></li>
+      <li><a href="#lanes">車道線</a></li>
+      <li><a href="#right-turn">右轉規則</a></li>
+      <li><a href="#signals">交通號誌</a></li>
+      <li><a href="#rules">行車規則</a></li>
+      <li><a href="#penalties">罰則</a></li>
+      <li><a href="#checklist">速查</a></li>
+    </ul>
+    <button class="theme-toggle" data-theme-toggle aria-label="切換深色模式">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- REMINDER BAR -->
+<div class="reminder-bar" role="alert">
+  ⚠️ 台灣國際駕照在日本無效 <span>·</span> 請攜帶「監理所核發日文譯本」<span>·</span> 駕照 + 譯本 + 護照 = 租車三寶
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container hero-content">
+    <div class="hero-eyebrow">🌊 台灣旅客自駕完整指南</div>
+    <h1>沖繩自駕<br><span>台日差異一覽</span></h1>
+    <p class="hero-subtitle">靠左行駛、右側駕駛、標誌大不同——出發前掌握這些差異，讓您在沖繩安全上路、暢行無阻。</p>
+    <div class="hero-badges">
+      <span class="hero-badge">🚗 右駕靠左</span>
+      <span class="hero-badge">🛑 止まれ完全停車</span>
+      <span class="hero-badge">🚦 紅燈禁止右轉</span>
+      <span class="hero-badge">📋 日文譯本必備</span>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- 1. DOCUMENTS -->
+  <section class="section" id="documents">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <div class="section-tag">出發前必備</div>
+          <h2 class="section-title">租車三寶</h2>
+        </div>
+      </div>
+      <div class="trio-grid reveal">
+        <div class="trio-card">
+          <div class="trio-card-icon">🪪</div>
+          <h3>台灣駕照正本</h3>
+          <p>必須為實體卡片，且有效期限需涵蓋整個租車行程期間。過期或數位版本一律不受理。</p>
+          <span class="tag">必帶</span>
+        </div>
+        <div class="trio-card">
+          <div class="trio-card-icon">📄</div>
+          <h3>駕照日文譯本</h3>
+          <p>非國際駕照（IDP）！需至各地監理所申請，費用 NT$100。忘記申請？可於沖繩台灣辦事處補辦，約 400 日圓。</p>
+          <span class="tag">最重要</span>
+        </div>
+        <div class="trio-card">
+          <div class="trio-card-icon">📘</div>
+          <h3>護照正本</h3>
+          <p>入境使用之護照，建議效期六個月以上，且與日文譯本申請時使用的資料相符。</p>
+          <span class="tag">必帶</span>
+        </div>
+      </div>
+      <div class="warning-card reveal">
+        <div class="warning-icon">⛔</div>
+        <div>
+          <p><strong>台灣核發的「國際駕照」在日本完全無效！</strong> 日本僅承認依《1949年日內瓦公約》簽訂的特定國家駕照加官方譯本，台灣屬於此類別，故必須攜帶「監理所日文譯本」，而非一般國際駕照（IDP）。無譯本駕駛等同無照駕駛，保險全額失效。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. CORE DIFF -->
+  <section class="section" id="core-diff" style="background: var(--color-surface);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <div class="section-tag">最根本差異</div>
+          <h2 class="section-title">左右完全相反</h2>
+        </div>
+      </div>
+      <div class="lr-compare reveal">
+        <div class="lr-card taiwan">
+          <span class="lr-label taiwan">🇹🇼 台灣</span>
+          <div class="lr-item"><span class="lr-key">駕駛座</span><span class="lr-val">左側（左駕）</span></div>
+          <div class="lr-item"><span class="lr-key">行駛方向</span><span class="lr-val">靠右</span></div>
+          <div class="lr-item"><span class="lr-key">方向燈</span><span class="lr-val">方向盤左側</span></div>
+          <div class="lr-item"><span class="lr-key">雨刷</span><span class="lr-val">方向盤右側</span></div>
+          <div class="lr-item"><span class="lr-key">右轉</span><span class="lr-val">小圈（近道）</span></div>
+          <div class="lr-item"><span class="lr-key">左轉</span><span class="lr-val">等對向直行車（大圈）</span></div>
+        </div>
+        <div class="lr-card japan">
+          <span class="lr-label japan">🇯🇵 日本（沖繩）</span>
+          <div class="lr-item"><span class="lr-key">駕駛座</span><span class="lr-val highlight">右側（右駕）</span></div>
+          <div class="lr-item"><span class="lr-key">行駛方向</span><span class="lr-val highlight">靠左</span></div>
+          <div class="lr-item"><span class="lr-key">方向燈</span><span class="lr-val highlight">方向盤右側</span></div>
+          <div class="lr-item"><span class="lr-key">雨刷</span><span class="lr-val highlight">方向盤左側</span></div>
+          <div class="lr-item"><span class="lr-key">左轉</span><span class="lr-val highlight">小圈（近道）</span></div>
+          <div class="lr-item"><span class="lr-key">右轉</span><span class="lr-val highlight">等對向直行車（大圈）</span></div>
+        </div>
+      </div>
+      <div class="tip-row reveal">
+        <span class="tip-icon">💡</span>
+        <div>
+          <strong>駕駛口訣：</strong>「靠左邊、左轉小圈、右轉大圈」。道路中心線應始終在駕駛（右側）身旁。想打方向燈時容易誤觸雨刷，是新手必經體驗，初上路請放慢速度多留意。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SIGNS -->
+  <section class="section" id="signs">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <div class="section-tag">視覺差異</div>
+          <h2 class="section-title">道路標誌對照</h2>
+        </div>
+      </div>
+      <div class="signs-grid reveal">
+
+        <!-- 台灣 停 -->
+        <div class="sign-card">
+          <div class="sign-img">
+            <img src="images/sign_tw_stop.png" alt="台灣停止標誌：紅色八角形白字「停」" width="200" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'sign-img-placeholder\'><svg width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><path d=\'M12 8v8M8 12h8\'/></svg><span>sign_tw_stop.png</span></div>'">
+          </div>
+          <div class="sign-info">
+            <h4>停止標誌</h4>
+            <p>紅色八角形，白字「停」</p>
+            <span class="sign-badge badge-tw">台灣</span>
+          </div>
+        </div>
+
+        <!-- 日本 止まれ -->
+        <div class="sign-card">
+          <div class="sign-img">
+            <img src="images/sign_jp_tomare.png" alt="日本止まれ標誌：紅色倒三角形，白字止まれ" width="200" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'sign-img-placeholder\'><svg width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><polygon points=\'12,3 21,19 3,19\'/></svg><span>sign_jp_tomare.png</span></div>'">
+          </div>
+          <div class="sign-info">
+            <h4>止まれ（停止）</h4>
+            <p>紅色倒三角，白字「止まれ」。必須完全停車，車輪靜止！</p>
+            <span class="sign-badge badge-jp">日本</span>
+            <span class="sign-badge badge-diff">⚠ 差異</span>
+          </div>
+        </div>
+
+        <!-- 台灣 慢 -->
+        <div class="sign-card">
+          <div class="sign-img">
+            <img src="images/sign_tw_slow.png" alt="台灣慢行標誌：三角形白底紅框黑字慢" width="200" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'sign-img-placeholder\'><svg width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><polygon points=\'12,3 22,21 2,21\'/></svg><span>sign_tw_slow.png</span></div>'">
+          </div>
+          <div class="sign-info">
+            <h4>慢行標誌</h4>
+            <p>正三角形，白底紅框，黑字「慢」</p>
+            <span class="sign-badge badge-tw">台灣</span>
+          </div>
+        </div>
+
+        <!-- 日本 徐行 -->
+        <div class="sign-card">
+          <div class="sign-img">
+            <img src="images/sign_jp_joko.png" alt="日本徐行標誌：白色倒三角形紅框，黑字徐行" width="200" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'sign-img-placeholder\'><svg width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><polygon points=\'12,21 3,5 21,5\'/></svg><span>sign_jp_joko.png</span></div>'">
+          </div>
+          <div class="sign-info">
+            <h4>徐行（慢行）</h4>
+            <p>白色倒三角形紅框，黑字「徐行」。注意：倒三角！</p>
+            <span class="sign-badge badge-jp">日本</span>
+            <span class="sign-badge badge-diff">⚠ 差異</span>
+          </div>
+        </div>
+
+        <!-- 日本 警告標誌（菱形） -->
+        <div class="sign-card">
+          <div class="sign-img">
+            <img src="images/sign_jp_warning_diamond.png" alt="日本警告標誌：黃色菱形，黑色圖案" width="200" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'sign-img-placeholder\'><svg width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><polygon points=\'12,2 22,12 12,22 2,12\'/></svg><span>sign_jp_warning_diamond.png</span></div>'">
+          </div>
+          <div class="sign-info">
+            <h4>警告標誌（菱形）</h4>
+            <p>日本警告標誌為<strong>黃色菱形</strong>，台灣為三角形，形狀完全不同</p>
+            <span class="sign-badge badge-jp">日本</span>
+            <span class="sign-badge badge-diff">⚠ 差異</span>
+          </div>
+        </div>
+
+        <!-- 台灣 禁止進入 -->
+        <div class="sign-card">
+          <div class="sign-img">
+            <img src="images/sign_no_entry.png" alt="禁止進入標誌：紅底白橫槓圓形" width="200" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'sign-img-placeholder\'><svg width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'12\' r=\'9\'/><line x1=\'6\' y1=\'12\' x2=\'18\' y2=\'12\' stroke-width=\'3\'/></svg><span>sign_no_entry.png</span></div>'">
+          </div>
+          <div class="sign-info">
+            <h4>禁止進入（共通）</h4>
+            <p>紅圓白橫槓，台日相同，但日本標誌通常附有文字補充說明</p>
+            <span class="sign-badge badge-tw">台灣</span>
+            <span class="sign-badge badge-jp">日本</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Compare table for signs -->
+      <div class="compare-table-wrap reveal">
+        <table class="compare-table" aria-label="台日標誌形狀對照表">
+          <thead>
+            <tr>
+              <th>標誌種類</th>
+              <th>台灣形狀</th>
+              <th>日本形狀</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>停止標誌</td><td>紅色八角形「停」</td><td class="jp-cell">紅色倒三角「止まれ」</td></tr>
+            <tr><td>慢行標誌</td><td>正三角形「慢」</td><td class="jp-cell">倒三角「徐行」</td></tr>
+            <tr><td>一般警告</td><td>三角形（正立）</td><td class="jp-cell">黃色菱形</td></tr>
+            <tr><td>禁止進入</td><td>紅圓白橫槓</td><td class="jp-cell">相同（含補充文字）</td></tr>
+            <tr><td>讓行標誌</td><td>倒三角「讓」</td><td class="jp-cell">倒三角（無文字，箭頭示意）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. LANES -->
+  <section class="section" id="lanes" style="background: var(--color-surface);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <div class="section-tag">路面標線</div>
+          <h2 class="section-title">車道線差異</h2>
+        </div>
+      </div>
+      <div class="lane-grid reveal">
+
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/lane_white_dash.png" alt="白色虛線車道線：可超車換道" width="400" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'lane-img-placeholder\'>lane_white_dash.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>白色虛線（中央線）</h4>
+            <p>台灣、日本均代表可超車或換道。設於片側寬 6m <strong>未滿</strong>的較窄道路。</p>
+          </div>
+        </div>
+
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/lane_white_solid.png" alt="白色實線車道線：禁止跨越" width="400" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'lane-img-placeholder\'>lane_white_solid.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>白色實線（中央線）</h4>
+            <p>台灣、日本均禁止跨越。設於片側寬 6m <strong>以上</strong>的較寬道路。</p>
+          </div>
+        </div>
+
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/lane_yellow_solid.png" alt="黃色實線：禁止超車換道，閃避停駐車輛可跨越" width="400" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'lane-img-placeholder\'>lane_yellow_solid.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>黃色（橘色）實線</h4>
+            <p>禁止超車換道。日本：閃避停駐車輛時可例外跨越。</p>
+          </div>
+        </div>
+
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/lane_yellow_white_double.png" alt="黃白雙線：白線側可跨越，黃線側禁止" width="400" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'lane-img-placeholder\'>lane_yellow_white_double.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>黃白並行雙線 🇯🇵 獨有</h4>
+            <p><strong>白線側</strong>：可換道至黃線側。<strong>黃線側</strong>：禁止換道。台灣無此設計！</p>
+          </div>
+        </div>
+
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/lane_green_bus.png" alt="綠色路面公車專用道：那霸市區，特定時段限制" width="400" height="200" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'lane-img-placeholder\'>lane_green_bus.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>綠色路面 — 公車專用道 🇯🇵 獨有</h4>
+            <p>那霸市區。平日 07:30–09:00 及 17:30–19:00 為公車、計程車、機車專用。<strong>一般車輛禁止進入</strong>。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 5. RIGHT-TURN RULES -->
+  <section class="section" id="right-turn">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">05</div>
+        <div class="section-title-group">
+          <div class="section-tag">中央線跨越規則</div>
+          <h2 class="section-title">右轉進入路旁設施</h2>
+        </div>
+      </div>
+
+      <div class="warning-card reveal" style="background:var(--color-primary-highlight);border-color:oklch(from var(--color-primary) l c h / 0.25);margin-bottom:var(--space-8);">
+        <div class="warning-icon" style="background:var(--color-primary);">⚖️</div>
+        <div>
+          <p><strong>日本道路交通法第17條 vs 第34條的關鍵區別：</strong>中央線各種實線禁止的對象是「<strong>為超車而跨越</strong>」（第17條），右折進入加油站、便利商店、飯店等路旁設施屬於「<strong>方向轉換</strong>」（第34條），兩者適用不同法條。因此<strong>白線、黃線等各種中央線均可合法右折</strong>，但須遵守正確右折方法。</p>
+        </div>
+      </div>
+
+      <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-5);color:var(--color-text);">各線型右轉規則對照</h3>
+      <div class="compare-table-wrap reveal" style="margin-bottom:var(--space-10);">
+        <table class="compare-table" aria-label="各中央線線型右轉規則表">
+          <thead>
+            <tr><th>中央線類型</th><th>右轉可否</th><th>法律依據</th><th>注意事項</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>白色虛線（破線）</td>
+              <td style="color:var(--color-success);font-weight:700;">✅ 可以</td>
+              <td>道交法第17條・第34條</td>
+              <td>道幅 6m 未滿道路常見，右折前靠近中央線緩行</td>
+            </tr>
+            <tr>
+              <td>白色實線（單線）</td>
+              <td style="color:var(--color-success);font-weight:700;">✅ 可以</td>
+              <td>道交法第17條・第34條</td>
+              <td>禁止「超車目的」跨越，但右折方向轉換合法</td>
+            </tr>
+            <tr>
+              <td>黃色（橘色）實線</td>
+              <td style="color:var(--color-success);font-weight:700;">✅ 可以</td>
+              <td>道交法第17條・第34條</td>
+              <td>禁止「為追越目的」跨越，右折入店仍合法</td>
+            </tr>
+            <tr>
+              <td>白＋黃並行雙線（黃側駕駛）</td>
+              <td style="color:var(--color-success);font-weight:700;">✅ 可以</td>
+              <td>道交法第17條・第34條</td>
+              <td>黃線側禁止超車跨越，但右折方向轉換仍合法</td>
+            </tr>
+            <tr>
+              <td>白色雙實線</td>
+              <td style="color:var(--color-success);font-weight:700;">✅ 可以</td>
+              <td>道交法第17條・第34條</td>
+              <td>強調禁止超車，右折合法；需格外注意對向來車</td>
+            </tr>
+            <tr>
+              <td>ゼブラゾーン（導流帶）</td>
+              <td style="color:var(--color-success);font-weight:700;">✅ 可進入</td>
+              <td>非交通規制標示，無明文禁止</td>
+              <td>法律未禁止，但需注意同方向後方快速車輛，謹慎通過</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-5);color:var(--color-text);">右轉場景示意</h3>
+      <div class="lane-grid reveal" style="margin-bottom:var(--space-10);">
+
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/turn_right_yellow_line.png" alt="跨越黃色實線右轉進入便利商店：合法，屬方向轉換" width="400" height="200" loading="lazy"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<div class='lane-img-placeholder'>turn_right_yellow_line.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>✅ 黃色實線 — 右轉入店合法</h4>
+            <p>右折進入便利商店、加油站屬「方向轉換」非「超車」，跨越黃色實線合法。右折前需靠近中央線，讓對向直行車先行。</p>
+          </div>
+        </div>
+
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/turn_right_white_solid.png" alt="跨越白色實線右轉進入飯店：合法" width="400" height="200" loading="lazy"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<div class='lane-img-placeholder'>turn_right_white_solid.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>✅ 白色實線 — 右轉入飯店合法</h4>
+            <p>白色實線僅禁止超車目的跨越。右折入飯店或停車場時，依第34條靠近中央線右折即合法。</p>
+          </div>
+        </div>
+
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/turn_right_zebra.png" alt="通過導流帶ゼブラゾーン右轉：法律允許但需謹慎" width="400" height="200" loading="lazy"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<div class='lane-img-placeholder'>turn_right_zebra.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>⚠️ 導流帶（ゼブラゾーン）— 可進入但需謹慎</h4>
+            <p>道路交通法未明文禁止進入<strong>白色斜線</strong>導流帶。為右折前往路旁設施可通過，但需注意後方車輛可能加速進入右轉道。</p>
+            <p style="margin-top:var(--space-2);padding:var(--space-2) var(--space-3);background:var(--color-warning-light);border-left:3px solid var(--color-warning);border-radius:var(--radius-sm);font-size:var(--text-xs);color:var(--color-warning);">⛔ <strong>黃色斜線區域（立入禁止部分）</strong>與白色導流帶外觀相似，但屬於明文禁止進入的路面標示，切勿混淆。</p>
+          </div>
+        </div>
+
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/lane_double_white_solid.png" alt="白色雙實線：禁止超車但可右折" width="400" height="200" loading="lazy"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<div class='lane-img-placeholder'>lane_double_white_solid.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>✅ 白色雙實線 — 右折合法</h4>
+            <p>雙白實線為強調版禁止超車標線，右折仍合法。須格外注意對向車速，確認安全後再行右折。</p>
+          </div>
+        </div>
+
+      </div>
+
+      <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-5);color:var(--color-warning);">❌ 絕對禁止右轉的情況</h3>
+      <div class="rules-grid reveal" style="margin-bottom:var(--space-8);">
+        <div class="rule-card">
+          <div class="rule-icon red">🚫</div>
+          <div class="rule-text">
+            <h4>設有「右折禁止」標識</h4>
+            <p>圓形藍底、白色右轉箭頭加紅斜槓標誌，或文字「右折禁止」標識。此為強制規定，無任何例外，違反直接罰款。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon red">⬆️</div>
+          <div class="rule-text">
+            <h4>設有「直進・左折のみ」標識</h4>
+            <p>標示只能直行或左轉的路口，右轉完全禁止。常見於市區複雜交叉路口或單行道出入口。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon red">🛡️</div>
+          <div class="rule-text">
+            <h4>中央分離帶（實體隔離）</h4>
+            <p>道路中央有植栽島、護欄或實體隆起分隔帶，物理上無法穿越，必須前往設有缺口處才能右折或迴轉。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon red">🟡</div>
+          <div class="rule-text">
+            <h4>黃色格子「立入禁止部分」</h4>
+            <p>路口設有黃色格子線標示，車輛不得在其中停等。需等對向車通過、右方有足夠空間後，一次完成右折，不可中途停留格子內。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon red">👁️</div>
+          <div class="rule-text">
+            <h4>對向視線不良（彎道、坡頂）</h4>
+            <p>非標線規定，但於彎道或坡頂無法確認對向來車安全時強行右折，若發生事故，右折車通常負全責。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lane-grid reveal" style="margin-bottom:var(--space-8);">
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/turn_right_forbidden_sign.png" alt="右折禁止標識：圓形藍底白箭頭打叉" width="400" height="200" loading="lazy"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<div class='lane-img-placeholder'>turn_right_forbidden_sign.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>❌ 右折禁止標識</h4>
+            <p>出現此標識時任何右折均屬違規，無論中央線為何種標線，一律禁止。</p>
+          </div>
+        </div>
+        <div class="lane-card">
+          <div class="lane-img">
+            <img src="images/turn_right_center_divider.png" alt="中央分離帶：實體護欄無法跨越" width="400" height="200" loading="lazy"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<div class='lane-img-placeholder'>turn_right_center_divider.png</div>'">
+          </div>
+          <div class="lane-info">
+            <h4>❌ 中央分離帶（物理阻擋）</h4>
+            <p>有實體中央分隔帶的道路，物理上無法右折。需前往設有缺口的位置才能進行迴轉或右折。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-row reveal">
+        <span class="tip-icon">📐</span>
+        <div>
+          <strong>正確右折方法（道交法第34條）：</strong>右折前須盡量靠近道路中央線，進入路口後在中心點附近緩行，待對向直行車及左方來車通過後再完成右折。切勿在中央線後方遠距離直接切右，或高速右切——即使中央線標線允許跨越，危險駕駛仍可能遭裁罰。
+        </div>
+      </div>
+
+      <!-- 右折實務步驟 -->
+      <h3 style="font-size:var(--text-base);font-weight:700;margin:var(--space-8) 0 var(--space-5);color:var(--color-text);">🚗 實務操作步驟：如何右折才不妨礙後車？</h3>
+
+      <div class="rules-grid reveal" style="margin-bottom:var(--space-6);">
+        <div class="rule-card">
+          <div class="rule-icon teal" style="font-size:1rem;font-weight:900;font-family:var(--font-display);">①</div>
+          <div class="rule-text">
+            <h4>提前打右方向燈（距目標 60～70m 前）</h4>
+            <p>法律最低要求為右折點 30m 前，但實務上應<strong>更早</strong>（60～70m 前）打燈。方向燈優先於煞車，讓後方車輛提前判斷前車意圖、有充足距離減速，避免急煞。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon teal" style="font-size:1rem;font-weight:900;font-family:var(--font-display);">②</div>
+          <div class="rule-text">
+            <h4>逐漸靠近中央線、緩慢減速</h4>
+            <p>打燈後開始向中央線靠攏，同步平順減速。不可先煞後打燈，也不可突然切入中央線——漸進式移動讓後車能預判並從左側空間通過。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon sand" style="font-size:1rem;font-weight:900;font-family:var(--font-display);">③</div>
+          <div class="rule-text">
+            <h4>車身保持直立，緊靠中央線等待</h4>
+            <p>等待對向車輛時，<strong>車身必須保持直行狀態（不斜向）</strong>，讓出左側空間。斜向等待不僅堵死後車，萬一被追撞還會衝入對向車道，非常危險。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon teal" style="font-size:1rem;font-weight:900;font-family:var(--font-display);">④</div>
+          <div class="rule-text">
+            <h4>對向車空隙出現→徐行完成右折</h4>
+            <p>確認對向來車完全通過後，以<strong>徐行速度（約 10 km/h 以下）</strong>完成右折進入設施。不可因後車等待壓力而搶先插入對向車流——右折車優先順位最低，需讓對向直行車先行。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 片側1車線的特別說明 -->
+      <div class="warning-card reveal" style="background:var(--color-sand-light);border-color:oklch(from var(--color-sand) l c h / 0.3);margin-bottom:var(--space-6);">
+        <div class="warning-icon" style="background:var(--color-sand);">🛣️</div>
+        <div>
+          <h4 style="margin-bottom:var(--space-2);">片側1車線道路：後車難以通行時怎麼辦？</h4>
+          <p style="font-size:var(--text-sm);">當道路只有一線且對向車流持續時，右折車等待期間後車確實會卡住——<strong>這是法律允許的狀態，不構成違規</strong>。關鍵在於，只要你確實執行①②步驟（提前打燈、漸進靠近中央線），後車就有充足時間減速，不會造成急煞。如果道路夠寬，靠近中央線後留出的左側空間也足以讓後方機車或較窄車輛通過。若對向車流真的非常密集、等待時間過長，可考慮<strong>放棄此次右折，繼續直行後再尋找更安全的入口或路口</strong>，不要為了不堵後車而貿然搶入對向車道。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. SIGNALS -->
+  <section class="section" id="signals">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">06</div>
+        <div class="section-title-group">
+          <div class="section-tag">號誌差異</div>
+          <h2 class="section-title">交通號誌</h2>
+        </div>
+      </div>
+      <div class="signal-grid reveal">
+
+        <div class="signal-card">
+          <div class="signal-img">
+            <img src="images/signal_red_no_turn.png" alt="日本紅燈：任何方向均禁止轉彎" width="300" height="225" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'signal-img-placeholder\'>signal_red_no_turn.png</div>'">
+          </div>
+          <div class="signal-info">
+            <h4>🔴 紅燈禁止轉彎</h4>
+            <p>台灣部分路口允許紅燈右轉，日本<strong>完全禁止</strong>任何方向轉彎，必須等綠燈或方向箭頭燈亮起。</p>
+          </div>
+        </div>
+
+        <div class="signal-card">
+          <div class="signal-img">
+            <img src="images/signal_arrow_green.png" alt="日本方向箭頭燈：主號誌紅燈但箭頭燈亮可依箭頭行進" width="300" height="225" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'signal-img-placeholder\'>signal_arrow_green.png</div>'">
+          </div>
+          <div class="signal-info">
+            <h4>🟢 方向箭頭燈</h4>
+            <p>主號誌紅燈時，若對應方向箭頭燈亮起，可依箭頭方向行進。常見於直行↑、右轉→、左轉←三種。</p>
+          </div>
+        </div>
+
+        <div class="signal-card">
+          <div class="signal-img">
+            <img src="images/signal_flashing_red.png" alt="閃爍紅燈：等同止まれ，必須完全停車" width="300" height="225" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'signal-img-placeholder\'>signal_flashing_red.png</div>'">
+          </div>
+          <div class="signal-info">
+            <h4>🔴 閃爍紅燈</h4>
+            <p>等同「止まれ」，<strong>必須完全停車</strong>，確認安全後再通行。台灣閃紅燈為「注意減速」，概念不同。</p>
+          </div>
+        </div>
+
+        <div class="signal-card">
+          <div class="signal-img">
+            <img src="images/signal_double_row.png" alt="日本雙排號誌：上排主燈，下排方向箭頭燈" width="300" height="225" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'signal-img-placeholder\'>signal_double_row.png</div>'">
+          </div>
+          <div class="signal-info">
+            <h4>雙排號誌（日本獨有）</h4>
+            <p>上排為主號誌，下排為方向箭頭燈。主燈紅燈但下排箭頭亮時，可依箭頭方向行進。台灣無此設計。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. RULES -->
+  <section class="section" id="rules" style="background: var(--color-surface);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">07</div>
+        <div class="section-title-group">
+          <div class="section-tag">行車禮儀與法規</div>
+          <h2 class="section-title">行車規則差異</h2>
+        </div>
+      </div>
+
+      <!-- Speed table -->
+      <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4);color:var(--color-text);">速限對照</h3>
+      <div class="compare-table-wrap reveal" style="margin-bottom:var(--space-10);">
+        <table class="compare-table" aria-label="台日速限對照表">
+          <thead>
+            <tr><th>道路類型</th><th>台灣</th><th>日本（沖繩）</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>高速公路</td><td>最高 110 km/h</td><td class="warn-cell">最高 80 km/h（沖繩自動車道）</td></tr>
+            <tr><td>市區道路</td><td>一般 50 km/h</td><td class="jp-cell">30～50 km/h</td></tr>
+            <tr><td>郊區主幹道</td><td>60～70 km/h</td><td class="jp-cell">60 km/h</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Rules grid -->
+      <div class="rules-grid reveal">
+        <div class="rule-card">
+          <div class="rule-icon red">🚶</div>
+          <div class="rule-text">
+            <h4>行人禮讓（法律強制）</h4>
+            <p>斑馬線旁行人等待中，即須<strong>停車禮讓</strong>。日本嚴格執法，違者直接罰款。台灣自2025年6月30日起大幅加重罰則：汽車行經行人穿越道未停讓，最高罰<strong>新臺幣6,000元</strong>並記3點、需參加3小時道安講習；若導致行人輕傷升至1.8萬～3萬元，導致重傷或死亡則罰3.6萬元並<strong>吊銷駕照</strong>。兩國均嚴格執法，切勿輕忽。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon teal">🔒</div>
+          <div class="rule-text">
+            <h4>後座安全帶（全程強制）</h4>
+            <p>日本<strong>全車全程</strong>必須繫安全帶，含後座乘客。台灣現行規定同樣<strong>全面強制</strong>，無論高速公路或一般道路，後座乘客均須繫安全帶。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon sand">🪑</div>
+          <div class="rule-text">
+            <h4>兒童安全座椅（未滿6歲）</h4>
+            <p>日本規定 <strong>未滿6歲（5歲以下）</strong>必須使用安全座椅；台灣為4歲以下。差了將近2歲，務必注意。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon red">🍺</div>
+          <div class="rule-text">
+            <h4>酒駕連坐責任</h4>
+            <p>日本酒駕不僅罰駕駛，<strong>車主與乘客</strong>可能被連帶處罰。台灣同樣設有乘客連坐規定：<strong>年滿18歲</strong>的乘客，若明知駕駛酒測值達標準值（0.15 mg/L）以上或拒測仍未勸阻，可被罰<strong>新臺幣 6,000 至 15,000 元</strong>；年滿70歲、心智障礙者或搭乘計程車、客運等汽車運輸業的乘客可免責。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon teal">📱</div>
+          <div class="rule-text">
+            <h4>手機使用（含看導航）</h4>
+            <p>手持使用手機違法，且「長時間注視手機導航」亦屬違規。請使用車架固定後操作。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon sand">📣</div>
+          <div class="rule-text">
+            <h4>按喇叭文化</h4>
+            <p>日本僅限緊急避險才按喇叭。日常按喇叭被視為<strong>嚴重失禮</strong>，與台灣文化截然不同。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon green">🙏</div>
+          <div class="rule-text">
+            <h4>感謝雙黃燈（沖繩禮儀）</h4>
+            <p>他車禮讓您並線或讓道時，短暫閃爍雙黃燈表達感謝。這是當地通行的駕駛禮儀。</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon red">↩️</div>
+          <div class="rule-text">
+            <h4>右轉等待區</h4>
+            <p>路口右轉須讓對向直行車優先。有「待轉區」請先進入等待，切勿強行右轉。此為外籍旅客最常肇事原因。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. PENALTIES -->
+  <section class="section" id="penalties">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">08</div>
+        <div class="section-title-group">
+          <div class="section-tag">法律責任</div>
+          <h2 class="section-title">違規罰則</h2>
+        </div>
+      </div>
+      <div class="penalty-table-wrap reveal">
+        <table class="penalty-table" aria-label="沖繩違規罰則表">
+          <thead>
+            <tr><th>違規類型</th><th>罰則金額</th><th>嚴重程度</th><th>備註</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>未完全停於「止まれ」</td>
+              <td>7,000 日圓起</td>
+              <td><span class="penalty-badge med">中</span></td>
+              <td>極常見，嚴格執法</td>
+            </tr>
+            <tr>
+              <td>無照駕駛（含無日文譯本）</td>
+              <td>3年以下有期徒刑或 50 萬日圓</td>
+              <td><span class="penalty-badge high">高</span></td>
+              <td>保險完全失效</td>
+            </tr>
+            <tr>
+              <td>超速（嚴重）／酒駕</td>
+              <td>刑事處分（紅色罰單）</td>
+              <td><span class="penalty-badge high">高</span></td>
+              <td>留有刑事前科，影響未來入境日本</td>
+            </tr>
+            <tr>
+              <td>超速（15 km/h 以內）</td>
+              <td>行政罰款（藍色罰單）</td>
+              <td><span class="penalty-badge med">中</span></td>
+              <td>無刑事前科</td>
+            </tr>
+            <tr>
+              <td>違規停車</td>
+              <td>10,000～18,000 日圓</td>
+              <td><span class="penalty-badge med">中</span></td>
+              <td>拖吊費另計</td>
+            </tr>
+            <tr>
+              <td>未使用兒童安全座椅</td>
+              <td>記違規點數 1 點</td>
+              <td><span class="penalty-badge med">中</span></td>
+              <td>6 歲以下適用</td>
+            </tr>
+            <tr>
+              <td>違規轉彎（如紅燈右轉）</td>
+              <td>7,000 日圓起</td>
+              <td><span class="penalty-badge med">中</span></td>
+              <td>台灣旅客最常見違規</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Accident handling -->
+      <h3 style="font-size:var(--text-base);font-weight:700;margin:var(--space-10) 0 var(--space-5);color:var(--color-text);">🚨 事故發生時處理流程</h3>
+      <div class="rules-grid reveal">
+        <div class="rule-card">
+          <div class="rule-icon red" style="font-size:1.1rem;font-family:var(--font-display);font-weight:900;color:var(--color-coral);">1</div>
+          <div class="rule-text"><h4>靠邊停車</h4><p>立即停車靠邊，開啟雙黃警示燈，在後方設置警示標誌。</p></div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon red" style="font-size:1.1rem;font-family:var(--font-display);font-weight:900;color:var(--color-coral);">2</div>
+          <div class="rule-text"><h4>傷者救護 — 119</h4><p>有傷亡立即撥打 <strong>119</strong>。即使無傷亡亦需確認乘客狀況。</p></div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon red" style="font-size:1.1rem;font-family:var(--font-display);font-weight:900;color:var(--color-coral);">3</div>
+          <div class="rule-text"><h4>報警（強制）— 110</h4><p>撥打 <strong>110</strong>，無論大小事故皆須報警。警察出具「事故證明書」方可啟動保險理賠。</p></div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon sand" style="font-size:1.1rem;font-family:var(--font-display);font-weight:900;color:var(--color-sand);">4</div>
+          <div class="rule-text"><h4>聯絡租車公司</h4><p>告知狀況請求協助，租車公司有 24 小時緊急服務電話，合約內有號碼。</p></div>
+        </div>
+        <div class="rule-card" style="grid-column: span 2;">
+          <div class="rule-icon red">⛔</div>
+          <div class="rule-text"><h4>切勿私下和解</h4><p>不可在警察抵達前與對方私下了結。日本法律要求正式記錄，私下和解將導致保險拒賠，且可能引發後續法律糾紛。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. CHECKLIST + FUEL -->
+
+  <!-- 8.5 RENTAL CAR INSURANCE -->
+  <section class="section" id="rental-insurance">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">09</div>
+        <div class="section-title-group">
+          <div class="section-tag">租車注意事項</div>
+          <h2 class="section-title">租車補償制度全解析</h2>
+        </div>
+      </div>
+
+      <div class="warning-card reveal" style="background:var(--color-sand-light);border-color:oklch(from var(--color-sand) l c h / 0.3);margin-bottom:var(--space-8);">
+        <div class="warning-icon" style="background:var(--color-sand);">💡</div>
+        <div>
+          <p>日本租車的補償制度分為三層，<strong>層層獨立、不能互相替代</strong>。台灣旅客最常犯的錯誤是以為加了「免責補償」就萬無一失，卻在還車時意外收到 NOC 帳單。出發前務必確認自己的補償層級。</p>
+        </div>
+      </div>
+
+      <!-- 三層補償架構 -->
+      <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-5);color:var(--color-text);">補償架構三層說明</h3>
+
+      <div class="rules-grid reveal" style="margin-bottom:var(--space-10);">
+
+        <div class="rule-card">
+          <div class="rule-icon teal" style="font-size:1rem;font-weight:900;font-family:var(--font-display);">①</div>
+          <div class="rule-text">
+            <h4>基本保險（租車費用已含）</h4>
+            <p>所有租車方案均已內含基本保險，涵蓋對人無限額、對物無限額（含自賠責保險）、搭乘者傷害補償。但<strong>對物事故與車輛損傷各有自付額</strong>（免責額，通常各 5 萬日圓），發生事故需自行負擔這部分費用。</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-icon sand" style="font-size:1rem;font-weight:900;font-family:var(--font-display);">②</div>
+          <div class="rule-text">
+            <h4>免責補償（任意加入）— 約 1,100～2,200 日圓／日</h4>
+            <p>免除第①層中保險使用時的「自付額（免責額）」，讓事故修繕的自費降為零。沖繩地區行情約 1,650 日圓／日。<strong>注意：免責補償不含 NOC（營業補償金）</strong>，NOC 仍需另外承擔。</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-icon red" style="font-size:1rem;font-weight:900;font-family:var(--font-display);">③</div>
+          <div class="rule-text">
+            <h4>NOC 補償（任意加入）— 約 500～2,200 日圓／日</h4>
+            <p>NOC（Non-Operation Charge，ノンオペレーションチャージ）是車輛因事故或汙損送修期間，租車公司無法出租該車的<strong>營業損失補償金</strong>，由承租人負擔，與修繕費用完全無關。NOC 補償方案可免除此費用。</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- NOC 詳細說明 -->
+      <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-5);color:var(--color-text);">NOC 是什麼？為何讓人意外？</h3>
+      <div class="compare-table-wrap reveal" style="margin-bottom:var(--space-10);">
+        <table class="compare-table" aria-label="免責補償與NOC補償差異表">
+          <thead>
+            <tr><th>比較項目</th><th>免責補償</th><th>NOC（營業補償金）</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>補償對象</td>
+              <td>修繕車輛的費用（自付額部分）</td>
+              <td>車輛送修期間租車公司的<strong>營業損失</strong></td>
+            </tr>
+            <tr>
+              <td>收費金額</td>
+              <td>加入後免費（已支付補償費）</td>
+              <td class="warn-cell">自走可返還：<strong>2 萬日圓</strong><br>需拖吊：<strong>5 萬日圓</strong></td>
+            </tr>
+            <tr>
+              <td>觸發條件</td>
+              <td>事故損傷達一定程度</td>
+              <td>任何導致送修或清潔的情況，<strong>包含小刮傷、飲料汙漬</strong></td>
+            </tr>
+            <tr>
+              <td>有無加入免責補償</td>
+              <td>—</td>
+              <td class="warn-cell">無論有無加入免責補償，<strong>NOC 照樣計收</strong></td>
+            </tr>
+            <tr>
+              <td>如何免除</td>
+              <td>加入免責補償方案</td>
+              <td>另行加入 <strong>NOC 補償方案</strong>（或含 NOC 的安心パック）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-3);padding:var(--space-3);background:var(--color-warning-light);border-radius:var(--radius-md);">⚠️ 實際案例：車輛被飛石打傷一小塊玻璃，免責補償免除了修繕自付額，但車輛仍需送修 3 天，NOC 2 萬日圓仍須自費。建議<strong>免責補償＋NOC 補償同時加入</strong>。</p>
+      </div>
+
+      <!-- 安心パック：額外保險Package -->
+      <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-5);color:var(--color-text);">安心パック：超越基本補償的加值方案</h3>
+      <p class="reveal" style="margin-bottom:var(--space-5);color:var(--color-text-muted);font-size:var(--text-sm);">大型租車公司（如 Toyota Rent a Car、Sky Rent a Car 等）提供「安心パック」或「ワイド補償」等進階方案，通常在免責補償基礎上追加少量費用，可覆蓋標準保險完全不保的項目。</p>
+
+      <div class="lane-grid reveal" style="margin-bottom:var(--space-6);">
+
+        <div class="lane-card">
+          <div class="lane-info" style="padding:var(--space-5);">
+            <h4 style="color:var(--color-warning);margin-bottom:var(--space-3);">⚠️ 標準保險＋免責補償仍不涵蓋的項目</h4>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-2);">
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-coral);font-weight:700;flex-shrink:0;">✕</span><span><strong>輪胎爆胎・破損</strong>（バンク・タイヤ損傷）— 修理費或換胎費全額自費</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-coral);font-weight:700;flex-shrink:0;">✕</span><span><strong>飛石打破擋風玻璃</strong>（飛び石ガラス破損）— 實費自費，沖繩砂石路況常見</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-coral);font-weight:700;flex-shrink:0;">✕</span><span><strong>鑰匙遺失</strong>（キー紛失）— 差込型約 3 萬日圓，遙控型約 5 萬日圓</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-coral);font-weight:700;flex-shrink:0;">✕</span><span><strong>鑰匙鎖在車內</strong>（キー閉じ込め）— 道路救援出勤費用自費</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-coral);font-weight:700;flex-shrink:0;">✕</span><span><strong>輪轂蓋遺失・破損</strong>（ホイールキャップ）— 實費自費</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-coral);font-weight:700;flex-shrink:0;">✕</span><span><strong>車內裝備損壞・遺失</strong>（USB、導航等）— 實費自費</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-coral);font-weight:700;flex-shrink:0;">✕</span><span><strong>加錯油種</strong>（混油，例如加柴油）— 引擎損害費用全額自費</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lane-card">
+          <div class="lane-info" style="padding:var(--space-5);">
+            <h4 style="color:var(--color-success);margin-bottom:var(--space-3);">✅ 安心パック可額外涵蓋的項目</h4>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-2);">
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-success);font-weight:700;flex-shrink:0;">✓</span><span>NOC 營業補償金（2 萬～5 萬日圓）</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-success);font-weight:700;flex-shrink:0;">✓</span><span>輪胎爆胎・損傷的修繕費用</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-success);font-weight:700;flex-shrink:0;">✓</span><span>飛石造成擋風玻璃裂痕・破損</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-success);font-weight:700;flex-shrink:0;">✓</span><span>輪轂蓋破損（但遺失通常仍自費）</span></li>
+              <li style="display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);"><span style="color:var(--color-success);font-weight:700;flex-shrink:0;">✓</span><span>車內裝備損壞・遺失</span></li>
+            </ul>
+            <p style="margin-top:var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted);border-top:1px solid var(--color-divider);padding-top:var(--space-3);">安心パック費用約 <strong>550～1,100 日圓／日</strong>（沖繩地區），疊加在免責補償之上。各公司名稱與內容不同，<strong>訂車前請仔細確認補償細節</strong>。</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 補償失效情況 -->
+      <div class="warning-card reveal" style="margin-bottom:var(--space-6);">
+        <div class="warning-icon">🚫</div>
+        <div>
+          <h4 style="margin-bottom:var(--space-2);">以下情況所有補償均無效，損失全額自費</h4>
+          <p style="font-size:var(--text-sm);">飲酒駕車、無照駕車、事故未向警察報案（無事故證明）、超過合約使用時間、鑰匙留在車內導致被盜、故意行為、約款違反行為。任何補償均以<strong>「先向警察報案取得事故證明」</strong>為前提。</p>
+        </div>
+      </div>
+
+      <!-- 補償建議 -->
+      <div class="tip-row reveal">
+        <span class="tip-icon">📋</span>
+        <div>
+          <strong>訂車建議：</strong>確認方案時查看三個項目——①免責補償是否已含、②NOC 補償是否另計、③安心パック有無提供。沖繩道路砂石較多，<strong>飛石打玻璃與輪胎爆胎是最常見意外</strong>，有家人同行建議加購安心パック，以免行程受影響。
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 9. CHECKLIST + FUEL -->
+  <section class="section" id="checklist" style="background: var(--color-surface);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-number">10</div>
+        <div class="section-title-group">
+          <div class="section-tag">隨身速查</div>
+          <h2 class="section-title">快速記憶清單</h2>
+        </div>
+      </div>
+      <div class="checklist-grid reveal">
+        <div class="checklist-col">
+          <h3 class="ok">✅ 必須做到</h3>
+          <div class="checklist-item"><span class="check-dot ok">✓</span><span>靠<strong>左</strong>行駛，駕駛座在<strong>右側</strong></span></div>
+          <div class="checklist-item"><span class="check-dot ok">✓</span><span>見「止まれ」車輪<strong>完全靜止</strong>再通行</span></div>
+          <div class="checklist-item"><span class="check-dot ok">✓</span><span>等待綠燈或箭頭燈才能轉彎</span></div>
+          <div class="checklist-item"><span class="check-dot ok">✓</span><span>高速公路最高 <strong>80 km/h</strong></span></div>
+          <div class="checklist-item"><span class="check-dot ok">✓</span><span>斑馬線旁行人等待即<strong>停車禮讓</strong></span></div>
+          <div class="checklist-item"><span class="check-dot ok">✓</span><span><strong>全車全程</strong>繫安全帶</span></div>
+          <div class="checklist-item"><span class="check-dot ok">✓</span><span>未滿6歲（5歲以下）使用<strong>兒童安全座椅</strong></span></div>
+          <div class="checklist-item"><span class="check-dot ok">✓</span><span>帶齊駕照 + <strong>日文譯本</strong> + 護照</span></div>
+          <div class="checklist-item"><span class="check-dot ok">✓</span><span>事故必須報警（<strong>110</strong>）取得事故證明</span></div>
+        </div>
+        <div class="checklist-col">
+          <h3 class="no">❌ 禁止事項</h3>
+          <div class="checklist-item"><span class="check-dot no">✕</span><span>以為台灣「國際駕照」有效（<strong>無效</strong>！）</span></div>
+          <div class="checklist-item"><span class="check-dot no">✕</span><span>紅燈右轉（<strong>完全禁止</strong>）</span></div>
+          <div class="checklist-item"><span class="check-dot no">✕</span><span>「止まれ」僅減速滑行，未完全停車</span></div>
+          <div class="checklist-item"><span class="check-dot no">✕</span><span>進入<strong>綠色路面</strong>公車專用道（特定時段）</span></div>
+          <div class="checklist-item"><span class="check-dot no">✕</span><span>日常按喇叭（<strong>嚴重失禮</strong>）</span></div>
+          <div class="checklist-item"><span class="check-dot no">✕</span><span>手持使用手機（含查看導航）</span></div>
+          <div class="checklist-item"><span class="check-dot no">✕</span><span>事故私下和解，不報警</span></div>
+          <div class="checklist-item"><span class="check-dot no">✕</span><span>超過 80 km/h 於高速公路行駛</span></div>
+        </div>
+      </div>
+
+      <!-- Emergency + Fuel -->
+      <div class="info-cards reveal" style="margin-top:var(--space-10);">
+        <div class="info-card">
+          <h3>🚨 緊急電話</h3>
+          <div><div class="info-number">110</div><p style="font-size:var(--text-sm);color:var(--color-text-muted);">警察（交通事故必撥）</p></div>
+          <div style="margin-top:var(--space-4);"><div class="info-number">119</div><p style="font-size:var(--text-sm);color:var(--color-text-muted);">救護車／火警</p></div>
+          <p style="font-size:var(--text-xs);color:var(--color-text-faint);margin-top:var(--space-4);">日本緊急電話可直接撥打，建議提前存入手機。</p>
+        </div>
+        <div class="info-card">
+          <h3>⛽ 加油站油種</h3>
+          <div class="fuel-rows">
+            <div class="fuel-row">
+              <div class="fuel-dot red"></div>
+              <span class="fuel-name">普通無鉛</span>
+              <span class="fuel-jp">レギュラー</span>
+              <span class="fuel-note">多數租車</span>
+            </div>
+            <div class="fuel-row">
+              <div class="fuel-dot yellow"></div>
+              <span class="fuel-name">高級無鉛</span>
+              <span class="fuel-jp">ハイオク</span>
+              <span class="fuel-note">高性能車</span>
+            </div>
+            <div class="fuel-row danger">
+              <div class="fuel-dot green"></div>
+              <span class="fuel-name">柴油</span>
+              <span class="fuel-jp">軽油</span>
+              <span class="fuel-note">⚠ 誤加毀引擎</span>
+            </div>
+          </div>
+          <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-4);background:var(--color-surface-offset);padding:var(--space-3);border-radius:var(--radius-md);">加滿說法：「<strong>レギュラー、満タン、お願いします</strong>」</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-logo">🌊 沖繩自駕指南</div>
+    <p class="footer-note">本文件針對持台灣駕照赴沖繩自駕之旅客整理，資料來源：日本道路交通法、台日駕照互惠協議及沖繩租車注意事項（2025–2026）。實際規定以當地法規為準，出發前請再次確認最新資訊。</p>
+    <p style="margin-top:var(--space-3);">製作給 Kai Chung Cheng 的沖繩自駕行前準備 ✈️</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+// Dark mode toggle
+(function(){
+  const t = document.querySelector('[data-theme-toggle]');
+  const r = document.documentElement;
+  let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+  r.setAttribute('data-theme', d);
+  const sunIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  const moonIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  function updateIcon() { if(t) t.innerHTML = d === 'dark' ? sunIcon : moonIcon; }
+  updateIcon();
+  if(t) t.addEventListener('click', () => {
+    d = d === 'dark' ? 'light' : 'dark';
+    r.setAttribute('data-theme', d);
+    t.setAttribute('aria-label', '切換' + (d === 'dark' ? '淺色' : '深色') + '模式');
+    updateIcon();
+  });
+})();
+
+// Scroll reveal
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('visible')); return; }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(e => obs.observe(e));
+})();
+</script>
+
+<!-- Lightbox -->
+<div id="lb-overlay" role="dialog" aria-modal="true" aria-label="圖片檢視">
+  <button id="lb-close" aria-label="關閉">✕</button>
+  <img id="lb-img" src="" alt="">
+  <p id="lb-caption"></p>
+</div>
+
+<script>
+(function(){
+  const overlay = document.getElementById('lb-overlay');
+  const lbImg   = document.getElementById('lb-img');
+  const lbCap   = document.getElementById('lb-caption');
+  const lbClose = document.getElementById('lb-close');
+
+  function open(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt;
+    lbCap.textContent = alt;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+  function close() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  // 綁定所有 .lane-img 內已載入的圖片
+  document.querySelectorAll('.lane-img').forEach(function(wrap) {
+    wrap.addEventListener('click', function() {
+      var img = wrap.querySelector('img');
+      if (img && img.complete && img.naturalWidth > 0) {
+        open(img.src, img.alt);
+      }
+    });
+  });
+
+  // 標誌區小圖也支援點擊放大
+  document.querySelectorAll('.sign-grid img, .compare-table img').forEach(function(img) {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', function() {
+      if (img.complete && img.naturalWidth > 0) open(img.src, img.alt);
+    });
+  });
+
+  // 關閉：按鈕 / 點擊背景 / ESC
+  lbClose.addEventListener('click', close);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+  });
+})();
+</script>
+</body>
+</html>
