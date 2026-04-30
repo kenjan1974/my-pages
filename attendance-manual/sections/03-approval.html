@@ -1,0 +1,88 @@
+        <!-- ============================================================ -->
+        <!-- 簽核管理                                                      -->
+        <!-- ============================================================ -->
+        <h2 id="approval-management">簽核管理</h2>
+        <p>
+            <span class="role-tag role-admin">管理員</span>
+            <span class="role-tag role-boss">老闆</span>
+            — 僅管理員與老闆可使用簽核管理功能。
+        </p>
+
+        <!-- ── 簽核中心 ── -->
+        <h3 id="approval-center">簽核中心</h3>
+
+        <p>簽核中心是處理員工請假、加班、補卡申請的統一入口。管理員與老闆登入後，預設會導向此頁面。</p>
+
+        <h4>待簽核列表</h4>
+        <ul>
+            <li>頁面分為「<strong>待簽核</strong>」和「<strong>已簽核</strong>」兩個 Tab 頁籤</li>
+            <li>待簽核列表顯示所有等待您核准的申請：類型（請假/加班/補卡）、申請人、簽核步驟、摘要、申請時間</li>
+            <li>每筆申請旁有「<strong>核准</strong>」與「<strong>駁回</strong>」兩個操作按鈕</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/簽核管理_簽核中心.png" alt="簽核中心">
+            <div class="caption">簽核中心 — 待簽核列表，可直接進行核准或駁回操作</div>
+        </div>
+
+        <h4>核准 / 駁回申請</h4>
+        <ol class="steps">
+            <li>在待簽核列表中，找到要處理的申請</li>
+            <li>點擊「<strong>✓ 核准</strong>」或「<strong>✕ 駁回</strong>」按鈕</li>
+            <li>若駁回，可填寫備註說明駁回原因</li>
+            <li>確認後申請狀態會更新，並通知申請人</li>
+        </ol>
+
+        <div class="info-box">
+            <strong>💡 簽核流程說明</strong>
+            系統採兩階段簽核機制。一般員工的申請先由部門主管（第一關）核准，若假別設定為需兩關簽核，則還須由老闆（第二關）做最終核准。部門主管自己的申請則直接由老闆簽核。
+        </div>
+
+        <h4>已簽核紀錄</h4>
+        <p>切換到「已簽核」Tab 可查看您過去核准/駁回的歷史紀錄。</p>
+
+        <!-- ── 請假紀錄 ── -->
+        <h3 id="leave-records">請假紀錄</h3>
+
+        <p>查看全公司所有員工的請假申請紀錄。</p>
+
+        <ul>
+            <li>可依<strong>狀態</strong>篩選（待審核、已核准、已駁回、已撤銷）</li>
+            <li>顯示完整資訊：申請人、假別、起始日、結束日、時數、事由、簽核狀態、簽核備註等</li>
+            <li>支援分頁瀏覽</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/簽核管理_請假紀錄.png" alt="請假紀錄">
+            <div class="caption">請假紀錄 — 全公司請假申請紀錄總覽</div>
+        </div>
+
+        <!-- ── 加班紀錄 ── -->
+        <h3 id="overtime-records">加班紀錄</h3>
+
+        <p>查看全公司所有員工的加班申請紀錄。</p>
+
+        <ul>
+            <li>可依狀態篩選</li>
+            <li>顯示：申請人、加班類型（平日/假日）、日期、時段、時數、原因、狀態等</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/簽核管理_加班紀錄.png" alt="加班紀錄">
+            <div class="caption">加班紀錄 — 全公司加班申請紀錄總覽</div>
+        </div>
+
+        <!-- ── 補卡紀錄 ── -->
+        <h3 id="makeup-records">補卡紀錄</h3>
+
+        <p>查看全公司所有員工的補卡申請紀錄。</p>
+
+        <ul>
+            <li>可依狀態篩選</li>
+            <li>顯示：申請人、補卡類型（上班卡/下班卡）、日期、補卡時間、原因、狀態等</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/簽核管理_補卡紀錄.png" alt="補卡紀錄">
+            <div class="caption">補卡紀錄 — 全公司補卡申請紀錄總覽</div>
+        </div>

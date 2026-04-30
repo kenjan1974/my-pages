@@ -1,0 +1,142 @@
+        <!-- ============================================================ -->
+        <!-- 報表中心                                                      -->
+        <!-- ============================================================ -->
+        <h2 id="report-center">報表中心</h2>
+        <p>
+            <span class="role-tag role-admin">管理員</span>
+            <span class="role-tag role-boss">老闆</span>
+            — 報表中心提供各種出勤統計與異常管理功能。
+        </p>
+
+        <!-- ── 每日出勤總覽 ── -->
+        <h3 id="report-daily">每日出勤總覽</h3>
+
+        <p>以日期為維度，查看全公司當日的出勤狀況一覽。</p>
+
+        <h4>頁面說明</h4>
+        <ul>
+            <li>右上角可選擇<strong>日期</strong>，切換不同日期的出勤資料</li>
+            <li><strong>摘要卡片</strong>：顯示當日總人數、正常出勤、遲到、請假、曠職/缺卡、早退等各項統計</li>
+            <li><strong>員工出勤表格</strong>：列出每位員工的員工編號、姓名、部門、班別、上班打卡、下班打卡、打卡方式、外勤、遲到分鐘、狀態等</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/報表中心_每日出勤總覽.png" alt="每日出勤總覽">
+            <div class="caption">每日出勤總覽 — 頂部為統計摘要卡片，下方為全員打卡狀態明細</div>
+        </div>
+
+        <!-- ── 月出勤報表 ── -->
+        <h3 id="report-monthly">月出勤報表</h3>
+
+        <p>以月份為維度，彙總全公司每位員工的出勤統計。</p>
+
+        <h4>頁面說明</h4>
+        <ul>
+            <li>可選擇<strong>年份</strong>、<strong>月份</strong>和<strong>部門</strong>篩選</li>
+            <li>頂部顯示：該月應出勤天數、員工人數</li>
+            <li>表格欄位包含：員工編號、姓名、部門、應出勤天、實出勤天、缺勤天、遲到、早退、外勤天、加班時數、誤餐費、請假時數</li>
+            <li>右上角可點擊「<strong>匯出 Excel</strong>」按鈕下載報表檔案</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/報表中心_月出勤報表.png" alt="月出勤報表">
+            <div class="caption">月出勤報表 — 可依月份、部門篩選並匯出 Excel</div>
+        </div>
+
+        <!-- ── 薪資輔助報表 ── -->
+        <h3 id="report-payroll">薪資輔助報表</h3>
+
+        <p>專為薪資計算提供的出勤資料報表，可直接作為薪資計算的輸入依據。</p>
+
+        <h4>頁面說明</h4>
+        <ul>
+            <li>可選擇<strong>年月</strong>與<strong>部門</strong>篩選</li>
+            <li>報表包含薪資計算所需的關鍵欄位：出勤天數、遲到基數、早退基數、平日加班時數、假日加班時數、誤餐費、各假別請假天數/時數等</li>
+            <li>若員工已填寫月薪，報表另行顯示：遲到扣薪、早退扣薪、加班費、誤餐費、實發薪資試算等</li>
+            <li>右上角可點擊「<strong>匯出 Excel</strong>」下載，直接用於薪資作業</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/報表中心_薪資輔助報表.png" alt="薪資輔助報表">
+            <div class="caption">薪資輔助報表 — 包含遲到基數、加班分類等薪資計算所需資料</div>
+        </div>
+
+        <!-- ── 異常管理 ── -->
+        <h3 id="anomaly-mgmt">異常管理</h3>
+
+        <p>異常管理儀表板用於集中查看並處理系統自動偵測到的出勤異常紀錄。</p>
+
+        <h4>頁面說明</h4>
+        <ul>
+            <li><strong>摘要卡片</strong>：顯示待處理、已處理、遲到、早退等異常數量統計</li>
+            <li><strong>篩選條件</strong>：可依日期區間、異常類型、處理狀態進行篩選</li>
+            <li><strong>異常列表</strong>：顯示日期、員工編號、姓名、異常類型、嚴重程度、說明、狀態</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/報表中心_異常管理.png" alt="異常管理儀表板">
+            <div class="caption">異常管理 — 頂部為統計摘要，可篩選異常類型與狀態</div>
+        </div>
+
+        <h4>處理異常紀錄</h4>
+        <p>對於每筆異常紀錄，管理員可進行以下操作：</p>
+        <ul>
+            <li><strong>標記「已確認」</strong>：確認此異常為正常情況（如主管口頭允許遲到）</li>
+            <li><strong>標記「免計」</strong>：免除扣除（如公務外出造成的異常）</li>
+            <li><strong>核准補卡</strong>：針對缺卡類異常，可直接核准對應的補卡申請</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>💡 異常類型說明</strong>
+            系統自動偵測的異常類型包含：遲到、早退、缺上班卡、缺下班卡、曠職、GPS 異常、Wi-Fi 異常、工時不足等。每種異常會依嚴重程度標記為「警告」或「嚴重」。
+        </div>
+
+        <!-- ── 異常統計 ── -->
+        <h3 id="anomaly-stats">異常統計</h3>
+
+        <p>以圖表方式呈現異常紀錄的統計分析，協助管理者掌握出勤異常趨勢。</p>
+
+        <ul>
+            <li>可選擇<strong>日期區間</strong>進行查詢</li>
+            <li><strong>異常類型長條圖</strong>：各類異常的數量分佈</li>
+            <li><strong>嚴重程度圓餅圖</strong>：警告與嚴重異常的比例</li>
+            <li><strong>明細卡片</strong>：各部門、各員工的異常次數排行</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/報表中心_異常統計.png" alt="異常統計">
+            <div class="caption">異常統計 — 以長條圖與圓餅圖呈現異常趨勢</div>
+        </div>
+
+        <!-- ── 年度統計 ── -->
+        <h3 id="report-annual">年度統計</h3>
+
+        <p>以年度為維度，呈現全公司的出勤與假別使用統計。</p>
+
+        <ul>
+            <li><strong>特休使用率</strong>：全公司及各部門的特休使用率統計，並提供各員工<strong>年度剩餘特休天數</strong>總表</li>
+            <li><strong>各部門出勤率</strong>：以長條圖/圓餅圖呈現各部門的年度出勤表現</li>
+            <li><strong>假別統計</strong>：各假別的年度使用量統計</li>
+            <li><strong>個人明細</strong>：可查看各員工的年度出勤詳情</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/報表中心_年度統計.png" alt="年度統計">
+            <div class="caption">年度統計 — 特休使用率、部門出勤率等年度統計圖表</div>
+        </div>
+
+        <!-- ── 自訂區間報表 ── -->
+        <h3 id="report-custom">自訂區間報表</h3>
+
+        <p>可自由選擇任意日期範圍產出出勤報表，不限於月份維度。</p>
+
+        <ul>
+            <li>使用<strong>日期範圍選擇器</strong>指定起迄日期</li>
+            <li>可依<strong>部門</strong>篩選</li>
+            <li>報表欄位與月出勤報表相同：出勤天數、遲到、早退、加班、請假等</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/報表中心_自訂區間報表.png" alt="自訂區間報表">
+            <div class="caption">自訂區間報表 — 自由選擇日期範圍產出報表</div>
+        </div>

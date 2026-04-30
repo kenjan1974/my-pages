@@ -1,0 +1,395 @@
+        <!-- ============================================================ -->
+        <!-- 基礎資料管理                                                  -->
+        <!-- ============================================================ -->
+        <h2 id="base-data">基礎資料管理</h2>
+        <p>
+            <span class="role-tag role-admin">管理員</span>
+            — 基礎資料管理涵蓋公司核心設定，建議由管理員（人事）進行日常維護。
+        </p>
+
+        <!-- ── 公司設定 ── -->
+        <h3 id="company">公司設定</h3>
+
+        <p>設定公司基本資訊及打卡相關參數。</p>
+
+        <h4>設定項目說明</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>欄位</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>公司名稱</td>
+                    <td>公司正式名稱（必填）</td>
+                </tr>
+                <tr>
+                    <td>地址</td>
+                    <td>公司地址</td>
+                </tr>
+                <tr>
+                    <td>GPS 緯度 / 經度</td>
+                    <td>公司所在的 GPS 座標，作為打卡圍欄的中心點</td>
+                </tr>
+                <tr>
+                    <td>圍欄半徑（公尺）</td>
+                    <td>GPS 打卡圍欄的有效半徑，預設 200 公尺</td>
+                </tr>
+                <tr>
+                    <td>Wi-Fi SSID</td>
+                    <td>公司指定的 Wi-Fi 名稱，員工打卡時必須連接此 Wi-Fi 才算正常打卡</td>
+                </tr>
+                <tr>
+                    <td>LINE Channel ID</td>
+                    <td>LINE Login 的 Channel ID（由 LINE Developers Console 取得）</td>
+                </tr>
+                <tr>
+                    <td>LINE Channel Secret</td>
+                    <td>LINE Login 的 Channel Secret（留空表示不更改）</td>
+                </tr>
+                <tr>
+                    <td>人事部門</td>
+                    <td>指定人事部門，系統會用於特定流程的判斷</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>操作步驟</h4>
+        <ol class="steps">
+            <li>在左側選單點擊「基礎資料 > <strong>公司設定</strong>」</li>
+            <li>修改需要變更的欄位</li>
+            <li>點擊「<strong>儲存設定</strong>」按鈕</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_公司設定.png" alt="公司設定">
+            <div class="caption">公司設定 — 設定公司基本資訊、GPS 座標、Wi-Fi SSID 等</div>
+        </div>
+
+        <div class="info-box warning">
+            <strong>⚠️ 重要提醒</strong>
+            修改 Wi-Fi SSID 或 GPS 座標會直接影響員工的打卡驗證。請確認設定正確後再儲存。若公司未設定 Wi-Fi SSID，系統會退回純 GPS 模式驗證。
+        </div>
+
+        <!-- ── 部門管理 ── -->
+        <h3 id="departments">部門管理</h3>
+
+        <p>管理公司的組織架構，建立、編輯部門並指定部門主管。</p>
+
+        <h4>檢視部門列表</h4>
+        <ul>
+            <li>頁面顯示所有部門：部門名稱、部門主管、狀態</li>
+        </ul>
+
+        <h4>新增部門</h4>
+        <ol class="steps">
+            <li>點擊「<strong>＋ 新增部門</strong>」按鈕</li>
+            <li>輸入<strong>部門名稱</strong></li>
+            <li>選擇<strong>部門主管</strong>（從員工清單中選擇）</li>
+            <li>點擊「確定」儲存</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_部門管理.png" alt="部門管理">
+            <div class="caption">部門管理 — 部門列表</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_部門管理_新增部門.png" alt="新增部門">
+            <div class="caption">新增部門 — 輸入名稱並指定主管</div>
+        </div>
+
+        <h4>編輯 / 刪除部門</h4>
+        <ul>
+            <li>點擊「<strong>編輯</strong>」可修改部門名稱和主管</li>
+            <li>點擊「<strong>刪除</strong>」可移除部門；<strong>若部門下仍有員工，無法刪除</strong>，系統會提示「有 X 位員工在此部門，無法刪除」</li>
+        </ul>
+
+        <!-- ── 員工管理 ── -->
+        <h3 id="employees">員工管理</h3>
+
+        <p>管理全公司員工資料，包含新增、編輯、停用員工，以及 LINE 綁定和代理人設定。</p>
+
+        <h4>檢視員工列表</h4>
+        <ul>
+            <li>可使用<strong>搜尋框</strong>以姓名或工號搜尋</li>
+            <li>可依<strong>部門</strong>和<strong>狀態</strong>（在職 / 停用）篩選</li>
+            <li>表格欄位：員工編號、姓名、部門、職稱、到職日、角色、LINE 綁定狀態、在職狀態</li>
+            <li>操作：編輯、代理人設定、LINE 綁定碼、停用/啟用</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_員工管理.png" alt="員工管理">
+            <div class="caption">員工管理 — 員工列表（可搜尋、篩選部門與狀態）</div>
+        </div>
+
+        <h4>新增員工</h4>
+        <ol class="steps">
+            <li>點擊右上角「<strong>＋ 新增員工</strong>」按鈕</li>
+            <li>填寫必要資訊：員工編號、姓名、Email、部門、職稱、到職日</li>
+            <li>選擇角色：管理員 / 員工 / 老闆</li>
+            <li>選擇預設班別</li>
+            <li>（選填）輸入<strong>月薪</strong>，系統將用於薪資輔助報表試算</li>
+            <li>設定初始密碼</li>
+            <li>點擊「確定」儲存</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_員工管理_新增員工.png" alt="新增員工">
+            <div class="caption">新增員工 — 填寫員工基本資料</div>
+        </div>
+
+        <div class="info-box warning">
+            <strong>⚠️ 注意事項</strong>
+            <ul style="margin:4px 0 0 16px">
+                <li>員工編號不可重複，設定後無法修改</li>
+                <li>到職日是計算年資與特休天數的依據，請確認正確</li>
+                <li>角色設定為「老闆」的帳號將成為最終簽核人（全公司僅應有一位）</li>
+            </ul>
+        </div>
+
+        <h4>編輯員工</h4>
+        <p>點擊員工列表中的「<strong>編輯</strong>」按鈕，可修改員工的部門、職稱、班別、月薪、密碼等資訊。若該員工不需打卡（如特殊主管職位），可開啟「免打卡員工」開關，系統將跳過差勤異常偵測。</p>
+
+        <h4>代理人設定</h4>
+        <p>為員工指定代理人，當該員工請假時，其待簽核的項目會由代理人協助處理。</p>
+        <ol class="steps">
+            <li>在員工列表中，點擊對應員工的「<strong>代理人</strong>」按鈕</li>
+            <li>從下拉選單中選擇代理人</li>
+            <li>確認儲存</li>
+        </ol>
+
+        <h4>LINE 綁定</h4>
+        <p>管理員可為員工產生 LINE 綁定碼，員工在手機 APP 首次使用 LINE 登入時，需輸入此綁定碼來關聯帳號。</p>
+        <ul>
+            <li>點擊「<strong>LINE 綁定</strong>」按鈕可產生綁定碼</li>
+            <li>將綁定碼提供給員工，員工在 APP 中輸入即完成綁定</li>
+            <li>已綁定的員工，表格中 LINE 欄位會顯示「已綁定」</li>
+        </ul>
+
+        <h4>停用 / 啟用員工</h4>
+        <ul>
+            <li>點擊「<strong>停用</strong>」可將離職員工帳號標記為停用，停用後員工無法登入但歷史紀錄保留</li>
+            <li>已停用的員工可點擊「<strong>啟用</strong>」恢復使用</li>
+        </ul>
+
+        <!-- ── 班別設定 ── -->
+        <h3 id="shifts">班別設定</h3>
+
+        <p>管理公司的班別（工作時間制度），每位員工會被指派一個預設班別。</p>
+
+        <h4>班別類型</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>類型</th>
+                    <th>說明</th>
+                    <th>適用情境</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>固定班</strong></td>
+                    <td>設定明確的上下班時間，系統依此判斷遲到、早退</td>
+                    <td>多數員工的標準工作制</td>
+                </tr>
+                <tr>
+                    <td><strong>彈性班</strong></td>
+                    <td>不設固定上下班時間，僅檢查每日最低工時</td>
+                    <td>不需管控上下班時間的特殊職位</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>新增班別</h4>
+        <ol class="steps">
+            <li>點擊「<strong>＋ 新增班別</strong>」按鈕</li>
+            <li>輸入<strong>班別名稱</strong>（如「標準全天班」）</li>
+            <li>選擇<strong>班別類型</strong>（固定班/彈性班）</li>
+            <li>固定班需設定：上班時間、下班時間、彈性分鐘數</li>
+            <li>彈性班需設定：最低工時（小時）</li>
+            <li>可設定是否為預設班別</li>
+            <li>點擊「確定」儲存</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_班別設定.png" alt="班別設定">
+            <div class="caption">班別設定 — 班別列表</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_班別設定_新增班別.png" alt="新增班別">
+            <div class="caption">新增班別 — 依類型設定不同參數</div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 彈性分鐘數說明</strong>
+            以標準全天班為例：上班時間 08:30、彈性時段至 09:35（09:35:59 前打卡均視為正常；09:30:01–09:35:59 視同 09:30 打卡），09:36 之後才算遲到。
+        </div>
+
+        <!-- ── 假別設定 ── -->
+        <h3 id="leave-types">假別設定</h3>
+
+        <p>管理公司提供的假別種類及其規則。</p>
+
+        <h4>假別列表</h4>
+        <ul>
+            <li>顯示所有假別：名稱、年度上限天數、是否需附件、給薪方式、最小請假單位、簽核層級、啟用狀態</li>
+            <li>可以<strong>切換啟用/停用</strong>假別（停用後員工無法申請該假別）</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_假別設定.png" alt="假別設定">
+            <div class="caption">假別設定 — 假別列表及啟用狀態</div>
+        </div>
+
+        <h4>新增假別</h4>
+        <ol class="steps">
+            <li>點擊「<strong>＋ 新增假別</strong>」按鈕</li>
+            <li>填寫假別名稱</li>
+            <li>設定年度上限天數</li>
+            <li>設定最小請假單位（0.5 天 / 1 天 / 0.5 小時 / 1 小時等）</li>
+            <li>設定是否需要附件證明</li>
+            <li>設定簽核層級（1 = 僅需部門主管 / 2 = 主管 + 老闆）</li>
+            <li>點擊「確定」儲存</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_假別設定_新增假別.png" alt="新增假別">
+            <div class="caption">新增假別 — 設定假別規則</div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 給假方式說明</strong>
+            <ul style="margin:4px 0 0 16px">
+                <li><strong>員工可直接申請</strong>：如事假、病假、生理假、公差，系統自動提供額度，員工可直接在自助服務中申請</li>
+                <li><strong>後端給假</strong>：如婚假、喪假、產假等特殊假別，須由管理員先在「假期額度」中為員工建立額度，員工才能看到並申請</li>
+            </ul>
+        </div>
+
+        <!-- ── 年資特休 ── -->
+        <h3 id="leave-seniority">年資特休</h3>
+
+        <p>設定年資與特休天數的對照規則，系統會依據員工到職日的年資自動計算特休天數。</p>
+
+        <h4>年資規則列表</h4>
+        <ul>
+            <li>顯示各年資區間對應的特休天數</li>
+            <li>預設已依勞基法 §38 建立標準規則</li>
+            <li>公司可設定優於法令的規則（如較多的特休天數）</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_年資特休.png" alt="年資特休">
+            <div class="caption">年資特休 — 年資區間與特休天數對照表</div>
+        </div>
+
+        <h4>新增 / 編輯規則</h4>
+        <ol class="steps">
+            <li>點擊「<strong>＋ 新增年資規則</strong>」</li>
+            <li>設定<strong>年資起始月數</strong>與<strong>年資結束月數</strong></li>
+            <li>設定對應的<strong>特休天數</strong></li>
+            <li>點擊「確定」儲存</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_年資特休_新增年資規則.png" alt="新增年資規則">
+            <div class="caption">新增年資規則 — 設定年資區間與天數</div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 年資計算說明</strong>
+            系統採<strong>曆年制</strong>（每年 1/1～12/31），到職首年依實際月份按比例折算。每年初系統會自動依據年資規則計算各員工的特休天數。
+        </div>
+
+        <!-- ── 假期額度 ── -->
+        <h3 id="leave-balances">假期額度</h3>
+
+        <p>管理各員工在各假別的年度額度。部分假別（如特休）可批次初始化，部分特殊假別（如婚假、喪假）需手動建立。</p>
+
+        <h4>頁面說明</h4>
+        <ul>
+            <li>選擇<strong>年度</strong>查看該年度所有員工的假期額度</li>
+            <li>表格顯示：員工、假別、總天數、已使用、剩餘</li>
+            <li>可<strong>直接在表格中編輯</strong>額度（如手動調整天數）</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_假期額度.png" alt="假期額度">
+            <div class="caption">假期額度 — 選擇年度查看各員工的假別額度</div>
+        </div>
+
+        <h4>初始化特休額度</h4>
+        <ol class="steps">
+            <li>選擇年度（如 2026 年）</li>
+            <li>點擊「<strong>初始化特休額度</strong>」按鈕</li>
+            <li>系統會依據「年資特休」規則與員工到職日，自動計算並建立所有在職員工的特休額度</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_假期額度_初始化特休額度.png" alt="初始化特休額度">
+            <div class="caption">初始化特休額度 — 一鍵依年資規則批次產生特休額度</div>
+        </div>
+
+        <div class="info-box warning">
+            <strong>⚠️ 注意</strong>
+            初始化特休額度會覆蓋已存在的特休額度。建議在每年初執行一次，若該年度已有特休資料請謹慎操作。
+        </div>
+
+        <!-- ── 行事曆 ── -->
+        <h3 id="holidays">行事曆</h3>
+
+        <p>管理公司的年度行事曆，包含國定假日、公司自訂假日及補班日的設定。</p>
+
+        <h4>行事曆類型</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>類型</th>
+                    <th>說明</th>
+                    <th>對出勤的影響</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>國定假日</strong></td>
+                    <td>依政府公告之國定假日</td>
+                    <td>當日不需上班，不列入出勤計算</td>
+                </tr>
+                <tr>
+                    <td><strong>公司假日</strong></td>
+                    <td>公司自訂假日（如颱風假、尾牙）</td>
+                    <td>當日不需上班，不列入出勤計算</td>
+                </tr>
+                <tr>
+                    <td><strong>補班日</strong></td>
+                    <td>依政府公告之補班日</td>
+                    <td>原本休假日改為上班日，需正常出勤</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>操作說明</h4>
+        <ul>
+            <li>頁面以<strong>年份 Tab</strong> 切換不同年度的行事曆</li>
+            <li>可<strong>新增</strong>假日：選擇日期、類型、輸入名稱</li>
+            <li>可<strong>編輯</strong>或<strong>刪除</strong>現有假日</li>
+            <li>支援<strong>批次匯入</strong>功能，可一次匯入整年度的國定假日</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_行事曆.png" alt="行事曆">
+            <div class="caption">行事曆 — 以年份 Tab 切換，顯示國定假日、公司假日、補班日</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/基礎資料_行事曆_新增假日.png" alt="新增假日">
+            <div class="caption">新增假日 — 選擇日期、類型與名稱</div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 提醒</strong>
+            行事曆設定會直接影響出勤報表中的「應出勤天數」計算，以及假日加班的認定。建議每年初將當年度國定假日匯入系統。
+        </div>

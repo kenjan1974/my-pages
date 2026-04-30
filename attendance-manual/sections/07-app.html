@@ -1,0 +1,353 @@
+        <!-- ============================================================ -->
+        <!-- 行動 APP                                                      -->
+        <!-- ============================================================ -->
+        <h2 id="app-overview">行動 APP</h2>
+
+        <p>行動 APP 供全體員工在手機上使用，可進行上下班打卡、提送請假 / 加班 / 補卡申請、查看出勤紀錄與通知。APP 支援 iOS 與 Android 雙平台。</p>
+
+        <p>APP 底部共有 <strong>5 個主要頁籤</strong>：</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>頁籤</th>
+                    <th>圖示</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>打卡</td>
+                    <td>🏠</td>
+                    <td>上下班打卡（首頁），顯示今日打卡狀態與 GPS / Wi-Fi 驗證結果</td>
+                </tr>
+                <tr>
+                    <td>申請單</td>
+                    <td>📋</td>
+                    <td>提送與查看請假、加班、補卡申請</td>
+                </tr>
+                <tr>
+                    <td>出勤紀錄</td>
+                    <td>📅</td>
+                    <td>以月曆檢視每日打卡紀錄與異常標記</td>
+                </tr>
+                <tr>
+                    <td>通知</td>
+                    <td>🔔</td>
+                    <td>接收簽核結果、異常提醒等系統通知</td>
+                </tr>
+                <tr>
+                    <td>個人</td>
+                    <td>👤</td>
+                    <td>個人資訊、LINE 綁定、密碼變更等</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="screenshot">
+            <img src="images/APP_主畫面.png" alt="APP 主畫面（打卡頁籤）">
+            <div class="caption">APP 主畫面（打卡頁籤）— 顯示五個底部頁籤的全貌</div>
+        </div>
+
+        <!-- ── 登入與 LINE 綁定 ── -->
+        <h3 id="app-login">登入與 LINE 綁定</h3>
+
+        <h4>帳號密碼登入</h4>
+        <ol class="steps">
+            <li>開啟 APP，進入登入畫面</li>
+            <li>輸入<strong>員工編號</strong>（例如 EMP001）</li>
+            <li>輸入<strong>密碼</strong>（預設為管理員配發的初始密碼）</li>
+            <li>點擊「登入」按鈕</li>
+            <li>首次登入成功後會自動進入打卡首頁</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/APP_登入頁面.png" alt="APP 登入畫面">
+            <div class="caption">APP 登入畫面 — 員工編號與密碼欄位、登入按鈕、LINE 登入按鈕</div>
+        </div>
+
+        <h4>LINE 快速登入</h4>
+        <p>若已完成 LINE 帳號綁定，可直接點擊登入畫面的「使用 LINE 登入」按鈕，透過 LINE OAuth 驗證後自動登入。</p>
+
+        <h4>LINE 帳號綁定</h4>
+        <ol class="steps">
+            <li>先以帳號密碼登入 APP</li>
+            <li>前往「個人」頁籤 → 點擊「LINE 帳號綁定」</li>
+            <li>APP 會導向 LINE 授權頁面，點擊「允許」</li>
+            <li>授權成功後返回 APP，顯示「LINE 已綁定」</li>
+            <li>之後即可在登入畫面使用「使用 LINE 登入」快速登入</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/APP_LINE綁定頁面.png" alt="LINE 綁定畫面">
+            <div class="caption">LINE 綁定畫面 — 顯示綁定前的引導頁面</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_LINE綁定成功.png" alt="LINE 綁定成功">
+            <div class="caption">LINE 綁定成功 — 顯示已綁定狀態</div>
+        </div>
+
+        <div class="info-box warning">
+            <strong>⚠️ 注意</strong>
+            每個 LINE 帳號只能綁定一位員工。若需解除綁定，請聯繫管理員。
+        </div>
+
+        <!-- ── 打卡 ── -->
+        <h3 id="app-clockin">打卡</h3>
+
+        <p>打卡頁面是 APP 的首頁，進入後系統會自動偵測目前的位置與 Wi-Fi 狀態，判斷是否在公司範圍內。</p>
+
+        <h4>打卡驗證方式</h4>
+        <p>系統同時採用 <strong>GPS 定位</strong>與<strong>Wi-Fi SSID</strong> 雙重驗證：</p>
+        <ul>
+            <li><strong>GPS 驗證</strong>：根據手機定位座標，計算與公司位置的距離，在設定的圍欄半徑範圍內視為「在公司」</li>
+            <li><strong>Wi-Fi 驗證</strong>：偵測目前連線的 Wi-Fi 名稱，與公司設定的 SSID 比對。若公司啟用「Wi-Fi 必要模式」，則必須連上公司 Wi-Fi 才能正常打卡</li>
+        </ul>
+
+        <h4>正常打卡（公司範圍內）</h4>
+        <ol class="steps">
+            <li>開啟 APP，自動進入打卡頁面</li>
+            <li>頁面上方顯示目前 GPS 狀態與 Wi-Fi 連線狀態</li>
+            <li>當顯示「在公司範圍內」時，按下<strong>「上班打卡」</strong>按鈕</li>
+            <li>系統跳出確認對話框，點擊「確認打卡」</li>
+            <li>打卡成功後頁面會更新顯示打卡時間</li>
+            <li>下班時按下<strong>「下班打卡」</strong>按鈕，流程相同</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/APP_打卡_範圍內.png" alt="打卡頁面 — 在公司範圍內">
+            <div class="caption">打卡頁面 — 在公司範圍內，顯示「上班打卡」按鈕與位置狀態</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_打卡_確認對話框.png" alt="打卡確認對話框">
+            <div class="caption">打卡確認對話框 — 「確認上班打卡」提示</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_打卡_成功.png" alt="打卡成功">
+            <div class="caption">打卡成功 — 頁面顯示已打上班卡的時間</div>
+        </div>
+
+        <h4>外勤打卡（不在公司範圍）</h4>
+        <p>若員工因外出洽公等原因不在公司範圍內，系統會提示進行<strong>外勤打卡</strong>：</p>
+        <ol class="steps">
+            <li>頁面顯示「不在公司範圍內」，並標示與公司的距離</li>
+            <li>按下打卡按鈕後，系統跳出外勤打卡確認對話框</li>
+            <li>確認後系統會<strong>開啟相機要求拍照</strong>，作為外勤打卡佐證</li>
+            <li>拍照完成後送出打卡，記錄會標記為「外勤」</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/APP_打卡_外勤提示.png" alt="外勤打卡提示">
+            <div class="caption">外勤打卡提示 — 顯示不在範圍內與距離資訊</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_打卡_外勤拍照.png" alt="外勤打卡拍照">
+            <div class="caption">外勤打卡拍照 — 開啟相機拍照作為佐證</div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 提示</strong>
+            <ul>
+                <li>若 Wi-Fi 必要模式啟用但手機未開啟 Wi-Fi，系統會提示開啟 Wi-Fi 設定</li>
+                <li>若 GPS 權限被拒絕，系統會引導開啟定位權限</li>
+                <li>上班打卡超過 09:35:59 即記為「遲到」；下班打卡早於應下班時間即記為「早退」</li>
+            </ul>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_打卡_已完成.png" alt="打卡頁面 — 已完成上下班打卡">
+            <div class="caption">打卡頁面 — 已完成上下班打卡，顯示兩次打卡時間</div>
+        </div>
+
+        <!-- ── 申請單 ── -->
+        <h3 id="app-requests">申請單</h3>
+
+        <p>點擊底部「申請單」頁籤，進入申請單管理頁面。頂部有<strong>三個子頁籤</strong>：請假、加班、補卡，可切換檢視不同類型的申請。</p>
+
+        <div class="screenshot">
+            <img src="images/APP_申請單_列表.png" alt="申請單列表頁">
+            <div class="caption">申請單列表頁 — 顯示三個子頁籤（請假 / 加班 / 補卡）與申請紀錄列表</div>
+        </div>
+
+        <h4>請假申請</h4>
+        <ol class="steps">
+            <li>在「請假」子頁籤下，點擊右下角的<strong>「+」浮動按鈕</strong></li>
+            <li>進入請假申請表單：
+                <ul>
+                    <li>選擇<strong>假別</strong>（特休、事假、病假等，僅顯示有額度的假別）</li>
+                    <li>選擇的假別下方會顯示<strong>可用餘額</strong></li>
+                    <li>選擇<strong>起始日期 / 時間</strong>和<strong>結束日期 / 時間</strong></li>
+                    <li>系統自動計算請假<strong>時數</strong></li>
+                    <li>填寫<strong>請假事由</strong></li>
+                </ul>
+            </li>
+            <li>確認無誤後點擊「送出」按鈕</li>
+            <li>申請送出後狀態為「待審核」，等待主管簽核</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/APP_申請單_請假表單.png" alt="請假申請表單">
+            <div class="caption">請假申請表單 — 假別選擇、日期時間選擇、餘額顯示、事由欄位</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_申請單_請假詳情.png" alt="請假申請詳情">
+            <div class="caption">請假申請詳情 — 顯示已送出申請的完整資訊與審核狀態</div>
+        </div>
+
+        <h4>加班申請</h4>
+        <ol class="steps">
+            <li>切換到「加班」子頁籤，點擊「+」浮動按鈕</li>
+            <li>填寫加班申請表單：
+                <ul>
+                    <li>選擇<strong>加班日期</strong></li>
+                    <li>選擇<strong>起始時間</strong>和<strong>結束時間</strong></li>
+                    <li>系統自動計算加班<strong>時數</strong></li>
+                    <li>填寫<strong>加班事由</strong></li>
+                </ul>
+            </li>
+            <li>確認後點擊「送出」</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/APP_申請單_加班表單.png" alt="加班申請表單">
+            <div class="caption">加班申請表單 — 日期、時間區間、事由欄位</div>
+        </div>
+
+        <h4>補卡申請</h4>
+        <ol class="steps">
+            <li>切換到「補卡」子頁籤，點擊「+」浮動按鈕</li>
+            <li>填寫補卡申請表單：
+                <ul>
+                    <li>選擇<strong>補卡日期</strong>（限事發後 3 個日曆天內）</li>
+                    <li>選擇<strong>補卡類型</strong>（上班 / 下班）</li>
+                    <li>選擇<strong>補卡時段</strong>（上班卡：08:30 / 14:00；下班卡：12:30 / 18:00）</li>
+                    <li>填寫<strong>補卡原因</strong></li>
+                </ul>
+            </li>
+            <li>確認後點擊「送出」</li>
+        </ol>
+
+        <div class="screenshot">
+            <img src="images/APP_申請單_補卡表單.png" alt="補卡申請表單">
+            <div class="caption">補卡申請表單 — 日期、補卡類型、固定時段選擇、原因欄位</div>
+        </div>
+
+        <div class="info-box warning">
+            <strong>⚠️ 補卡限制</strong>
+            <ul>
+                <li>僅能補卡<strong>3 個日曆天內</strong>的紀錄</li>
+                <li>同一天最多<strong>2 筆</strong>補卡申請</li>
+                <li>已有 2 筆打卡紀錄的日期不可再補卡</li>
+            </ul>
+        </div>
+
+        <h4>申請狀態查看</h4>
+        <p>每筆申請會以卡片方式呈現，顯示申請類型、日期、狀態標籤：</p>
+        <ul>
+            <li><strong>待審核</strong> — 等待主管處理</li>
+            <li><strong>已核准</strong> — 主管已批准</li>
+            <li><strong>已駁回</strong> — 主管已退回，可查看駁回原因</li>
+            <li><strong>已撤銷</strong> — 員工自行撤銷</li>
+        </ul>
+        <p>點擊任一申請卡片可進入詳情頁面，查看完整申請資訊與簽核結果。</p>
+
+        <!-- ── 出勤紀錄 ── -->
+        <h3 id="app-calendar">出勤紀錄</h3>
+
+        <p>點擊底部「出勤紀錄」頁籤，以<strong>月曆檢視</strong>方式查看整月的出勤狀況。</p>
+
+        <h4>月曆畫面</h4>
+        <ul>
+            <li>每個日期格子會以<strong>顏色標記</strong>標示當日出勤狀態（正常、異常、請假、缺勤等）</li>
+            <li>點擊任一日期可快速展開該日的<strong>打卡紀錄詳情</strong>：上班時間、下班時間、打卡方式、是否異常</li>
+            <li>如該日有異常（遲到、早退、缺勤），可直接從月曆點擊<strong>快速補卡</strong></li>
+            <li>使用左右箭頭或滑動切換月份</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/APP_出勤紀錄_月曆.png" alt="出勤紀錄月曆">
+            <div class="caption">出勤紀錄月曆 — 整月出勤狀態總覽，以顏色標記正常 / 異常 / 請假 / 缺勤</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_出勤紀錄_日詳情.png" alt="出勤紀錄日詳情">
+            <div class="caption">出勤紀錄日詳情 — 點擊日期後展開的打卡時間與狀態資訊</div>
+        </div>
+
+        <!-- ── 月報表 ── -->
+        <h3 id="app-report">月報表</h3>
+
+        <p>在出勤紀錄頁面右上角點擊<strong>「月報表」</strong>按鈕，進入個人月報表畫面。</p>
+
+        <h4>報表內容</h4>
+        <ul>
+            <li><strong>統計磚塊</strong>：出勤天數、遲到次數、早退次數、請假天數、加班時數等快速總覽</li>
+            <li><strong>每日紀錄清單</strong>：依日期排列的詳細打卡紀錄，包含上下班時間、打卡方式、工時與異常標記</li>
+            <li>可切換月份查看不同月份的統計資料</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/APP_月報表_統計.png" alt="月報表統計磚塊">
+            <div class="caption">月報表統計磚塊 — 出勤天數、遲到 / 早退次數、請假天數等統計數字</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_月報表_每日紀錄.png" alt="月報表每日紀錄">
+            <div class="caption">月報表每日紀錄 — 依日期排列的打卡紀錄詳情</div>
+        </div>
+
+        <!-- ── 通知中心 ── -->
+        <h3 id="app-notifications">通知中心</h3>
+
+        <p>點擊底部「通知」頁籤，查看所有系統通知。底部頁籤的通知圖示會顯示<strong>未讀數量紅點</strong>。</p>
+
+        <h4>通知類型</h4>
+        <ul>
+            <li><strong>簽核結果</strong>：申請被核准或駁回時收到通知</li>
+            <li><strong>異常提醒</strong>：打卡異常（遲到、早退、缺勤）的提醒</li>
+            <li><strong>系統公告</strong>：公司管理員發送的公告訊息</li>
+        </ul>
+
+        <h4>操作方式</h4>
+        <ul>
+            <li>未讀通知以<strong>醒目樣式</strong>顯示，已讀則為較淡的樣式</li>
+            <li>點擊通知可<strong>標示為已讀</strong>並檢視詳細內容</li>
+            <li>簽核結果類通知點擊後可<strong>直接跳轉</strong>到對應的申請詳情頁面</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/APP_通知_列表.png" alt="通知列表">
+            <div class="caption">通知列表 — 顯示已讀與未讀通知，含簽核結果、異常提醒等</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_通知_未讀紅點.png" alt="通知頁籤紅點">
+            <div class="caption">通知頁籤紅點 — 底部導覽列通知圖示上的未讀數量提示</div>
+        </div>
+
+        <!-- ── 個人資料 ── -->
+        <h3 id="app-profile">個人資料</h3>
+
+        <p>點擊底部「個人」頁籤，查看與管理個人帳號資訊。</p>
+
+        <h4>頁面內容</h4>
+        <ul>
+            <li><strong>個人資訊卡片</strong>：顯示姓名、員工編號、部門、職稱與角色標籤</li>
+            <li><strong>LINE 綁定狀態</strong>：顯示目前 LINE 帳號是否已綁定，未綁定可點擊進行綁定</li>
+            <li><strong>快捷功能</strong>：變更密碼、LINE 帳號綁定 / 解除、關於系統（版本資訊）</li>
+            <li><strong>登出</strong>：點擊最下方「登出」按鈕，清除登入狀態並返回登入頁面</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/APP_個人資料.png" alt="個人資料頁面">
+            <div class="caption">個人資料頁面 — 個人資訊卡片、LINE 綁定狀態、快捷功能選項</div>
+        </div>
+
+        <div class="screenshot">
+            <img src="images/APP_變更密碼.png" alt="變更密碼畫面">
+            <div class="caption">變更密碼畫面 — 輸入目前密碼與新密碼</div>
+        </div>

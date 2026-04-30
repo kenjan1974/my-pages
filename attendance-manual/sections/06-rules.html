@@ -1,0 +1,562 @@
+        <!-- ============================================================ -->
+        <!-- 規則參考                                                      -->
+        <!-- ============================================================ -->
+        <h2 id="rules">規則參考</h2>
+        <p>以下為系統中各項差勤規則的詳細說明，供使用者了解系統判斷邏輯。</p>
+
+        <!-- ── 出勤與打卡規則 ── -->
+        <h3 id="rules-attendance">出勤與打卡規則</h3>
+
+        <h4>全天班出勤規則</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>規則</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>標準上班時間</td>
+                    <td>08:30（標準下班 18:00，工時 8 小時 + 午休 12:00–13:30）</td>
+                </tr>
+                <tr>
+                    <td>彈性打卡時段</td>
+                    <td>08:00–09:35 均可打卡不算遲到；09:30:01–09:35:59 為緩衝，視同 09:30 打卡</td>
+                </tr>
+                <tr>
+                    <td>遲到起算</td>
+                    <td>09:36:00 起算，以 <strong>09:30</strong> 為基準，每 30 分鐘為 1 個遲到基數（ceil 取整）</td>
+                </tr>
+                <tr>
+                    <td>應下班時間</td>
+                    <td>
+                        打卡 ≤ 08:30 → <strong>18:00</strong><br>
+                        08:31–09:30 → <strong>18:00 + (打卡時間 − 08:30)</strong>（逐分鐘延後）<br>
+                        ≥ 09:36（遲到）→ <strong>19:00</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>早退計算</td>
+                    <td>下班打卡 &lt; 應下班時間，每 30 分鐘為 1 個早退基數</td>
+                </tr>
+                <tr>
+                    <td>每日異常基數上限</td>
+                    <td>遲到 + 早退合計最多 16 基數</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>應下班時間對照範例</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>上班打卡</th>
+                    <th>effectiveStart</th>
+                    <th>應下班</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>07:33</td><td>08:30</td><td>18:00</td><td>早到視同 08:30</td></tr>
+                <tr><td>08:30</td><td>08:30</td><td>18:00</td><td>準時</td></tr>
+                <tr><td>08:59</td><td>08:59</td><td>18:29</td><td>延後 29 分鐘</td></tr>
+                <tr><td>09:00</td><td>09:00</td><td>18:30</td><td>延後 30 分鐘</td></tr>
+                <tr><td>09:30</td><td>09:30</td><td>19:00</td><td>延後 60 分鐘</td></tr>
+                <tr><td>09:35</td><td>09:30</td><td>19:00</td><td>緩衝內，視同 09:30</td></tr>
+                <tr><td>09:36（遲到）</td><td>09:30</td><td>19:00</td><td>遲到 1 基數</td></tr>
+            </tbody>
+        </table>
+
+        <h4>半天假與打卡整合</h4>
+        <p>當日若有<strong>已核准</strong>的半天假，系統會自動調整當日應打卡時段與異常判定：</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>情境</th>
+                    <th>打卡規則</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>下午半天假</strong>（14:00–18:00）</td>
+                    <td>早上正常打卡；應下班改為 <strong>12:30</strong></td>
+                    <td>12:30 前打下班卡算正常；午休前 30 分鐘視為上班時間；早上遲到照一般規則計算</td>
+                </tr>
+                <tr>
+                    <td><strong>上午半天假</strong>（08:30–14:00）</td>
+                    <td>無需早上打卡；<strong>14:00</strong> 打上班卡為正常</td>
+                    <td>晚於 14:00 算遲到（以 14:00 為基準）；應下班固定 18:00；加班從 18:30 起算</td>
+                </tr>
+                <tr>
+                    <td><strong>全天假</strong></td>
+                    <td>不需打卡</td>
+                    <td>異常偵測跳過</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>打卡驗證機制</h4>
+        <p>員工透過 APP 打卡時，系統採用 <strong>Wi-Fi + GPS 雙重驗證</strong>：</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>場景</th>
+                    <th>Wi-Fi</th>
+                    <th>GPS</th>
+                    <th>結果</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>正常辦公</td>
+                    <td>已連接公司 Wi-Fi</td>
+                    <td>圍欄內</td>
+                    <td>✅ 正常打卡</td>
+                </tr>
+                <tr>
+                    <td>Wi-Fi 正常但 GPS 偏移</td>
+                    <td>已連接公司 Wi-Fi</td>
+                    <td>圍欄外</td>
+                    <td>✅ 正常打卡（Wi-Fi 優先）</td>
+                </tr>
+                <tr>
+                    <td>GPS 在範圍但無 Wi-Fi</td>
+                    <td>未連接</td>
+                    <td>圍欄內</td>
+                    <td>❌ 範圍外 → 需外勤打卡</td>
+                </tr>
+                <tr>
+                    <td>Wi-Fi 未開啟</td>
+                    <td>未開啟</td>
+                    <td>任意</td>
+                    <td>⚠️ 提醒開啟，否則外勤打卡</td>
+                </tr>
+                <tr>
+                    <td>外勤</td>
+                    <td>任意</td>
+                    <td>任意</td>
+                    <td>外勤打卡（需附照片）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <strong>💡 為何需要 Wi-Fi 驗證？</strong>
+            GPS 圍欄通常設定 100～200 公尺，員工在公司樓下或隔壁建築也可能通過 GPS 驗證。Wi-Fi 驗證可確認員工手機確實連接到公司內部網路，大幅提高打卡的真實性。
+        </div>
+
+        <!-- ── 請假規則 ── -->
+        <h3 id="rules-leave">請假規則</h3>
+
+        <div class="info-box warning">
+            <strong>⚠️ 請假不可跨年度</strong>
+            同一張請假單的起迄日期必須在同一曆年內（例如 2026-12-31 至 2027-01-02 須拆成兩張申請）。原因：特休等年度額度以曆年計算，跨年度會造成額度扣抵混亂。
+        </div>
+
+        <h4>假別一覽表</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>假別</th>
+                    <th>年度上限</th>
+                    <th>給薪</th>
+                    <th>最小單位</th>
+                    <th>需證明</th>
+                    <th>簽核</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>特別休假（年假）</td>
+                    <td>依年資</td>
+                    <td>全薪</td>
+                    <td>0.5 天</td>
+                    <td>否</td>
+                    <td>一關</td>
+                </tr>
+                <tr>
+                    <td>事假</td>
+                    <td>14 天</td>
+                    <td>不支薪</td>
+                    <td>0.5 小時</td>
+                    <td>否</td>
+                    <td>一關</td>
+                </tr>
+                <tr>
+                    <td>病假</td>
+                    <td>30 天</td>
+                    <td>半薪</td>
+                    <td>1 小時</td>
+                    <td>不要求</td>
+                    <td>一關</td>
+                </tr>
+                <tr>
+                    <td>生理假</td>
+                    <td>每月 1 天</td>
+                    <td>半薪（前3天）</td>
+                    <td>0.5 天</td>
+                    <td>不得要求</td>
+                    <td>一關</td>
+                </tr>
+                <tr>
+                    <td>家庭照顧假</td>
+                    <td>7 天（併入事假）</td>
+                    <td>不支薪</td>
+                    <td>1 小時</td>
+                    <td>否</td>
+                    <td>一關</td>
+                </tr>
+                <tr>
+                    <td>婚假</td>
+                    <td>8 天</td>
+                    <td>全薪</td>
+                    <td>1 天</td>
+                    <td>是</td>
+                    <td>需要</td>
+                </tr>
+                <tr>
+                    <td>喪假</td>
+                    <td>依親屬</td>
+                    <td>全薪</td>
+                    <td>1 天</td>
+                    <td>是</td>
+                    <td>需要</td>
+                </tr>
+                <tr>
+                    <td>公傷病假</td>
+                    <td>無上限</td>
+                    <td>全薪</td>
+                    <td>1 天</td>
+                    <td>是</td>
+                    <td>需要</td>
+                </tr>
+                <tr>
+                    <td>產假</td>
+                    <td>8 週</td>
+                    <td>全薪/半薪</td>
+                    <td>1 天</td>
+                    <td>是</td>
+                    <td>需要</td>
+                </tr>
+                <tr>
+                    <td>流產假</td>
+                    <td>依懷孕週數</td>
+                    <td>依週數</td>
+                    <td>1 天</td>
+                    <td>是</td>
+                    <td>需要</td>
+                </tr>
+                <tr>
+                    <td>產檢假</td>
+                    <td>7 天</td>
+                    <td>全薪</td>
+                    <td>1 小時</td>
+                    <td>建議</td>
+                    <td>需要</td>
+                </tr>
+                <tr>
+                    <td>陪產檢及陪產假</td>
+                    <td>7 天</td>
+                    <td>全薪</td>
+                    <td>半天</td>
+                    <td>建議</td>
+                    <td>需要</td>
+                </tr>
+                <tr>
+                    <td>公差 / 公假</td>
+                    <td>依需求</td>
+                    <td>全薪</td>
+                    <td>1 小時</td>
+                    <td>否</td>
+                    <td>需要</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>特休天數（年資對照表）</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>年資</th>
+                    <th>特休天數</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>滿 6 個月未滿 1 年</td><td>3 天</td></tr>
+                <tr><td>滿 1 年未滿 2 年</td><td>7 天</td></tr>
+                <tr><td>滿 2 年未滿 3 年</td><td>10 天</td></tr>
+                <tr><td>滿 3 年未滿 5 年</td><td>14 天</td></tr>
+                <tr><td>滿 5 年未滿 10 年</td><td>15 天</td></tr>
+                <tr><td>滿 10 年以上</td><td>每年加 1 天，最多 30 天</td></tr>
+            </tbody>
+        </table>
+
+        <h4>喪假天數（親屬對照表）</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>親屬關係</th>
+                    <th>天數</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>父母、養父母、繼父母、配偶</td><td>8 天</td></tr>
+                <tr><td>祖父母、子女、配偶之父母/養父母/繼父母</td><td>6 天</td></tr>
+                <tr><td>曾祖父母、兄弟姊妹、配偶之祖父母</td><td>3 天</td></tr>
+            </tbody>
+        </table>
+
+        <h4>流產假天數（懷孕週數對照表）</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>情形</th>
+                    <th>天數</th>
+                    <th>給薪</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>懷孕滿 3 個月流產</td><td>4 週</td><td>依任職年資（同產假）</td></tr>
+                <tr><td>懷孕 2～3 個月流產</td><td>1 週</td><td>不支薪（可改請病假領半薪）</td></tr>
+                <tr><td>懷孕未滿 2 個月流產</td><td>5 天</td><td>不支薪（可改請病假領半薪）</td></tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <strong>💡 病假新規（2026 年施行）</strong>
+            一年內請病假未超過 10 天，雇主不得因此扣考績、降調或取消權益。超過 10 天的部分，報表會特別標示提醒。
+        </div>
+
+        <!-- ── 補卡規則 ── -->
+        <h3 id="rules-makeup">補卡規則</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>規則</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>適用條件</td>
+                    <td>當天打卡紀錄不足 2 筆（上下班卡）時，才可申請</td>
+                </tr>
+                <tr>
+                    <td>申請期限</td>
+                    <td>事發後 <strong>3 個日曆天</strong>內提出申請</td>
+                </tr>
+                <tr>
+                    <td>每日上限</td>
+                    <td>每天最多 2 筆補卡（上班卡與下班卡需分開申請）</td>
+                </tr>
+                <tr>
+                    <td>補卡時段</td>
+                    <td>
+                        固定 4 個選項，不可自由輸入時間：<br>
+                        上班卡：<strong>08:30</strong>（標準上班）/ <strong>14:00</strong>（上午半天假後的下午上班）<br>
+                        下班卡：<strong>12:30</strong>（下午半天假的中午下班）/ <strong>18:00</strong>（標準下班）
+                    </td>
+                </tr>
+                <tr>
+                    <td>審核流程</td>
+                    <td>須經直屬主管核准，核准後才會計入出勤紀錄</td>
+                </tr>
+                <tr>
+                    <td>未核准</td>
+                    <td>當日仍視為缺卡異常</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box warning">
+            <strong>⚠️ 補卡不支援彈性延後時間</strong>
+            例如：員工當天彈性刷 08:50 上班（應下班 18:20），下班忘記打卡，只能補 18:00。系統會偵測出「早退 20 分鐘（1 基數）」— 此為預期行為，屬合理限制。
+        </div>
+
+        <!-- ── 加班規則 ── -->
+        <h3 id="rules-overtime">加班規則</h3>
+
+        <h4>平日加班</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>規則</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>加班起算點（三段式）</td>
+                    <td>
+                        依上班打卡時間決定，加上晚餐休息 30 分鐘後起算：<br>
+                        打卡 ≤ 08:30 → 應下班 18:00 → 起算 <strong>18:30</strong><br>
+                        打卡 08:31–09:00 → 應下班 18:31–19:00 → 起算 <strong>19:00</strong><br>
+                        打卡 09:01–09:35 或遲到 → 應下班 19:01–19:00 → 起算 <strong>19:30</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>計算方式</td>
+                    <td>下班打卡 − 加班起算點，每 60 分鐘為 1 小時（不足 1 小時不算）</td>
+                </tr>
+                <tr>
+                    <td>時數上限</td>
+                    <td>無上限</td>
+                </tr>
+                <tr>
+                    <td>誤餐費</td>
+                    <td>加班 ≥ 2 小時，當日給付 NT$200（每日最多一次）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>平日加班範例（以 08:30 上班、起算 18:30）</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>下班時間</th>
+                    <th>加班時數</th>
+                    <th>誤餐費</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>≤ 19:29</td><td>0 小時</td><td>—</td></tr>
+                <tr><td>19:30～20:29</td><td>1 小時</td><td>—</td></tr>
+                <tr><td>20:30～21:29</td><td>2 小時</td><td>NT$200</td></tr>
+                <tr><td>21:30～22:29</td><td>3 小時</td><td>NT$200</td></tr>
+            </tbody>
+        </table>
+
+        <h4>平日加班範例（以 09:30 上班、起算 19:30）</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>下班時間</th>
+                    <th>加班時數</th>
+                    <th>誤餐費</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>≤ 20:29</td><td>0 小時</td><td>—</td></tr>
+                <tr><td>20:30～21:29</td><td>1 小時</td><td>—</td></tr>
+                <tr><td>21:30～22:29</td><td>2 小時</td><td>NT$200</td></tr>
+                <tr><td>22:30～23:29</td><td>3 小時</td><td>NT$200</td></tr>
+            </tbody>
+        </table>
+
+        <h4>假日加班</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>規則</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>假日定義</td>
+                    <td>行事曆中的國定假日、週六、週日；颱風假亦同此規則</td>
+                </tr>
+                <tr>
+                    <td>計算方式</td>
+                    <td>下班打卡 − 上班打卡（以整小時計，不足不算）</td>
+                </tr>
+                <tr>
+                    <td>休息扣除</td>
+                    <td>每滿 4 小時扣 30 分鐘休息（扣除次數 = floor(總時數 / 4)）</td>
+                </tr>
+                <tr>
+                    <td>誤餐費</td>
+                    <td>未扣休息前的總時數 ≥ 11 小時，給付 NT$200</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>假日加班休息扣除對照</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>未扣除總時數</th>
+                    <th>扣除休息</th>
+                    <th>實際加班時數</th>
+                    <th>誤餐費</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>3h</td><td>0 次</td><td>3h</td><td>—</td></tr>
+                <tr><td>4h</td><td>1 次（30min）</td><td>3.5h</td><td>—</td></tr>
+                <tr><td>8h</td><td>2 次（60min）</td><td>7h</td><td>—</td></tr>
+                <tr><td>11h</td><td>2 次（60min）</td><td>10h</td><td>NT$200</td></tr>
+                <tr><td>12h</td><td>3 次（90min）</td><td>10.5h</td><td>NT$200</td></tr>
+            </tbody>
+        </table>
+
+        <!-- ── 簽核流程 ── -->
+        <h3 id="rules-approval">簽核流程</h3>
+
+        <p>系統採用<strong>兩階段簽核</strong>機制，申請送出後由系統自動判斷簽核人。</p>
+
+        <h4>簽核流程</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>申請人身份</th>
+                    <th>第一關</th>
+                    <th>第二關</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>一般員工</td>
+                    <td>部門主管</td>
+                    <td>若假別 approval_level=2，則由老闆核准</td>
+                </tr>
+                <tr>
+                    <td>部門主管</td>
+                    <td>老闆（直接跳過部門主管層級）</td>
+                    <td>不啟用</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>流程示意</h4>
+        <div style="background:#fafafa;padding:16px;border-radius:8px;font-size:14px;margin:12px 0">
+            <strong>一般員工申請流程：</strong><br>
+            員工送出申請 → 部門主管收到通知 → 主管核准/駁回<br>
+            <span style="color:var(--text-secondary)">（若需兩關）</span> → 老闆收到通知 → 老闆核准/駁回<br><br>
+            <strong>部門主管自己的申請：</strong><br>
+            主管送出申請 → 老闆收到通知 → 老闆核准/駁回
+        </div>
+
+        <h4>代理簽核</h4>
+        <p>當簽核人請假時，其待簽核項目會由事先設定的<strong>代理人</strong>處理。代理人需在「員工管理」中預先設定。</p>
+
+        <h4>申請狀態說明</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>狀態</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>待審核</strong>（pending）</td>
+                    <td>申請已送出，等待簽核人處理</td>
+                </tr>
+                <tr>
+                    <td><strong>已核准</strong>（approved）</td>
+                    <td>所有簽核關卡均已通過</td>
+                </tr>
+                <tr>
+                    <td><strong>已駁回</strong>（rejected）</td>
+                    <td>任一簽核關卡被駁回</td>
+                </tr>
+                <tr>
+                    <td><strong>已撤銷</strong>（cancelled）</td>
+                    <td>申請人在待審核時自行撤銷</td>
+                </tr>
+            </tbody>
+        </table>
