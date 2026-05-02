@@ -114,31 +114,46 @@
 
         <h4>檢視員工列表</h4>
         <ul>
-            <li>可使用<strong>搜尋框</strong>以姓名或工號搜尋</li>
+            <li>可使用<strong>搜尋框</strong>以姓名或工號搜尋（即時防抖搜尋）</li>
             <li>可依<strong>部門</strong>和<strong>狀態</strong>（在職 / 停用）篩選</li>
-            <li>表格欄位：員工編號、姓名、部門、職稱、到職日、角色、LINE 綁定狀態、在職狀態</li>
-            <li>操作：編輯、代理人設定、LINE 綁定碼、停用/啟用</li>
+            <li>表格欄位：員工編號、姓名（含標籤）、部門、職稱、到職日、角色、免打卡、月薪、LINE 綁定狀態、在職狀態</li>
+            <li>姓名欄特殊標籤：<strong>最高主管</strong>（金色）、<strong>免打卡</strong>（紫色）</li>
+            <li>角色 Tag：管理員（藍）/ 員工（灰）/ 人事（青）/ 會計（洋紅）/ 老闆（金）</li>
+            <li>操作欄：<strong>編輯</strong> / <strong>代理人</strong> / <strong>LINE綁定</strong>（未綁且在職時）或 <strong>解綁</strong>（已綁時）/ <strong>停用</strong>或<strong>啟用</strong></li>
         </ul>
 
         <div class="screenshot">
             <img src="images/基礎資料_員工管理.png" alt="員工管理">
-            <div class="caption">員工管理 — 員工列表（可搜尋、篩選部門與狀態）</div>
+            <div class="caption">員工管理 — 員工列表，含職稱、免打卡、月薪欄位</div>
         </div>
 
-        <h4>新增員工</h4>
-        <ol class="steps">
-            <li>點擊右上角「<strong>＋ 新增員工</strong>」按鈕</li>
-            <li>填寫必要資訊：員工編號、姓名、Email、部門、職稱、到職日</li>
-            <li>選擇角色：管理員 / 員工 / 老闆</li>
-            <li>選擇預設班別</li>
-            <li>（選填）輸入<strong>月薪</strong>，系統將用於薪資輔助報表試算</li>
-            <li>設定初始密碼</li>
-            <li>點擊「確定」儲存</li>
-        </ol>
+        <h4>新增 / 編輯員工</h4>
+        <p>點擊「<strong>＋ 新增員工</strong>」或員工列表中的「<strong>編輯</strong>」按鈕，右側會滑出 Drawer 表單。</p>
+
+        <table>
+            <thead><tr><th>欄位</th><th>說明</th><th>備註</th></tr></thead>
+            <tbody>
+                <tr><td>員工編號</td><td>唯一識別碼</td><td>必填</td></tr>
+                <tr><td>姓名</td><td>員工姓名</td><td>必填</td></tr>
+                <tr><td>電子信箱</td><td>登入用 Email</td><td></td></tr>
+                <tr><td>手機號碼</td><td>聯絡電話</td><td></td></tr>
+                <tr><td>部門</td><td>所屬部門</td><td></td></tr>
+                <tr><td>職稱</td><td>職位名稱</td><td></td></tr>
+                <tr><td>到職日</td><td>年資與特休計算基準</td><td>必填</td></tr>
+                <tr><td>預設班別</td><td>員工適用的班別</td><td></td></tr>
+                <tr><td>角色</td><td>員工 / 管理員 / 人事 / 會計 / 老闆</td><td>預設「員工」</td></tr>
+                <tr><td>最高主管</td><td>開啟後成為全公司最終簽核人</td><td>Switch</td></tr>
+                <tr><td>免打卡員工</td><td>開啟後不需打卡、不跑差勤異常、報表標記為免打卡；仍可申請請假／加班／補卡</td><td>Switch</td></tr>
+                <tr><td>月薪</td><td>用於薪資輔助報表試算（時薪 = 月薪 ÷ 240）</td><td>NT$ 格式，選填</td></tr>
+                <tr><td>初始密碼</td><td>新增員工時設定，至少 6 字元（選填）</td><td>僅新增時顯示</td></tr>
+            </tbody>
+        </table>
+
+        <p>編輯模式下，表單底部會顯示 <strong>LINE 綁定狀態</strong>：已綁定時可在此直接解除綁定；未綁定時可直接產生綁定碼。</p>
 
         <div class="screenshot">
-            <img src="images/基礎資料_員工管理_新增員工.png" alt="新增員工">
-            <div class="caption">新增員工 — 填寫員工基本資料</div>
+            <img src="images/基礎資料_員工管理_編輯員工.png" alt="編輯員工">
+            <div class="caption">編輯員工 — 新增免打卡員工 Switch 與月薪欄位，底部顯示 LINE 綁定狀態</div>
         </div>
 
         <div class="info-box warning">
@@ -146,33 +161,31 @@
             <ul style="margin:4px 0 0 16px">
                 <li>員工編號不可重複，設定後無法修改</li>
                 <li>到職日是計算年資與特休天數的依據，請確認正確</li>
-                <li>角色設定為「老闆」的帳號將成為最終簽核人（全公司僅應有一位）</li>
+                <li>「老闆」角色為全公司最終簽核人，全公司通常僅應有一位</li>
+                <li>無法停用自己的帳號（操作按鈕會呈灰色停用狀態）</li>
             </ul>
         </div>
 
-        <h4>編輯員工</h4>
-        <p>點擊員工列表中的「<strong>編輯</strong>」按鈕，可修改員工的部門、職稱、班別、月薪、密碼等資訊。若該員工不需打卡（如特殊主管職位），可開啟「免打卡員工」開關，系統將跳過差勤異常偵測。</p>
-
         <h4>代理人設定</h4>
-        <p>為員工指定代理人，當該員工請假時，其待簽核的項目會由代理人協助處理。</p>
+        <p>為員工指定代理人，當該員工不在時，其待簽核的項目會轉由代理人處理。</p>
         <ol class="steps">
             <li>在員工列表中，點擊對應員工的「<strong>代理人</strong>」按鈕</li>
-            <li>從下拉選單中選擇代理人</li>
-            <li>確認儲存</li>
+            <li>從下拉選單中選擇代理人（留空則移除現有代理人）</li>
+            <li>點擊「<strong>儲存</strong>」</li>
         </ol>
 
-        <h4>LINE 綁定</h4>
-        <p>管理員可為員工產生 LINE 綁定碼，員工在手機 APP 首次使用 LINE 登入時，需輸入此綁定碼來關聯帳號。</p>
+        <h4>LINE 綁定管理</h4>
+        <p>管理員可為員工產生 LINE 綁定碼，員工在手機 APP 的 LINE 綁定頁面輸入後即完成關聯。</p>
         <ul>
-            <li>點擊「<strong>LINE 綁定</strong>」按鈕可產生綁定碼</li>
-            <li>將綁定碼提供給員工，員工在 APP 中輸入即完成綁定</li>
-            <li>已綁定的員工，表格中 LINE 欄位會顯示「已綁定」</li>
+            <li>未綁定且在職的員工：操作欄顯示「<strong>LINE綁定</strong>」按鈕，點擊後產生 6 位綁定碼（<strong>有效期 5 分鐘</strong>）</li>
+            <li>已綁定的員工：操作欄顯示「<strong>解綁</strong>」按鈕，解除後員工將無法使用 LINE 登入</li>
+            <li>亦可在編輯 Drawer 底部的「LINE 綁定狀態」區塊執行相同操作</li>
         </ul>
 
         <h4>停用 / 啟用員工</h4>
         <ul>
-            <li>點擊「<strong>停用</strong>」可將離職員工帳號標記為停用，停用後員工無法登入但歷史紀錄保留</li>
-            <li>已停用的員工可點擊「<strong>啟用</strong>」恢復使用</li>
+            <li>點擊「<strong>停用</strong>」可將離職員工帳號標記為停用，停用後員工無法登入，但歷史紀錄保留</li>
+            <li>已停用的員工，操作欄改顯示「<strong>啟用</strong>」按鈕，可恢復使用</li>
         </ul>
 
         <!-- ── 班別設定 ── -->
@@ -373,23 +386,41 @@
 
         <h4>操作說明</h4>
         <ul>
-            <li>頁面以<strong>年份 Tab</strong> 切換不同年度的行事曆</li>
-            <li>可<strong>新增</strong>假日：選擇日期、類型、輸入名稱</li>
-            <li>可<strong>編輯</strong>或<strong>刪除</strong>現有假日</li>
-            <li>支援<strong>批次匯入</strong>功能，可一次匯入整年度的國定假日</li>
+            <li>頁面以<strong>年份 Tab</strong> 切換不同年度（顯示前一年、今年、明年）</li>
+            <li>可<strong>新增假日</strong>：選擇日期、類型（國定假日 / 公司假日 / 補班日）、輸入名稱</li>
+            <li>可<strong>刪除</strong>現有假日（點擊「刪除」後需確認）</li>
         </ul>
 
         <div class="screenshot">
             <img src="images/基礎資料_行事曆.png" alt="行事曆">
-            <div class="caption">行事曆 — 以年份 Tab 切換，顯示國定假日、公司假日、補班日</div>
+            <div class="caption">行事曆 — 以年份 Tab 切換，右上角可初始化下一年度國定假日</div>
         </div>
+
+        <h4>初始化國定假日</h4>
+        <p>頁面右上角提供「<strong>初始化 {下一年} 年國定假日</strong>」按鈕，可一次寫入下一年度的台灣國定假日。</p>
+        <ol class="steps">
+            <li>點擊「<strong>初始化 {下一年} 年國定假日</strong>」按鈕</li>
+            <li>確認 Modal 中顯示<strong>將新增的假日清單</strong>，請仔細確認內容：
+                <ul>
+                    <li>若有節日恰逢週末，系統會提示「以下節日遇週末，本次不新增」，需另行手動設定補假或補班日</li>
+                    <li>系統會提示：<em>「清明節（時間不固定）未列入，請確認該年清明節日期後手動新增。」</em></li>
+                </ul>
+            </li>
+            <li>確認無誤後點擊「<strong>確認初始化</strong>」</li>
+            <li>系統將刪除該年度所有現有國定假日並重新寫入，成功後自動切換至下一年度 Tab</li>
+        </ol>
 
         <div class="screenshot">
             <img src="images/基礎資料_行事曆_新增假日.png" alt="新增假日">
-            <div class="caption">新增假日 — 選擇日期、類型與名稱</div>
+            <div class="caption">新增假日 — 選擇日期、類型與名稱（日期選擇器限定於該年度內）</div>
+        </div>
+
+        <div class="info-box warning">
+            <strong>⚠️ 注意</strong>
+            初始化操作會先<strong>刪除</strong>該年度所有現有國定假日，再重新寫入，請確認內容後再執行。清明節及補假日期需手動新增，補班日亦需另行設定。
         </div>
 
         <div class="info-box">
             <strong>💡 提醒</strong>
-            行事曆設定會直接影響出勤報表中的「應出勤天數」計算，以及假日加班的認定。建議每年初將當年度國定假日匯入系統。
+            行事曆設定會直接影響出勤報表中的「應出勤天數」計算，以及假日加班的認定。建議每年初完成下一年度的行事曆設定。
         </div>

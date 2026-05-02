@@ -46,19 +46,50 @@
         <!-- ── 薪資輔助報表 ── -->
         <h3 id="report-payroll">薪資輔助報表</h3>
 
-        <p>專為薪資計算提供的出勤資料報表，可直接作為薪資計算的輸入依據。</p>
+        <p>專為薪資計算提供的出勤資料報表，整合考勤扣薪與加班費試算，可直接作為薪資計算的參考依據。</p>
 
         <h4>頁面說明</h4>
         <ul>
-            <li>可選擇<strong>年月</strong>與<strong>部門</strong>篩選</li>
-            <li>報表包含薪資計算所需的關鍵欄位：出勤天數、遲到基數、早退基數、平日加班時數、假日加班時數、誤餐費、各假別請假天數/時數等</li>
-            <li>若員工已填寫月薪，報表另行顯示：遲到扣薪、早退扣薪、加班費、誤餐費、實發薪資試算等</li>
-            <li>右上角可點擊「<strong>匯出 Excel</strong>」下載，直接用於薪資作業</li>
+            <li>右上角可選擇<strong>年份</strong>與<strong>月份</strong>，標題下方顯示「應出勤 N 天 · 共 N 人」</li>
+            <li>右上角可點擊「<strong>匯出 Excel</strong>」下載完整報表</li>
+            <li>表格支援橫向捲動（總寬度約 1800px）；員工編號、姓名固定於左側，實發薪資試算、備註固定於右側</li>
         </ul>
+
+        <h4>報表欄位說明</h4>
+        <table>
+            <thead><tr><th>欄位</th><th>說明</th></tr></thead>
+            <tbody>
+                <tr><td>員工編號</td><td>員工工號</td></tr>
+                <tr><td>姓名</td><td>員工姓名</td></tr>
+                <tr><td>部門</td><td>所屬部門</td></tr>
+                <tr><td>月薪</td><td>員工設定的月薪（NT$）；未設定時顯示 -</td></tr>
+                <tr><td>時薪</td><td>月薪 ÷ 240（NT$）；未設定時顯示 -</td></tr>
+                <tr><td>應出勤天</td><td>當月扣除假日後應出勤天數</td></tr>
+                <tr><td>實出勤天</td><td>實際有打卡記錄的天數；低於應出勤天時以紅色顯示</td></tr>
+                <tr><td>遲到基數</td><td>遲到分鐘數換算基數（每 30 分鐘 = 1 基數）；大於 0 時以橘色顯示</td></tr>
+                <tr><td>早退基數</td><td>早退分鐘數換算基數；大於 0 時以橘色顯示</td></tr>
+                <tr><td>遲到/早退扣薪</td><td>依基數計算的合計扣薪金額（NT$）</td></tr>
+                <tr><td>無薪假(時)</td><td>當月無薪假時數；大於 0 時以紅色粗體顯示</td></tr>
+                <tr><td>半薪假(時)</td><td>當月半薪假時數；大於 0 時以橘色顯示</td></tr>
+                <tr><td>請假扣薪</td><td>無薪假 + 半薪假的合計扣薪金額（NT$）</td></tr>
+                <tr><td>平日加班</td><td>當月平日加班時數</td></tr>
+                <tr><td>假日加班</td><td>當月假日加班時數</td></tr>
+                <tr><td>國定加班</td><td>當月國定假日加班時數</td></tr>
+                <tr><td>加班費</td><td>加班費合計（NT$）</td></tr>
+                <tr><td>誤餐費</td><td>加班誤餐費合計（NT$）</td></tr>
+                <tr><td><strong>實發薪資試算</strong></td><td>月薪 − 扣薪 + 加班費 + 誤餐費（NT$，藍色粗體）；未設月薪時顯示 -</td></tr>
+                <tr><td>備註</td><td>特殊情況標記，例如「免打卡員工」</td></tr>
+            </tbody>
+        </table>
 
         <div class="screenshot">
             <img src="images/報表中心_薪資輔助報表.png" alt="薪資輔助報表">
-            <div class="caption">薪資輔助報表 — 包含遲到基數、加班分類等薪資計算所需資料</div>
+            <div class="caption">薪資輔助報表 — 有設定月薪的員工會顯示扣薪金額與實發薪資試算（藍色）</div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 提示</strong>
+            薪資試算結果為<strong>參考用途</strong>，不含勞健保扣除、所得稅等項目。請於員工管理中設定月薪後，報表才會顯示扣薪與試算金額。
         </div>
 
         <!-- ── 異常管理 ── -->
@@ -106,6 +137,29 @@
         <div class="screenshot">
             <img src="images/報表中心_異常統計.png" alt="異常統計">
             <div class="caption">異常統計 — 以長條圖與圓餅圖呈現異常趨勢</div>
+        </div>
+
+        <!-- ── 年度剩餘特休總表 ── -->
+        <h3 id="annual-leave-remaining">年度剩餘特休總表</h3>
+
+        <p>以年度為維度，一覽全體員工的特休天數使用情況，方便管理員掌握未休特休的分佈狀況。</p>
+
+        <h4>頁面說明</h4>
+        <ul>
+            <li>右上角可選擇<strong>年份</strong>（當年及前四年）切換查看</li>
+            <li>右上角可點擊「<strong>匯出 Excel</strong>」下載完整清單</li>
+            <li>頂部<strong>統計卡片</strong>（4 項）：員工人數、年度特休總天數、已使用總天數、<strong>剩餘總天數</strong>（藍色強調）</li>
+            <li>下方<strong>員工明細表格</strong>：
+                <ul>
+                    <li>欄位：員工編號、姓名、部門、到職日、年度特休天數、已使用、<strong>剩餘天數</strong></li>
+                    <li>剩餘天數為 0 且該員工有特休額度時，以<span style="color:#ff4d4f;font-weight:600">紅色粗體</span>顯示，提醒管理員特休已用盡</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/報表中心_年度剩餘特休總表.png" alt="年度剩餘特休總表">
+            <div class="caption">年度剩餘特休總表 — 頂部為公司合計統計，下方為每位員工的特休使用明細</div>
         </div>
 
         <!-- ── 年度統計 ── -->

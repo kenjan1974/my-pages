@@ -140,3 +140,146 @@
             <img src="images/自助服務_假期餘額.png" alt="假期餘額查詢">
             <div class="caption">假期餘額 — 以進度條顯示各假別使用情況</div>
         </div>
+
+        <!-- ── 我的出勤 ── -->
+        <h3 id="my-attendance">我的出勤</h3>
+
+        <p>查看每日打卡、請假、加班與補卡關聯資訊。</p>
+
+        <h4>頁面結構</h4>
+        <ul>
+            <li>頂端顯示員工基本資訊：姓名、工號、部門、班別</li>
+            <li>左上方「<strong>今日狀態</strong>」卡片：顯示今日日期、出勤狀態 Tag、上班時間、下班時間，以及狀態提示文字</li>
+            <li>右上方顯示當月 <strong>6 項統計</strong>：出勤天數、遲到次數、早退次數、請假時數、加班時數、外勤天數</li>
+            <li>右上角提供「<strong>查看月報表</strong>」與「<strong>重新整理</strong>」按鈕</li>
+        </ul>
+
+        <h4>月曆與單日明細</h4>
+        <ul>
+            <li>月曆以色點標示每日事件，圖例說明（依序）：
+                <ul>
+                    <li>● 正常（綠）／● 遲到（橘黃）／● 早退（橘）／● 缺卡・缺席（紅）</li>
+                    <li>● 外勤（紫）／○ 請假（藍框空心）／● 加班（青）／● 補卡（深藍）</li>
+                </ul>
+            </li>
+            <li>使用「<strong>上月</strong>」「<strong>下月</strong>」按鈕切換月份（當月不可跳至未來）</li>
+            <li>點擊月曆日期後，右側「<strong>單日出勤與申請明細</strong>」面板即時更新，顯示：
+                <ul>
+                    <li>「當日打卡摘要」：上班時間（含打卡方式：GPS / Wi-Fi / 外勤）、下班時間、工時（累計）、遲到 / 早退分鐘數</li>
+                    <li>「當日事件」：該日的請假、加班、補卡申請清單（含類型、時數與狀態）</li>
+                    <li>「當日摘要」：合計請假 N 筆、加班 N 筆、補卡 N 筆</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/自助服務_我的出勤.png" alt="我的出勤月曆">
+            <div class="caption">我的出勤 — 月曆（左）與單日明細面板（右），點選日期即時顯示打卡摘要與當日事件</div>
+        </div>
+
+        <div class="info-box">
+            <strong>ℹ️ 免打卡員工注意</strong>
+            老闆與設定為「免打卡」的員工不顯示出勤統計、月曆及單日明細，頁面改為顯示提示訊息，並提供前往我的請假、我的加班、我的補卡的快捷按鈕。
+        </div>
+
+        <h4>月出勤報表</h4>
+        <p>在「我的出勤」頁面點擊右上角「<strong>查看月報表</strong>」，即可進入個人月出勤報表頁面。</p>
+        <ul>
+            <li>頂端同樣顯示 6 項統計卡片（出勤天數、遲到次數、早退次數、請假時數、加班時數、外勤天數）</li>
+            <li><strong>本月摘要</strong>卡片：已記錄天數、異常天數、最近一筆紀錄日期</li>
+            <li><strong>本月提醒</strong>卡片：依實際資料顯示提示，例如「本月目前有 N 天出現遲到、早退或缺卡狀態」或「本月目前出勤狀態穩定」；另列出當月請假時數、加班時數、外勤天數提示</li>
+            <li><strong>每日出勤明細</strong>表格欄位：日期、星期、上班、下班、狀態、遲到（分）、早退（分）、請假、加班、外勤、備註</li>
+            <li>備註欄自動顯示：尚未完成下班打卡 / 補卡 N 筆 / 工時 Xh</li>
+            <li>使用「上月」「下月」切換月份；點擊右上角「<strong>回到出勤紀錄</strong>」可返回月曆頁面</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/自助服務_月出勤報表.png" alt="個人月出勤報表">
+            <div class="caption">月出勤報表 — 當月統計卡片、本月摘要 / 提醒，以及每日出勤明細表格</div>
+        </div>
+
+        <!-- ── 個人設定 ── -->
+        <h3 id="my-profile">個人設定</h3>
+
+        <p>查看個人基本資料與帳號設定。</p>
+
+        <h4>個人資料</h4>
+        <p>以表格形式顯示以下欄位：</p>
+        <table>
+            <thead>
+                <tr><th>欄位</th><th>說明</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>姓名</td><td>登入帳號的姓名</td></tr>
+                <tr><td>工號</td><td>員工工號（EMP 開頭）</td></tr>
+                <tr><td>角色</td><td>管理員 / 一般員工 / 老闆；免打卡員工額外顯示「免打卡身分」紫色標籤</td></tr>
+                <tr><td>Email</td><td>帳號 Email</td></tr>
+                <tr><td>電話</td><td>聯絡電話（未填時顯示 —）</td></tr>
+                <tr><td>部門</td><td>所屬部門名稱</td></tr>
+                <tr><td>班別</td><td>套用的班別名稱</td></tr>
+                <tr><td>到職日</td><td>到職日期</td></tr>
+                <tr><td>LINE 綁定</td><td>已綁定時顯示 LINE 顯示名稱（綠色標籤）；未綁定時顯示「未綁定」</td></tr>
+            </tbody>
+        </table>
+
+        <div class="screenshot">
+            <img src="images/自助服務_個人設定.png" alt="個人設定頁面">
+            <div class="caption">個人設定 — 個人資料、快捷功能與變更密碼入口</div>
+        </div>
+
+        <h4>快捷功能</h4>
+        <p>個人資料下方的「快捷功能」卡片提供兩個快速跳轉按鈕：</p>
+        <ul>
+            <li>「<strong>我的出勤</strong>」— 跳轉至月曆打卡頁面</li>
+            <li>「<strong>月出勤報表</strong>」— 跳轉至個人月出勤報表</li>
+        </ul>
+
+        <h4>變更密碼</h4>
+        <ol class="steps">
+            <li>點擊頁面底部「<strong>變更密碼</strong>」按鈕</li>
+            <li>在彈出視窗中依序填寫：<strong>目前密碼</strong>、<strong>新密碼</strong>、<strong>確認新密碼</strong></li>
+            <li>新密碼規則：至少 <strong>8 個字元</strong>，且需同時包含<strong>英文與數字</strong></li>
+            <li>點擊「<strong>確認變更</strong>」送出；成功後視窗自動關閉</li>
+        </ol>
+
+        <div class="info-box">
+            <strong>💡 提示</strong>
+            如需修改部門、班別或角色等資訊，請聯繫管理員在「員工管理」中調整。「關於系統」按鈕目前尚未開放。
+        </div>
+
+        <!-- ── 我的簽核 ── -->
+        <h3 id="my-approval">我的簽核</h3>
+
+        <p>當您擔任主管或被指定為代理簽核人時，可在此頁面處理下屬或指定人員的申請單。</p>
+
+        <h4>待簽核</h4>
+        <ul>
+            <li>頁籤標題顯示目前待處理數量，例如「待簽核 (3)」</li>
+            <li>每筆紀錄顯示：<strong>類型</strong>（請假 / 加班 / 補卡）、<strong>申請人</strong>、<strong>步驟</strong>（「第 N 步」）、<strong>摘要</strong>、<strong>申請時間</strong></li>
+            <li>「<strong>操作</strong>」欄直接顯示「<strong>核准</strong>」與「<strong>駁回</strong>」兩個按鈕</li>
+            <li>點擊任一按鈕後，系統會彈出確認視窗，顯示申請詳情，並提供<strong>備註（選填）</strong>欄位，確認後點「確認核准」或「確認駁回」完成操作</li>
+            <li>無待簽核申請時顯示「目前沒有待簽核的申請」</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/自助服務_我的簽核_待簽核.png" alt="我的簽核 — 待簽核列表">
+            <div class="caption">我的簽核 — 待簽核頁籤，每筆申請列有「核准」與「駁回」按鈕</div>
+        </div>
+
+        <h4>已簽核</h4>
+        <ul>
+            <li>顯示您已處理過（核准或駁回）的歷史簽核紀錄</li>
+            <li>篩選器：<strong>年份</strong>（當年及前三年）、<strong>表單類型</strong>（請假 / 加班 / 補卡）、<strong>申請人</strong>（以「工號 姓名」格式列出）</li>
+            <li>每筆紀錄顯示：類型、申請人、摘要、申請時間、簽核時間、<strong>結果</strong>（核准 / 駁回）</li>
+            <li>清單支援分頁（每頁 20 筆）；無資料時顯示「目前沒有已簽核的紀錄」</li>
+        </ul>
+
+        <div class="screenshot">
+            <img src="images/自助服務_我的簽核_已簽核.png" alt="我的簽核 — 已簽核列表">
+            <div class="caption">我的簽核 — 已簽核頁籤，可依年份、類型與申請人篩選歷史紀錄</div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 提示</strong>
+            「我的簽核」與管理員使用的「簽核管理 → 簽核中心」不同：簽核中心供管理員統一查看全公司所有申請；「我的簽核」僅顯示指派給您本人的簽核任務。
+        </div>
