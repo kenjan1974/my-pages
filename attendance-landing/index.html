@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>差勤管理系統｜中小企業彈性上班解決方案</title>
+  <meta name="description" content="專為中小企業彈性上班與內部簽核流程設計的差勤管理系統，包含員工 App、管理後台、請假加班補卡簽核、出勤報表與導入維護服務。">
+  <style>
+    :root {
+      --ink: #0b1f3f;
+      --ink-2: #17345f;
+      --blue: #1a73e8;
+      --cyan: #16b8d9;
+      --green: #2fbf71;
+      --amber: #ffb020;
+      --red: #e85d75;
+      --bg: #f6f9fc;
+      --paper: #ffffff;
+      --muted: #66768f;
+      --line: #dce6f2;
+      --shadow: 0 18px 45px rgba(11, 31, 63, .14);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      line-height: 1.72;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(220, 230, 242, .9);
+    }
+
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      box-shadow: 0 8px 18px rgba(11, 31, 63, .18);
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .links a:hover {
+      color: var(--blue);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(26, 115, 232, .25);
+    }
+
+    .button.secondary {
+      background: #fff;
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(9, 29, 62, .94), rgba(10, 48, 93, .88)),
+        url("images/hero-admin.png") center / cover no-repeat;
+      color: #fff;
+      min-height: 680px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 78px 22px 58px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 430px;
+      gap: 54px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #a9dcff;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 5px rgba(47, 191, 113, .18);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 54px;
+      line-height: 1.08;
+      letter-spacing: 0;
+      max-width: 760px;
+    }
+
+    .hero p {
+      margin: 22px 0 0;
+      max-width: 720px;
+      color: #d9e7f7;
+      font-size: 19px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .hero-proof {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 760px;
+    }
+
+    .proof-item {
+      border: 1px solid rgba(255, 255, 255, .16);
+      background: rgba(255, 255, 255, .08);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .proof-item strong {
+      display: block;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .proof-item span {
+      color: #b9cbe2;
+      font-size: 13px;
+    }
+
+    .phone-stack {
+      position: relative;
+      min-height: 570px;
+    }
+
+    .phone {
+      position: absolute;
+      width: 255px;
+      border-radius: 30px;
+      padding: 10px;
+      background: #07162d;
+      box-shadow: 0 26px 55px rgba(0, 0, 0, .38);
+      border: 1px solid rgba(255, 255, 255, .18);
+    }
+
+    .phone img {
+      border-radius: 22px;
+      width: 100%;
+    }
+
+    .phone.one {
+      right: 110px;
+      top: 0;
+      transform: rotate(-5deg);
+    }
+
+    .phone.two {
+      right: 0;
+      top: 125px;
+      transform: rotate(7deg);
+    }
+
+    section {
+      padding: 80px 22px;
+    }
+
+    .section-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-head {
+      max-width: 780px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 36px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+      margin: 14px 0 0;
+    }
+
+    .pain-grid,
+    .feature-grid,
+    .deliver-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 10px 28px rgba(11, 31, 63, .06);
+    }
+
+    .panel h3 {
+      margin: 0 0 9px;
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: #fff;
+      font-weight: 900;
+      background: var(--blue);
+    }
+
+    .icon.green {
+      background: var(--green);
+    }
+
+    .icon.amber {
+      background: var(--amber);
+    }
+
+    .icon.red {
+      background: var(--red);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .image-frame {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .image-frame img {
+      border-radius: 6px;
+      border: 1px solid #edf2f8;
+    }
+
+    .bullet-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .bullet {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      color: var(--ink-2);
+    }
+
+    .check {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(47, 191, 113, .14);
+      color: #148f4d;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .band {
+      background: #fff;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px 18px;
+      min-height: 190px;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .price-box {
+      background: linear-gradient(160deg, #071c3c, #123c75);
+      color: #fff;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 390px;
+    }
+
+    .price {
+      font-size: 58px;
+      line-height: 1;
+      font-weight: 900;
+      margin: 18px 0 8px;
+    }
+
+    .price small {
+      font-size: 18px;
+      color: #b7c6da;
+      font-weight: 700;
+    }
+
+    .price-note {
+      color: #cad8ea;
+      margin: 0;
+    }
+
+    .included {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+    }
+
+    .included ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .included li {
+      padding-left: 34px;
+      position: relative;
+      color: var(--ink-2);
+    }
+
+    .included li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(47, 191, 113, .14);
+      color: #148f4d;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .compare h3 {
+      margin-top: 0;
+    }
+
+    .muted-list {
+      color: var(--muted);
+      padding-left: 20px;
+    }
+
+    .muted-list li {
+      margin: 8px 0;
+    }
+
+    .cta {
+      background: linear-gradient(135deg, #071c3c, #0d3b6c);
+      color: #fff;
+      text-align: center;
+    }
+
+    .cta .section-inner {
+      max-width: 860px;
+    }
+
+    .cta p {
+      color: #d5e5f7;
+      font-size: 18px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+      text-align: left;
+    }
+
+    .contact-card {
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .contact-card strong {
+      display: block;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .contact-card a,
+    .contact-card span {
+      color: #d5e5f7;
+      word-break: break-word;
+    }
+
+    footer {
+      padding: 26px 22px;
+      color: var(--muted);
+      background: #07162d;
+      font-size: 14px;
+    }
+
+    footer .section-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    @media (max-width: 920px) {
+      .links {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-inner,
+      .split,
+      .pricing {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      h2 {
+        font-size: 30px;
+      }
+
+      .phone-stack {
+        min-height: 360px;
+      }
+
+      .phone {
+        width: 190px;
+      }
+
+      .phone.one {
+        right: auto;
+        left: 10%;
+      }
+
+      .phone.two {
+        right: 12%;
+        top: 70px;
+      }
+
+      .pain-grid,
+      .feature-grid,
+      .deliver-grid,
+      .workflow,
+      .compare,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-proof {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav-inner {
+        padding: 10px 16px;
+      }
+
+      .brand span {
+        font-size: 14px;
+      }
+
+      section {
+        padding: 58px 16px;
+      }
+
+      .hero-inner {
+        padding: 54px 16px 46px;
+        gap: 28px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .hero p,
+      .lead {
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .phone-stack {
+        min-height: 300px;
+      }
+
+      .phone {
+        width: 160px;
+      }
+
+      .price {
+        font-size: 46px;
+      }
+
+      footer .section-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="回到首頁">
+        <img src="images/app-icon.png" alt="差勤管理系統圖示">
+        <span>差勤管理系統</span>
+      </a>
+      <div class="links">
+        <a href="#fit">適合對象</a>
+        <a href="#features">系統特色</a>
+        <a href="#delivery">導入內容</a>
+        <a href="#pricing">費用說明</a>
+        <a href="../attendance-manual/index.html">操作手冊</a>
+        <a class="button" href="#contact">安排測試</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">為中小企業與彈性工時打造</div>
+        <h1>不是再買一套打卡工具，而是把公司的管理規則真正落地。</h1>
+        <p>這套系統適合已經有明確出勤、請假、加班與簽核流程的中小企業。員工用 App 打卡與送單，主管在後台簽核，人事用報表對帳，讓日常差勤作業集中管理。</p>
+        <div class="hero-actions">
+          <a class="button" href="#pricing">查看導入費用</a>
+          <a class="button secondary" href="../attendance-manual/index.html">查看操作手冊</a>
+        </div>
+        <div class="hero-proof" aria-label="系統重點">
+          <div class="proof-item">
+            <strong>NT$58,000</strong>
+            <span>含導入、上架設定與首年維護</span>
+          </div>
+          <div class="proof-item">
+            <strong>可調整</strong>
+            <span>依企業流程調整導入方式與必要設定</span>
+          </div>
+          <div class="proof-item">
+            <strong>可維護</strong>
+            <span>正式 API、資料庫、App、後台完整分工</span>
+          </div>
+        </div>
+      </div>
+      <div class="phone-stack" aria-hidden="true">
+        <div class="phone one">
+          <img src="images/app-clock.png" alt="">
+        </div>
+        <div class="phone two">
+          <img src="images/app-report.png" alt="">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="fit">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-kicker">適合對象</div>
+        <h2>適合希望把差勤流程制度化的公司</h2>
+        <p class="lead">當公司開始需要彈性工時、簽核紀錄、異常追蹤與月底報表時，單靠 Excel 或零散訊息容易產生漏算與爭議。系統將日常規則轉成可查、可簽、可匯出的管理流程。</p>
+      </div>
+      <div class="pain-grid">
+        <article class="panel">
+          <div class="icon">時</div>
+          <h3>有彈性上班規則</h3>
+          <p>不是單純 08:30 遲到、18:00 下班，而是上班時間會影響應下班時間、補卡與異常判斷。</p>
+        </article>
+        <article class="panel">
+          <div class="icon green">簽</div>
+          <h3>申請與簽核需要留紀錄</h3>
+          <p>請假、加班、補卡不再散落 LINE 對話，主管簽核、退回原因、歷史紀錄都留在系統。</p>
+        </article>
+        <article class="panel">
+          <div class="icon amber">報</div>
+          <h3>月底需要報表對帳</h3>
+          <p>人事與會計需要每日、月報、薪資輔助與異常統計，減少月底人工整理與漏算。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="features">
+    <div class="section-inner">
+      <div class="split">
+        <div>
+          <div class="section-kicker">系統特色</div>
+          <h2>針對實際管理流程設計，而不是只把功能列滿</h2>
+          <p class="lead">系統保留中小企業需要的核心能力：打卡、申請、簽核、報表與管理後台。導入時可依企業現有流程調整規則與設定，讓日常操作維持清楚。</p>
+          <div class="bullet-list">
+            <div class="bullet">
+              <span class="check">✓</span>
+              <div><strong>員工 App：</strong>上下班打卡、外勤照片、出勤月曆、請假加班補卡、通知與個人設定。</div>
+            </div>
+            <div class="bullet">
+              <span class="check">✓</span>
+              <div><strong>管理後台：</strong>員工、部門、班別、假別、行事曆、假期額度、簽核中心與報表中心。</div>
+            </div>
+            <div class="bullet">
+              <span class="check">✓</span>
+              <div><strong>資料與權限：</strong>正式資料庫、角色權限、登入綁定、安全限制與操作紀錄，利於後續維護。</div>
+            </div>
+          </div>
+        </div>
+        <div class="image-frame">
+          <img src="images/admin-approval.png" alt="簽核中心畫面">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-kicker">日常功能</div>
+        <h2>員工、主管、人事各自用得到的功能</h2>
+        <p class="lead">重點不是畫面多，而是每個角色每天打開系統時，能完成自己的工作。</p>
+      </div>
+      <div class="feature-grid">
+        <article class="panel">
+          <div class="icon">卡</div>
+          <h3>GPS / Wi-Fi 打卡</h3>
+          <p>員工在指定上班點完成上下班打卡，外勤情境可拍照留存；正式導入版包含同裝置防代打卡規則。</p>
+        </article>
+        <article class="panel">
+          <div class="icon green">假</div>
+          <h3>請假、加班、補卡</h3>
+          <p>三種常用申請單集中處理，員工可查進度，主管可簽核，管理端可追蹤紀錄。</p>
+        </article>
+        <article class="panel">
+          <div class="icon amber">班</div>
+          <h3>班別與彈性工時</h3>
+          <p>支援固定班與彈性班設定，可搭配企業既有上班時段與彈性工時規則。</p>
+        </article>
+        <article class="panel">
+          <div class="icon red">異</div>
+          <h3>異常偵測</h3>
+          <p>遲到、早退、缺卡、工時不足等狀況集中顯示，減少月底才發現問題。</p>
+        </article>
+        <article class="panel">
+          <div class="icon">薪</div>
+          <h3>薪資輔助報表</h3>
+          <p>依出勤、請假、加班與異常整理薪資試算資料，協助會計或人事核對。</p>
+        </article>
+        <article class="panel">
+          <div class="icon green">推</div>
+          <h3>通知與提醒</h3>
+          <p>搭配 LINE / App 推播，將簽核結果、提醒與重要狀態送到員工與主管手上。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="section-inner">
+      <div class="split">
+        <div class="image-frame">
+          <img src="images/admin-report.png" alt="薪資輔助報表畫面">
+        </div>
+        <div>
+          <div class="section-kicker">報表價值</div>
+          <h2>真正省下來的是月底整理與反覆確認的時間</h2>
+          <p class="lead">差勤管理不只是在指定時間完成打卡，更包含後續的異常判斷、主管簽核、假勤統計與薪資資料核對。</p>
+          <div class="bullet-list">
+            <div class="bullet">
+              <span class="check">✓</span>
+              <div>每日出勤總覽、月出勤報表、異常統計、年度統計與自訂區間報表。</div>
+            </div>
+            <div class="bullet">
+              <span class="check">✓</span>
+              <div>Excel 匯出，方便留存、對帳與提供給會計作業。</div>
+            </div>
+            <div class="bullet">
+              <span class="check">✓</span>
+              <div>請假時數、假期餘額、加班與補卡資料由系統串起，降低人工漏算。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="delivery">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-kicker">導入內容</div>
+        <h2>從測試、部署到上線維護，提供完整導入服務</h2>
+        <p class="lead">導入方案包含正式環境部署、App 上架設定協助、操作說明、測試回饋修正與首年維護服務，讓系統能穩定進入日常作業。</p>
+      </div>
+      <div class="workflow">
+        <article class="step">
+          <h3>測試與規則確認</h3>
+          <p>邀請實際使用者測試打卡、請假、加班、補卡與簽核流程，確認系統是否符合公司日常作業。</p>
+        </article>
+        <article class="step">
+          <h3>正式環境設定</h3>
+          <p>協助設定 API、後台、App、登入與通知相關參數，並確認正式環境可供日常使用。</p>
+        </article>
+        <article class="step">
+          <h3>上架與教育訓練</h3>
+          <p>協助首年 App Store / Google Play 上架設定，並提供管理端與員工端操作說明。</p>
+        </article>
+        <article class="step">
+          <h3>首年維護</h3>
+          <p>包含正式上線後問題修正、必要設定協助與小幅度調整；超出原導入範圍的新需求會先確認內容再安排。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="pricing">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-kicker">費用說明</div>
+        <h2>完整導入方案 NT$58,000</h2>
+        <p class="lead">方案包含系統導入、正式環境部署、App 上架設定協助、測試回饋修正與首年維護服務。外部平台與雲端服務費用依實際使用另計。</p>
+      </div>
+      <div class="pricing">
+        <div class="price-box">
+          <div>
+            <div class="section-kicker" style="color:#9bd4ff;">導入方案</div>
+            <div class="price">58,000 <small>元</small></div>
+            <p class="price-note">一次性導入費用，含 App 上架設定協助與首年維護服務。外部平台與雲端服務費用另計。</p>
+          </div>
+          <a class="button" href="#contact" style="margin-top:26px;background:#fff;color:#0b1f3f;box-shadow:none;">安排測試與討論</a>
+        </div>
+        <div class="included">
+          <h3 style="margin-top:0;">方案包含</h3>
+          <ul>
+            <li>員工 App、管理後台與 API 正式環境導入</li>
+            <li>正式環境部署與操作協助</li>
+            <li>正式上線前完成同裝置防代打卡規則</li>
+            <li>首年 App Store / Google Play 上架設定協助</li>
+            <li>導入確認後，正式上線前會修正測試回報的規則與問題</li>
+            <li>首年問題修正、設定協助與必要小幅調整</li>
+            <li>操作手冊、測試流程與基本教育訓練</li>
+            <li>正式上線後，超出原導入範圍的新增需求，會先確認內容與費用再進行</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-kicker">導入定位</div>
+        <h2>適合重視流程、資料與後續維護的公司</h2>
+      </div>
+      <div class="compare">
+        <article class="panel">
+          <h3>標準化管理</h3>
+          <ul class="muted-list">
+            <li>員工透過 App 完成打卡、請假、加班與補卡。</li>
+            <li>主管透過後台集中簽核與查詢紀錄。</li>
+            <li>人事可透過報表追蹤異常、假勤與薪資輔助資料。</li>
+            <li>系統管理員可在後台自行維護員工、部門、班別與假別設定。</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h3>可維護架構</h3>
+          <ul class="muted-list">
+            <li>採用正式後端 API、資料庫、管理後台與員工 App 分層設計。</li>
+            <li>支援角色權限、登入綁定、安全限制與操作紀錄。</li>
+            <li>導入時可依企業流程調整必要規則與系統設定。</li>
+            <li>首年包含上架設定協助、測試修正與維護服務。</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="section-inner">
+      <h2>先測試，再決定是否正式導入</h2>
+      <p>建議先讓管理員、主管與幾位員工各自跑一次打卡、申請、簽核與報表流程。確認符合日常作業後，再安排正式導入與上線時程。</p>
+      <div class="contact-grid" aria-label="聯絡資訊">
+        <div class="contact-card">
+          <strong>Email</strong>
+          <a href="mailto:kenjan.cheng@gmail.com">kenjan.cheng@gmail.com</a>
+        </div>
+        <div class="contact-card">
+          <strong>LINE ID</strong>
+          <span>kaichung63</span>
+        </div>
+        <div class="contact-card">
+          <strong>功能操作手冊</strong>
+          <a href="../attendance-manual/index.html">查看系統功能與操作畫面</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="section-inner">
+      <span>差勤管理系統｜中小企業彈性工時導入方案</span>
+      <span>App 上架設定協助與首年維護包含於導入方案，外部平台費用另計。</span>
+    </div>
+  </footer>
+</body>
+
+</html>
