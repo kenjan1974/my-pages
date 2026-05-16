@@ -2564,8 +2564,10 @@ document.addEventListener('keydown', (e) => {
       document.documentElement.requestFullscreen();
     }
   } else if (e.key === 'Home') {
+    e.preventDefault();
     current = 0; show(current);
   } else if (e.key === 'End') {
+    e.preventDefault();
     current = slides.length - 1; show(current);
   } else if (/^\d$/.test(e.key)) {
     const target = Math.floor(slides.length * parseInt(e.key) / 10);
