@@ -1,0 +1,2598 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>從學生到職場：AI 工作流與求職實戰課</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F1E8;
+  --bg-dark: #1C1C1C;
+  --ink: #1A1A1A;
+  --ink-soft: #3A3A3A;
+  --ink-muted: #6F685B;
+  --paper: #FBF8F1;
+  --rule: #C9C2B3;
+  --rule-soft: #E0DACA;
+  --green: #0F4C3A;
+  --green-light: #1F6B53;
+  --red: #C9472F;
+  --red-dark: #A23722;
+  --yellow: #D4A943;
+  --code-bg: #1F1B14;
+  --code-text: #F0EBDD;
+  --code-accent: #F0C25F;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans TC', -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.deck {
+  position: relative;
+}
+
+.slide {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 56px 72px;
+  display: none;
+  flex-direction: column;
+  position: relative;
+  page-break-after: always;
+}
+
+.slide.active {
+  display: flex;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================ */
+/* TYPOGRAPHY — re-sized for classroom projection */
+/* Body min 22px / labels min 16px / titles 60px+ */
+/* ============================================ */
+
+/* Header chrome — visible from back of room */
+.slide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border-bottom: 1.5px solid var(--rule);
+  padding-bottom: 16px;
+  margin-bottom: 44px;
+  font-weight: 500;
+}
+
+.slide-header .pagenum b {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+h1 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 700;
+  font-size: 88px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 28px;
+  color: var(--ink);
+}
+
+h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  color: var(--green);
+}
+
+h4 {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: var(--green);
+  margin-bottom: 14px;
+}
+
+p, li {
+  font-size: 24px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.lead {
+  font-size: 30px;
+  line-height: 1.5;
+  color: var(--ink);
+  font-weight: 400;
+  max-width: 1000px;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.eyebrow.green { color: var(--green); }
+.eyebrow.muted { color: var(--ink-muted); }
+
+/* ===== Cover ===== */
+.cover {
+  justify-content: space-between;
+  background: var(--bg);
+  position: relative;
+}
+
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at top left, rgba(15, 76, 58, 0.05), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(201, 71, 47, 0.04), transparent 50%);
+  pointer-events: none;
+}
+
+.cover-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 1;
+  margin-top: 40px;
+}
+
+.cover-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+
+.cover h1 {
+  font-size: 104px;
+  margin-bottom: 32px;
+}
+
+.cover .sub {
+  font-family: 'Noto Serif TC', serif;
+  font-style: italic;
+  font-size: 34px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  max-width: 820px;
+  margin-top: 28px;
+  border-left: 4px solid var(--green);
+  padding-left: 24px;
+}
+
+.cover-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  position: relative;
+  z-index: 1;
+}
+
+.cover-bottom .left { line-height: 1.9; }
+.cover-bottom strong { color: var(--ink); font-weight: 700; }
+
+/* ===== Section divider ===== */
+.divider {
+  justify-content: center;
+  background: var(--green);
+  color: var(--paper);
+  position: relative;
+}
+
+.divider .slide-header {
+  border-bottom-color: rgba(245, 241, 232, 0.25);
+  color: rgba(245, 241, 232, 0.75);
+}
+
+.divider .part-number {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 240px;
+  line-height: 1;
+  color: rgba(245, 241, 232, 0.12);
+  position: absolute;
+  top: 50%;
+  right: 72px;
+  transform: translateY(-50%);
+}
+
+.divider .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 28px;
+  font-weight: 700;
+}
+
+.divider h1 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 96px;
+  color: var(--paper);
+  max-width: 1000px;
+  position: relative;
+  z-index: 1;
+}
+
+.divider .summary {
+  margin-top: 36px;
+  font-size: 28px;
+  line-height: 1.55;
+  color: rgba(245, 241, 232, 0.92);
+  max-width: 820px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Content area ===== */
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.two-col-wide-right {
+  grid-template-columns: 0.85fr 1.15fr;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 28px;
+}
+
+/* ===== Code blocks / Prompt blocks ===== */
+.code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-size: 19px;
+  line-height: 1.75;
+  padding: 26px 30px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  margin: 14px 0;
+  border-left: 5px solid var(--code-accent);
+  position: relative;
+}
+
+.code.bad {
+  border-left-color: var(--red);
+}
+
+.code.good {
+  border-left-color: var(--green-light);
+}
+
+.code.small {
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+/* ===== Cards & boxes ===== */
+.card {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  padding: 28px 32px;
+  border-radius: 4px;
+}
+
+.card.accent {
+  border-left: 6px solid var(--green);
+}
+
+.card.warn {
+  border-left: 6px solid var(--red);
+  background: #FCF3F0;
+}
+
+.card-title {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 28px;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.card p {
+  font-size: 22px;
+  line-height: 1.6;
+}
+
+/* ===== Pull quote ===== */
+.quote {
+  font-family: 'Noto Serif TC', serif;
+  font-style: italic;
+  font-size: 44px;
+  line-height: 1.35;
+  color: var(--ink);
+  border-left: 5px solid var(--red);
+  padding-left: 32px;
+  max-width: 1100px;
+}
+
+.quote .attribution {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-style: normal;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+  margin-top: 24px;
+  font-weight: 500;
+}
+
+.giant-quote {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 68px;
+  line-height: 1.22;
+  color: var(--ink);
+  max-width: 1200px;
+  letter-spacing: -0.01em;
+}
+
+.giant-quote em {
+  font-style: italic;
+  color: var(--red);
+}
+
+.giant-quote .green-em {
+  font-style: normal;
+  color: var(--green);
+  border-bottom: 4px solid var(--green);
+}
+
+/* ===== Tables ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 22px;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px 20px;
+  border-bottom: 1.5px solid var(--rule);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  font-weight: 600;
+  background: rgba(15, 76, 58, 0.05);
+  border-bottom: 3px solid var(--green);
+}
+
+td {
+  color: var(--ink-soft);
+}
+
+td:first-child {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.compare-table td:first-child {
+  width: 45%;
+}
+
+/* ===== Lists ===== */
+ul.fancy {
+  list-style: none;
+  padding: 0;
+}
+
+ul.fancy li {
+  position: relative;
+  padding-left: 44px;
+  margin-bottom: 18px;
+  font-size: 22px;
+  line-height: 1.55;
+}
+
+ul.fancy li::before {
+  content: counter(item, decimal-leading-zero);
+  counter-increment: item;
+  position: absolute;
+  left: 0;
+  top: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.04em;
+}
+
+ul.fancy { counter-reset: item; }
+
+ul.check, ul.cross {
+  list-style: none;
+  padding: 0;
+}
+
+ul.check li, ul.cross li {
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 12px;
+  font-size: 22px;
+  line-height: 1.55;
+}
+
+ul.check li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: -2px;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 26px;
+}
+
+ul.cross li::before {
+  content: "✕";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  color: var(--red);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+ul.plain {
+  list-style: none;
+  padding: 0;
+}
+
+ul.plain li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;
+  font-size: 22px;
+  line-height: 1.55;
+}
+
+ul.plain li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--ink-muted);
+}
+
+/* ===== Flow diagram ===== */
+.flow {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  max-width: 720px;
+}
+
+.flow-step {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  padding: 14px 22px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 20px;
+}
+
+.flow-step .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  color: var(--ink-muted);
+  font-weight: 700;
+  min-width: 60px;
+}
+
+.flow-step .text {
+  flex: 1;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.flow-arrow {
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 22px;
+  margin: 0;
+}
+
+.flow-step.highlight {
+  background: var(--green);
+  color: var(--paper);
+  border-color: var(--green);
+}
+
+.flow-step.highlight .num,
+.flow-step.highlight .text {
+  color: var(--paper);
+}
+
+/* ===== Practice / hands-on ===== */
+.practice {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 40px 48px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.practice::before {
+  content: "PRACTICE";
+  position: absolute;
+  top: 24px;
+  right: 30px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.18em;
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+.practice .number {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 96px;
+  line-height: 1;
+  color: var(--yellow);
+  margin-bottom: 14px;
+}
+
+.practice h3 {
+  color: var(--paper);
+  font-size: 42px;
+  margin-bottom: 16px;
+}
+
+.practice p {
+  color: rgba(245, 241, 232, 0.92);
+  font-size: 22px;
+  line-height: 1.55;
+}
+
+.practice .duration {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  background: var(--yellow);
+  color: var(--ink);
+  padding: 6px 14px;
+  margin-top: 20px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+/* ===== Tags ===== */
+.tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  padding: 5px 12px;
+  background: var(--rule-soft);
+  color: var(--ink);
+  border-radius: 3px;
+  margin-right: 6px;
+  font-weight: 600;
+}
+
+.tag.green { background: rgba(15, 76, 58, 0.15); color: var(--green); }
+.tag.red { background: rgba(201, 71, 47, 0.15); color: var(--red-dark); }
+.tag.yellow { background: rgba(212, 169, 67, 0.25); color: #8B6F1F; }
+
+/* ===== Element grid (六元素 / 五問題) ===== */
+.element-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.element {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  padding: 24px 26px;
+  border-radius: 4px;
+}
+
+.element-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.element-name {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.element-desc {
+  font-size: 18px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* ===== Nav ===== */
+.nav {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 18px;
+  border-radius: 999px;
+  z-index: 100;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.nav button {
+  background: transparent;
+  color: var(--paper);
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 10px;
+  font-family: inherit;
+  font-weight: 700;
+}
+
+.nav button:hover { color: var(--yellow); }
+
+.nav .counter b { color: var(--yellow); font-weight: 700; }
+
+.help-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--ink-muted);
+  z-index: 99;
+  background: rgba(245, 241, 232, 0.9);
+  padding: 8px 14px;
+  border-radius: 4px;
+}
+
+/* Print */
+@media print {
+  .slide {
+    display: flex !important;
+    page-break-after: always;
+    min-height: 100vh;
+  }
+  .nav, .help-hint { display: none !important; }
+}
+
+/* ===== VS comparison ===== */
+.vs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.vs-card {
+  padding: 28px 30px;
+  border-radius: 4px;
+  border: 1.5px solid var(--rule);
+  background: var(--paper);
+}
+
+.vs-card.bad {
+  border-top: 6px solid var(--red);
+}
+
+.vs-card.good {
+  border-top: 6px solid var(--green);
+}
+
+.vs-card h4 {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  margin-bottom: 18px;
+}
+
+.vs-card.bad h4 { color: var(--red); }
+.vs-card.good h4 { color: var(--green); }
+
+.vs-card ul { list-style: none; padding: 0; }
+.vs-card li {
+  font-size: 20px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--rule-soft);
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.vs-card li:last-child { border-bottom: none; }
+
+/* ===== Marker highlight ===== */
+.marker {
+  background: linear-gradient(to bottom, transparent 55%, rgba(212, 169, 67, 0.55) 55%);
+  padding: 0 3px;
+}
+
+/* ===== Five-problem cards (slide 6) ===== */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.problem-card {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  padding: 22px 20px;
+  border-radius: 4px;
+}
+
+.problem-card .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  color: var(--red);
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.problem-card .title {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.problem-card .desc {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* ===== Workflow strip (slide 21) ===== */
+.workflow-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.workflow-step {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  padding: 14px 16px;
+  border-radius: 4px;
+}
+
+.workflow-step .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  color: var(--red);
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.workflow-step .text {
+  font-size: 19px;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.workflow-step.highlight {
+  background: var(--green);
+  border-color: var(--green);
+}
+.workflow-step.highlight .num { color: var(--yellow); }
+.workflow-step.highlight .text { color: var(--paper); }
+
+/* ===== Tier table ===== */
+.tier-table th, .tier-table td {
+  font-size: 19px;
+  padding: 14px 16px;
+}
+.tier-table td:first-child { width: 32%; font-size: 20px; }
+.tier-table .yes { color: var(--green); font-weight: 700; }
+.tier-table .no { color: var(--red); font-weight: 700; }
+.tier-table .partial { color: #8B6F1F; font-weight: 700; }
+
+/* ===== Big number ===== */
+.big-num {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 220px;
+  line-height: 1;
+  color: var(--green);
+  letter-spacing: -0.04em;
+}
+
+/* small text spec only where appropriate */
+.note {
+  font-size: 18px;
+  color: var(--ink-muted);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+/* Cover bottom info card style */
+.info-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  line-height: 1.9;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ============================== -->
+<!-- SLIDE 1: COVER -->
+<!-- ============================== -->
+<section class="slide cover active">
+  <div class="cover-top">
+    <span>樹德科技大學 · 電算中心</span>
+    <span>3 HOURS · WORKSHOP · 2026</span>
+  </div>
+  <div class="cover-main">
+    <div class="cover-eyebrow">給即將進入職場的你</div>
+    <h1>從學生到職場<br><span style="color: var(--green);">AI 工作流</span>與<br>求職實戰課</h1>
+    <div class="sub">
+      不教你背 Prompt 咒語。<br>
+      教你把一個模糊任務，<br>
+      轉成 AI 可以協助完成的工作流。
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="left info-line">
+      <strong>對象</strong> · 即將求職的大學畢業生<br>
+      <strong>時長</strong> · 3 小時 / 含 4 次實作<br>
+      <strong>工具</strong> · ChatGPT · Gemini · Claude（免費版即可）
+    </div>
+    <div>NO.01 / WORKSHOP SERIES</div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 2: 課程定位 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PROLOGUE · 課程定位</span>
+    <span class="pagenum"><b>02</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">這堂課不是什麼</div>
+    <h2>今天<span style="color: var(--red);">不會</span>教你<br>神奇的 Prompt 咒語</h2>
+    <div class="two-col" style="margin-top: 30px;">
+      <div>
+        <h4>不是這個</h4>
+        <ul class="cross">
+          <li>背 100 個萬用 Prompt 模板</li>
+          <li>追每週新模型、新工具</li>
+          <li>學如何問出「完美一句話」</li>
+          <li>把報告整份丟給 AI 寫</li>
+        </ul>
+      </div>
+      <div>
+        <h4>而是這個</h4>
+        <ul class="check">
+          <li>把模糊任務拆成可執行步驟</li>
+          <li>建立資料、產出、檢查的循環</li>
+          <li>讓 AI 當助理、審查者、教練</li>
+          <li>把重複工作做成可重用流程</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote" style="margin-top: 40px;">
+      AI 最重要的能力，不是一次幫你生出完美答案，<br><span style="color: var(--green); font-style: normal; font-weight: 600;">而是協助你更快完成初稿、整理思路、發現問題。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 3: 學習目標 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PROLOGUE · 學習目標</span>
+    <span class="pagenum"><b>03</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">3 HOURS · 8 OUTCOMES</div>
+    <h2>今天結束時，<br>你會帶走什麼？</h2>
+    <div class="two-col" style="margin-top: 30px;">
+      <div>
+        <ul class="fancy">
+          <li>分辨「叫 AI 產出」與「使用工作流」的差別</li>
+          <li>用六元素公式寫出清楚的 Prompt</li>
+          <li>把單次 Prompt 延伸成可重複工作流</li>
+          <li>用 AI 協助資料整理、寫作、簡報</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="fancy" style="counter-reset: item 4;">
+          <li>用 AI 研究公司、做履歷、模擬面試</li>
+          <li>理解 Agent / Skill / Gem 的判斷邊界</li>
+          <li>建立「產出 + 審查」的雙循環習慣</li>
+          <li>知道三家免費版能做什麼、不能做什麼</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent" style="margin-top: 40px;">
+      <div class="card-title">主軸</div>
+      <p style="color: var(--ink); font-size: 22px;">從一個主管交辦的模糊任務開始，跑完整套工作流：<br><strong style="color: var(--green);">資料 → 上下文 → 拆解 → 產出 → 驗證 → 改寫 → 沉澱</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 4: PART 1 DIVIDER -->
+<!-- ============================== -->
+<section class="slide divider">
+  <div class="slide-header">
+    <span>PART 01 · 從痛點開始</span>
+    <span class="pagenum"><b>04</b> / 50</span>
+  </div>
+  <div class="part-number">01</div>
+  <div style="position: relative; z-index: 1;">
+    <div class="label">Part 01 · 10 min</div>
+    <h1>大家是不是<br>都這樣用 AI？</h1>
+    <div class="summary">先看一個學生最常見的 AI 用法，找出問題，再決定接下來要學什麼。</div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 5: 常見壞 Prompt -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 01 · 常見用法</span>
+    <span class="pagenum"><b>05</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">先 Honest 一下</div>
+    <h2>以前寫期末報告，<br>是不是這樣問 AI？</h2>
+    <div class="code bad" style="margin-top: 30px; max-width: 900px;">請幫我寫一份期末報告，
+主題是生成式 AI 對大學生學習的影響，
+格式包含摘要、前言、正文、結論，
+字數約 3000 字。</div>
+    <p style="margin-top: 40px; font-size: 26px; max-width: 1000px; color: var(--ink);">
+      看起來已經給了 <strong>主題、格式、字數</strong>，好像很完整？<br>
+      <span style="color: var(--red); font-weight: 700;">但它通常會出五個問題。</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 6: 五個問題 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 01 · 直接生成的五個問題</span>
+    <span class="pagenum"><b>06</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <h2>直接叫 AI 寫，<br>會遇到什麼問題</h2>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="num">問題 01</div>
+        <div class="title">看起來完整<br>但很空泛</div>
+        <p class="desc">語氣正式、格式漂亮，但內容像通用範文。</p>
+      </div>
+      <div class="problem-card">
+        <div class="num">問題 02</div>
+        <div class="title">沒有真正的<br>資料來源</div>
+        <p class="desc">可能憑印象概括，甚至編造參考文獻。</p>
+      </div>
+      <div class="problem-card">
+        <div class="num">問題 03</div>
+        <div class="title">不符合老師<br>想看的</div>
+        <p class="desc">缺課程脈絡、評分重點、個人觀察。</p>
+      </div>
+      <div class="problem-card">
+        <div class="num">問題 04</div>
+        <div class="title">結構有了<br>邏輯不一定好</div>
+        <p class="desc">每段像摘要，段落間沒有推進。</p>
+      </div>
+      <div class="problem-card">
+        <div class="num">問題 05</div>
+        <div class="title">產出太像 AI<br>不像你</div>
+        <p class="desc">缺個人經驗、立場、課堂觀察。</p>
+      </div>
+    </div>
+    <div class="card warn" style="margin-top: 40px;">
+      <p style="color: var(--ink);"><strong style="color: var(--red);">共同問題：</strong>AI 不知道你的課程、老師、觀點、資料來源——它只能寫一篇「任何人都可以交」的報告。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 7: 金句頁 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 01 · 核心觀察</span>
+    <span class="pagenum"><b>07</b> / 50</span>
+  </div>
+  <div class="slide-body" style="justify-content: center;">
+    <div class="giant-quote">
+      AI 幫你<em>把文字填滿</em>，<br>不代表它幫你<span class="green-em">完成思考</span>。
+    </div>
+    <p style="margin-top: 50px; font-size: 24px; color: var(--ink-muted); max-width: 900px; line-height: 1.6;">
+      AI 最容易產生的，是「看起來合理的普通答案」，<br>不是「有脈絡、有資料、有個人理解的好答案」。
+    </p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 8: PART 2 DIVIDER -->
+<!-- ============================== -->
+<section class="slide divider">
+  <div class="slide-header">
+    <span>PART 02 · 提示技巧基礎</span>
+    <span class="pagenum"><b>08</b> / 50</span>
+  </div>
+  <div class="part-number">02</div>
+  <div style="position: relative; z-index: 1;">
+    <div class="label">Part 02 · 25 min</div>
+    <h1>Prompt 不是咒語，<br>是交代任務</h1>
+    <div class="summary">在進入工作流之前，先學會把單次任務交代清楚。這是所有複雜應用的地基。</div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 9: 為什麼還要學提示技巧 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 · 為什麼還要學 Prompt</span>
+    <span class="pagenum"><b>09</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">常見疑問</div>
+    <h2>AI 都這麼強了，<br>為什麼還要學提示？</h2>
+    <div class="two-col" style="margin-top: 30px;">
+      <div>
+        <h4>AI 的進步</h4>
+        <p style="font-size: 22px; line-height: 1.65;">GPT-5.5、Gemini 3、Claude 4.7 在準確性、清晰度、圖片理解、搜尋判斷上都有大幅改善。</p>
+        <p style="font-size: 22px; line-height: 1.65; margin-top: 16px;">提示可以越來越自然，不必死背模板。</p>
+      </div>
+      <div>
+        <h4 style="color: var(--red);">但 AI 仍然不知道</h4>
+        <ul class="plain">
+          <li>你的真實目的與優先順序</li>
+          <li>老師的評分標準、主管的期待</li>
+          <li>你的經歷、過去專案</li>
+          <li>哪些資料可用、哪些不能引用</li>
+          <li>最終交付的格式</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote" style="margin-top: 40px;">
+      模型變強，只是讓提示可以更自然，<br>不代表你可以什麼都不交代。
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 10: 六元素公式 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 · 提示六元素</span>
+    <span class="pagenum"><b>10</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">PROMPT FORMULA</div>
+    <h2>好的 Prompt =<br>把一件事交代清楚</h2>
+    <div class="code" style="margin-top: 24px; font-size: 22px; text-align: center; padding: 28px; line-height: 1.6;">任務  +  上下文  +  角色  +  輸出格式  +  限制條件  +  修正方式</div>
+    <div class="element-grid">
+      <div class="element">
+        <div class="element-num">01 / 任務</div>
+        <div class="element-name">要做什麼？</div>
+        <div class="element-desc">具體動作，不要說「幫我做企劃」。</div>
+      </div>
+      <div class="element">
+        <div class="element-num">02 / 上下文</div>
+        <div class="element-name">背景與限制</div>
+        <div class="element-desc">目的、對象、預算、影響判斷的資訊。</div>
+      </div>
+      <div class="element">
+        <div class="element-num">03 / 角色</div>
+        <div class="element-name">用什麼視角</div>
+        <div class="element-desc">主管？HR？面試官？決定判斷方式。</div>
+      </div>
+      <div class="element">
+        <div class="element-num">04 / 輸出格式</div>
+        <div class="element-name">要什麼結果</div>
+        <div class="element-desc">表格、條列、Email、簡報大綱？</div>
+      </div>
+      <div class="element">
+        <div class="element-num">05 / 限制條件</div>
+        <div class="element-name">什麼不能做</div>
+        <div class="element-desc">不要編造、不確定請標示、字數限制。</div>
+      </div>
+      <div class="element">
+        <div class="element-num">06 / 修正方式</div>
+        <div class="element-name">怎麼檢查</div>
+        <div class="element-desc">先列問題，再給建議，不一次完成。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 11: 技巧 1 明確需求 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 · 技巧 1 / 6</span>
+    <span class="pagenum"><b>11</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">技巧 01</div>
+    <h2>明確需求</h2>
+    <div class="vs-grid" style="margin-top: 24px;">
+      <div class="vs-card bad">
+        <h4>✕ 不建議</h4>
+        <div class="code bad" style="margin: 0;">幫我寫一份校園畢業季職涯講座企劃案。</div>
+      </div>
+      <div class="vs-card good">
+        <h4>✓ 較好</h4>
+        <div class="code good" style="margin: 0;">請幫我整理一份校園畢業季職涯講座的活動企劃初稿，目標是吸引大三、大四學生報名。</div>
+      </div>
+    </div>
+    <div class="card accent" style="margin-top: 36px;">
+      <p style="color: var(--ink);"><strong style="color: var(--green);">教學重點：</strong>任務越模糊，AI 越會產出「看起來正常、但其實很普通」的內容。明確的任務應包含<span class="marker">動作 + 對象 + 目的</span>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 12: 技巧 2 上下文 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 · 技巧 2 / 6</span>
+    <span class="pagenum"><b>12</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">技巧 02</div>
+    <h2>提供上下文</h2>
+    <div class="two-col" style="margin-top: 24px;">
+      <div>
+        <h4>把這些先告訴 AI</h4>
+        <div class="code good small">活動目標：報名 100 人，出席 70 人
+預算：3 萬元以內
+對象：大三、大四求職學生
+管道：IG、系辦、學生社團、Email
+活動賣點：履歷健檢、面試模擬</div>
+      </div>
+      <div>
+        <h4>關鍵心法</h4>
+        <p style="font-size: 26px; color: var(--ink); line-height: 1.55;">
+          上下文<strong style="color: var(--red);">不是越長越好</strong>，<br>
+          而是要提供<strong style="color: var(--green);">會影響判斷</strong>的資訊。
+        </p>
+        <p class="note" style="margin-top: 20px;">想像跟剛來的同事說明任務——他需要知道什麼？缺了什麼會做錯方向？</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 13: 技巧 3 指定角色 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 · 技巧 3 / 6</span>
+    <span class="pagenum"><b>13</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">技巧 03</div>
+    <h2>指定角色</h2>
+    <p class="lead" style="margin-top: 20px;">同一份內容，不同角色看到不同問題。<br>角色不是裝飾，是判斷視角的切換。</p>
+    <div class="three-col" style="margin-top: 36px;">
+      <div class="code good small">請你扮演一位嚴格但務實的行銷主管，審查以下企劃案。</div>
+      <div class="code good small">請扮演 HR、用人主管、面試官三種角色，審查這份履歷。</div>
+      <div class="code good small">你是一位資深工程師，請對這段程式碼進行 code review。</div>
+    </div>
+    <div class="card accent" style="margin-top: 36px;">
+      <p style="color: var(--ink);"><strong style="color: var(--green);">同一份履歷：</strong>HR 在意格式好不好篩選，用人主管在意能不能上手做事，面試官在意哪裡可以追問。讓 AI 換角色，就會看到不同問題。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 14: 技巧 4 輸出格式 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 · 技巧 4 / 6</span>
+    <span class="pagenum"><b>14</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">技巧 04</div>
+    <h2>指定輸出格式</h2>
+    <div class="two-col" style="margin-top: 24px;">
+      <div>
+        <h4>表格格式</h4>
+        <div class="code good small">請用表格呈現，欄位包含：
+問題、原因、修改建議、優先順序。</div>
+      </div>
+      <div>
+        <h4>簡報大綱格式</h4>
+        <div class="code good small">請輸出成 8 頁簡報大綱，每頁包含：
+1. 頁面標題
+2. 三個重點
+3. 建議圖表
+4. 講者備註</div>
+      </div>
+    </div>
+    <div class="card warn" style="margin-top: 36px;">
+      <p style="color: var(--ink);"><strong style="color: var(--red);">為什麼重要：</strong>沒指定格式，AI 會用它順手的方式回答。但職場通常需要<strong>固定格式</strong>——主管要表格、客戶要 Email、報告分章節。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 15: 技巧 5 限制條件 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 · 技巧 5 / 6</span>
+    <span class="pagenum"><b>15</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">技巧 05</div>
+    <h2>限制條件 + 查證要求</h2>
+    <div class="two-col" style="margin-top: 24px;">
+      <div>
+        <h4>慢一點，不要急著生成品</h4>
+        <div class="code good small">請先不要直接寫完整企劃案，
+先幫我列出需要收集的資料。</div>
+      </div>
+      <div>
+        <h4>不要編造，缺資料就標示</h4>
+        <div class="code good small">不要編造不存在的經歷或數字。
+若資料不足，請標示【需要補充】。</div>
+      </div>
+    </div>
+    <div class="card warn" style="margin-top: 36px;">
+      <p style="color: var(--ink);"><strong style="color: var(--red);">特別重要：</strong>履歷、報告、數字、法規，<span class="marker">不要讓 AI 用自信的語氣胡亂補洞</span>。明確要求「缺就標示」，比事後找錯更省力。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 16: 技巧 6 迭代 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 · 技巧 6 / 6</span>
+    <span class="pagenum"><b>16</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">技巧 06</div>
+    <h2>迭代修正</h2>
+    <div class="code good" style="margin-top: 24px;">請先產出初稿。
+接著請檢查邏輯問題、資料不足、可能風險。
+最後根據修改建議產出第二版。</div>
+    <div class="flow" style="margin: 36px auto; max-width: 800px;">
+      <div class="flow-step"><span class="num">STEP 1</span><span class="text">產出初稿（先求完整，不求漂亮）</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="num">STEP 2</span><span class="text">換角色審查（列出問題清單）</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="num">STEP 3</span><span class="text">根據建議修正（產出第二版）</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step highlight"><span class="num">STEP 4</span><span class="text">人工最後確認與判斷</span></div>
+    </div>
+    <p style="font-size: 22px; color: var(--ink-soft); text-align: center; margin-top: 20px;">不要期待一次完成。成熟的用法是<strong style="color: var(--ink);">來回修正</strong>。</p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 17: 實作 1 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 · 動手練習</span>
+    <span class="pagenum"><b>17</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="practice">
+      <div class="number">01</div>
+      <h3>把這句壞 Prompt 改好</h3>
+      <p style="margin: 16px 0;">用今天學的六元素，把下面這句重新交代清楚：</p>
+      <div class="code bad" style="margin: 20px 0; background: rgba(255,255,255,0.08); border-left-color: var(--yellow); color: var(--paper); font-size: 22px;">幫我做一份畢業季活動企劃。</div>
+      <p style="line-height: 1.65;">補上六個元素：<strong style="color: var(--yellow);">任務 · 上下文 · 角色 · 輸出格式 · 限制條件 · 修正方式</strong>。<br>用你最熟悉的 AI 跑跑看——比較「壞 prompt」與「好 prompt」的差別。</p>
+      <span class="duration">8 MIN · 個人 / 兩兩配對</span>
+    </div>
+    <div class="card accent" style="margin-top: 32px;">
+      <p style="color: var(--ink);"><strong>提示：</strong>不必一次寫完美。練習目的是體會「補上一兩個元素」後，AI 的回應品質會差多少。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 18: 轉場 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 02 → PART 03 · 轉場</span>
+    <span class="pagenum"><b>18</b> / 50</span>
+  </div>
+  <div class="slide-body" style="justify-content: center;">
+    <div class="giant-quote">
+      剛剛學的是<em>單次 Prompt</em><br>怎麼寫清楚。<br><br>
+      真實任務不是<span class="green-em">一句 Prompt</span><br>可以完成的。
+    </div>
+    <p style="margin-top: 50px; font-size: 26px; color: var(--ink-muted); max-width: 1000px;">
+      接下來要學的，是把多個 Prompt 串成<strong style="color: var(--ink);">一條工作流</strong>——<br>
+      這才是 AI 在職場真正的用法。
+    </p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 19: PART 3 DIVIDER -->
+<!-- ============================== -->
+<section class="slide divider">
+  <div class="slide-header">
+    <span>PART 03 · 主管交辦任務</span>
+    <span class="pagenum"><b>19</b> / 50</span>
+  </div>
+  <div class="part-number">03</div>
+  <div style="position: relative; z-index: 1;">
+    <div class="label">Part 03 · 50 min</div>
+    <h1>主管丟給你一個<br>模糊任務之後</h1>
+    <div class="summary">用一個完整案例——校園畢業季活動企劃，跑完整套 AI 工作流。重點不是行銷，是流程。</div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 20: 情境設定 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · 情境設定</span>
+    <span class="pagenum"><b>20</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">主線案例</div>
+    <h2>情境：實習第一週</h2>
+    <div class="card accent" style="margin-top: 24px; padding: 32px;">
+      <p style="color: var(--ink); font-size: 24px; line-height: 1.55;">
+        你剛進公司實習。主管走過來說：
+      </p>
+      <div class="quote" style="margin: 22px 0; font-size: 36px; border-left-color: var(--red);">
+        「你先幫我想一下這個校園畢業季活動怎麼做，下週開會討論。」
+      </div>
+      <p style="font-size: 22px; color: var(--ink-soft);">
+        然後他就走了。沒有更多說明。
+      </p>
+    </div>
+    <div class="two-col" style="margin-top: 32px;">
+      <div>
+        <h4>新人常見反應</h4>
+        <ul class="cross">
+          <li>立刻打開 ChatGPT 說「幫我寫企劃」</li>
+          <li>等主管再說清楚一點</li>
+          <li>從網路找一個模板套</li>
+        </ul>
+      </div>
+      <div>
+        <h4>本課程教的反應</h4>
+        <ul class="check">
+          <li>先用 AI 幫你拆解任務</li>
+          <li>建立上下文，再開始產出</li>
+          <li>分階段：資料 → 大綱 → 初稿 → 審查</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 21: AI 工作流全景 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · 工作流全景</span>
+    <span class="pagenum"><b>21</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">THE WORKFLOW</div>
+    <h2>從資料到成果：<br>用 AI 完成一個職場任務</h2>
+    <div class="workflow-strip">
+      <div class="workflow-step"><span class="num">STEP 01</span><span class="text">釐清需求</span></div>
+      <div class="workflow-step"><span class="num">STEP 02</span><span class="text">收集資料</span></div>
+      <div class="workflow-step"><span class="num">STEP 03</span><span class="text">整理上下文</span></div>
+      <div class="workflow-step"><span class="num">STEP 04</span><span class="text">拆解步驟</span></div>
+      <div class="workflow-step"><span class="num">STEP 05</span><span class="text">產出初稿</span></div>
+      <div class="workflow-step"><span class="num">STEP 06</span><span class="text">事實查證</span></div>
+      <div class="workflow-step"><span class="num">STEP 07</span><span class="text">角色審查</span></div>
+      <div class="workflow-step"><span class="num">STEP 08</span><span class="text">改寫優化</span></div>
+      <div class="workflow-step"><span class="num">STEP 09</span><span class="text">轉成交付</span></div>
+      <div class="workflow-step highlight"><span class="num">STEP 10</span><span class="text">沉澱成 Skill</span></div>
+    </div>
+    <div class="card accent" style="margin-top: 40px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--green);">關鍵心法：</strong>
+        每一步都是一個獨立的 Prompt，每一步都會產生一個可檢查的中間產出。<br>
+        <span style="color: var(--ink-muted); font-size: 20px;">不是一次叫 AI 做完，而是帶 AI 走完整段路。</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 22: 對比表 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · 兩種做法對比</span>
+    <span class="pagenum"><b>22</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <h2>原本的做法 vs 工作流做法</h2>
+    <table class="compare-table" style="margin-top: 24px;">
+      <thead>
+        <tr>
+          <th>原本的用法 ✕</th>
+          <th>工作流用法 ✓</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>直接叫 AI 寫完整報告</td>
+          <td>先釐清任務與評分標準</td>
+        </tr>
+        <tr>
+          <td>給一個主題就開始寫</td>
+          <td>先收集資料與上下文</td>
+        </tr>
+        <tr>
+          <td>一次要求完整成品</td>
+          <td>分階段：大綱、資料、段落、修正</td>
+        </tr>
+        <tr>
+          <td>只看文字順不順</td>
+          <td>檢查邏輯、資料、觀點、格式</td>
+        </tr>
+        <tr>
+          <td>產出後直接使用</td>
+          <td>人負責判斷、修改與查證</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 23: Step 1 釐清 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · Step 1 釐清</span>
+    <span class="pagenum"><b>23</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">STEP 01</div>
+    <h2>先釐清任務，<br>不要直接寫全文</h2>
+    <p class="lead" style="margin-top: 16px;">不要問「幫我寫企劃案」，而是問「我該怎麼做這份企劃案？」</p>
+    <div class="code good" style="margin-top: 28px;">我剛進公司實習，主管請我規劃「校園畢業季活動行銷企劃案」。
+目標對象是即將畢業的大學生。
+
+請<span style="color: var(--code-accent);">先不要直接寫企劃案</span>，先幫我列出需要收集哪些資料，
+並依照「目標客群、活動主題、宣傳管道、預算、KPI」分類。</div>
+    <div class="card accent" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--green);">關鍵差別：</strong>
+        加上「<span class="marker">請先不要直接寫</span>」這幾個字，AI 就會幫你拆解，而不是急著生產品。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 24: Step 2 上下文 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · Step 2 上下文</span>
+    <span class="pagenum"><b>24</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">STEP 02</div>
+    <h2>整理成「前置資料表」</h2>
+    <div class="two-col two-col-wide-right" style="margin-top: 24px;">
+      <div>
+        <h4>把已知資料告訴 AI</h4>
+        <div class="code small">活動目標：吸引大四生參加職涯講座
+對象：大三、大四求職者
+形式：實體＋線上報名
+預算：3 萬元以內
+管道：IG、系辦、社團、Email
+賣點：履歷健檢、面試模擬
+指標：報名 100 / 出席 70</div>
+      </div>
+      <div>
+        <h4>讓 AI 整理成表格</h4>
+        <div class="code good small">請整理成「企劃前置資料表」。
+
+表格欄位：
+1. 資料類型
+2. 目前已知資訊
+3. 可能不足之處
+4. 後續需要確認的問題
+
+【貼上已知資料】</div>
+      </div>
+    </div>
+    <div class="card warn" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--red);">為什麼關鍵：</strong>
+        AI 的輸出品質，取決於你給它<strong>多少有用的上下文</strong>。整理過的上下文，是後面所有 Prompt 的基礎。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 25: 實作 2 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · 動手練習</span>
+    <span class="pagenum"><b>25</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="practice">
+      <div class="number">02</div>
+      <h3>用你真實的任務跑一次</h3>
+      <p style="margin: 14px 0;">挑一個你最近要做的真實任務：</p>
+      <ul class="plain" style="margin: 10px 0;">
+        <li style="color: rgba(245,241,232,0.9); font-size: 22px;">期末報告</li>
+        <li style="color: rgba(245,241,232,0.9); font-size: 22px;">社團活動企劃</li>
+        <li style="color: rgba(245,241,232,0.9); font-size: 22px;">研究所自傳</li>
+        <li style="color: rgba(245,241,232,0.9); font-size: 22px;">想投的職缺求職信</li>
+      </ul>
+      <p style="margin-top: 16px; line-height: 1.7;">
+        <strong style="color: var(--yellow);">第一步：</strong>請 AI 列出「我需要收集哪些資料」<br>
+        <strong style="color: var(--yellow);">第二步：</strong>把已知資料貼給 AI，請它整理成前置資料表
+      </p>
+      <span class="duration">10 MIN · 個人練習</span>
+    </div>
+    <div class="card accent" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong>觀察：</strong>跑完第二步，你會發現你以為「自己已經想清楚」的任務，其實還有很多空白。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 26: Step 3 拆解 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · Step 3 拆解</span>
+    <span class="pagenum"><b>26</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">STEP 03</div>
+    <h2>用 AI 拆解模糊任務<br><span style="color: var(--green); font-size: 42px;">這就是 Agent 思維的起點</span></h2>
+    <div class="code good small" style="margin-top: 28px;">你是一位有經驗的行銷企劃主管。
+我是剛進公司的實習生，主管交辦我規劃「校園畢業季活動行銷企劃案」。
+
+請根據以下背景，幫我把這個模糊任務拆解成具體工作步驟。
+請用表格呈現，欄位包含：
+<span style="color: var(--code-accent);">步驟 · 任務 · 需要資料 · AI 可協助處 · 產出物</span>
+
+【貼上前面整理好的上下文】</div>
+    <div class="card accent" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--green);">Agent 思維的核心：</strong>
+        不是直接問 AI 答案，而是讓 AI 幫你<span class="marker">拆任務、排順序、決定產出</span>。<br>
+        <span style="color: var(--ink-muted); font-size: 20px;">這就是後面要講的 Agent 模式的底層邏輯。</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 27: Step 4 初稿 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · Step 4 初稿</span>
+    <span class="pagenum"><b>27</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">STEP 04</div>
+    <h2>產出初稿：<br>先求<span style="color: var(--green);">完整</span>，再求<span style="color: var(--red);">漂亮</span></h2>
+    <div class="code good small" style="margin-top: 28px;">請根據以下背景，產出「校園畢業季活動行銷企劃案」初稿。
+
+請包含：
+1. 企劃背景    2. 目標對象    3. 活動目標    4. 活動主軸
+5. 宣傳策略    6. 執行時程    7. 預算項目    8. KPI 指標
+
+請<span style="color: var(--code-accent);">先以條列式呈現，不要寫成正式長篇報告</span>。
+
+【貼上整理後上下文】</div>
+    <div class="card warn" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--red);">關鍵心法：</strong>
+        第一次不要要求漂亮，<strong>先要求完整</strong>。<br>
+        完整之後，再要求 AI 變得精簡、專業、有說服力。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 28: Step 5 驗證 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · Step 5 驗證</span>
+    <span class="pagenum"><b>28</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">STEP 05</div>
+    <h2>驗證與角色審查</h2>
+    <p class="lead" style="margin-top: 16px;">產出初稿不是終點。讓 AI 換角色挑毛病。</p>
+    <div class="code good small" style="margin-top: 24px;">你現在是<span style="color: var(--code-accent);">嚴格但務實的行銷主管</span>。
+請審查以下企劃案初稿，從主管角度指出問題。
+
+特別檢查：
+1. 目標是否清楚      2. 目標客群是否具體
+3. 主軸是否吸引人    4. 宣傳管道是否合理
+5. 預算與時程是否可執行
+6. 哪些地方像空話，哪些地方需要補充
+
+請列表：<span style="color: var(--code-accent);">問題 · 為什麼是問題 · 修改建議 · 優先順序</span></div>
+    <div class="quote" style="margin-top: 28px;">
+      AI 不只幫你寫漂亮，<br><span style="color: var(--green); font-style: normal; font-weight: 600;">也可以幫你挑毛病。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 29: AI 三角色 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · AI 的三種角色</span>
+    <span class="pagenum"><b>29</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <h2>AI 的三種角色</h2>
+    <p class="lead" style="margin-top: 16px;">同一個 AI，可扮演不同職位。一份內容，至少跑兩種角色。</p>
+    <div class="three-col" style="margin-top: 36px;">
+      <div class="card" style="border-top: 6px solid var(--green);">
+        <h4 style="color: var(--green);">01 · 產出者</h4>
+        <div class="card-title">PRODUCER</div>
+        <p style="margin-top: 8px;">幫你整理、撰寫、規劃初稿。</p>
+        <ul class="plain" style="margin-top: 14px;">
+          <li>報告大綱</li>
+          <li>企劃初稿</li>
+          <li>履歷段落</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top: 6px solid var(--red);">
+        <h4 style="color: var(--red);">02 · 審查者</h4>
+        <div class="card-title">REVIEWER</div>
+        <p style="margin-top: 8px;">幫你找問題、挑漏洞、提建議。</p>
+        <ul class="plain" style="margin-top: 14px;">
+          <li>邏輯檢查</li>
+          <li>履歷健檢</li>
+          <li>主管視角審稿</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top: 6px solid #8B6F1F;">
+        <h4 style="color: #8B6F1F;">03 · 查證者</h4>
+        <div class="card-title">FACT-CHECKER</div>
+        <p style="margin-top: 8px;">確認資料正確、是否需要來源。</p>
+        <ul class="plain" style="margin-top: 14px;">
+          <li>數字、統計</li>
+          <li>法規、政策</li>
+          <li>公司、職缺資訊</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card warn" style="margin-top: 32px;">
+      <p style="color: var(--ink);"><strong style="color: var(--red);">最重要原則：</strong>不要只讓 AI 當作者。同一份內容，要讓它輪流當主管、面試官、客戶。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 30: 必須查證 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 03 · 必須查證的資訊</span>
+    <span class="pagenum"><b>30</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <h2>哪些一定要查證？</h2>
+    <table style="margin-top: 24px;">
+      <thead>
+        <tr>
+          <th>類型</th>
+          <th>例子</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>最新資訊</td><td>產業趨勢、公司近況、政策改變</td></tr>
+        <tr><td>數字資料</td><td>市占率、薪資、預算、統計數據</td></tr>
+        <tr><td>法規制度</td><td>勞基法、學校規定、政府補助</td></tr>
+        <tr><td>公司職缺</td><td>公司名稱、產品、招募條件</td></tr>
+        <tr><td>引用參考</td><td>報告來源、研究結果、新聞資料</td></tr>
+      </tbody>
+    </table>
+    <div class="quote" style="margin-top: 32px; font-size: 38px;">
+      使用 AI 最危險的地方，<br>不是它不能幫你寫，<br><span style="color: var(--red); font-style: normal; font-weight: 700;">而是它寫得很像真的。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 31: PART 4 DIVIDER -->
+<!-- ============================== -->
+<section class="slide divider">
+  <div class="slide-header">
+    <span>PART 04 · 改寫與交付</span>
+    <span class="pagenum"><b>31</b> / 50</span>
+  </div>
+  <div class="part-number">04</div>
+  <div style="position: relative; z-index: 1;">
+    <div class="label">Part 04 · 15 min</div>
+    <h1>同一份內容，<br>變成不同交付物</h1>
+    <div class="summary">企劃案做好之後，怎麼變成社群文、Email、簡報、會議紀錄？這是 AI 最省時間的應用。</div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 32: 多用途改寫 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 04 · 多用途改寫</span>
+    <span class="pagenum"><b>32</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">STEP 06</div>
+    <h2>一份企劃 → 三種文案</h2>
+    <div class="code good" style="margin-top: 24px;">請根據這個活動企劃，產出三種宣傳文字：
+
+1. <span style="color: var(--code-accent);">Instagram 貼文</span>，語氣活潑，150 字以內
+2. <span style="color: var(--code-accent);">Email 通知</span>，語氣正式清楚，250 字以內
+3. <span style="color: var(--code-accent);">系辦公告</span>，語氣簡潔，條列式
+
+每種版本都要包含：活動亮點、適合對象、報名呼籲
+
+【貼上企劃案】</div>
+    <div class="card accent" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--green);">這就是適合做成 Skill / Gem 的工作：</strong>
+        每次拿到新企劃，都重複跑這個流程——固定格式、固定檢查標準。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 33: 轉成簡報 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 04 · 轉成簡報</span>
+    <span class="pagenum"><b>33</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">STEP 07</div>
+    <h2>轉成簡報 +<br>多角色審查</h2>
+    <div class="two-col" style="margin-top: 24px;">
+      <div>
+        <h4>產出簡報大綱</h4>
+        <div class="code good small">將企劃案轉成 8 頁簡報大綱。
+
+每頁包含：
+1. 頁面標題
+2. 三個重點 bullets
+3. 建議圖像或表格
+4. 講者備註
+
+對象：主管與承辦單位</div>
+      </div>
+      <div>
+        <h4>三角色審查</h4>
+        <div class="code good small">分別扮演以下三種角色審查：
+
+1. <span style="color: var(--code-accent);">主管</span>：目標、預算、可行性
+2. <span style="color: var(--code-accent);">承辦</span>：執行、時程、人力
+3. <span style="color: var(--code-accent);">學生</span>：是否值得參加
+
+請列出：在意什麼、不足、補強建議</div>
+      </div>
+    </div>
+    <p style="margin-top: 32px; font-size: 24px; color: var(--ink); text-align: center; max-width: 900px; margin-left: auto; margin-right: auto; line-height: 1.55;">
+      簡報不是把企劃案貼上去，<br>而是<strong style="color: var(--green);">重新組織成聽眾容易理解的順序</strong>。
+    </p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 34: 會議行政 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 04 · 會議行政（示範）</span>
+    <span class="pagenum"><b>34</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">STEP 08</div>
+    <h2>會議紀錄 +<br>待辦追蹤</h2>
+    <div class="two-col" style="margin-top: 24px;">
+      <div>
+        <h4>會議內容原始素材</h4>
+        <div class="code small">主管認為主題保留，但要加強誘因。
+宣傳除了 IG，要加系辦與社團。
+預算控制在 3 萬內。
+下週三前完成正式簡報。
+小美負責文案，阿明負責場地，
+我負責簡報修正。</div>
+      </div>
+      <div>
+        <h4>請 AI 整理成正式紀錄</h4>
+        <div class="code good small">請整理成正式會議紀錄：
+
+1. 會議重點
+2. 決議事項
+3. <span style="color: var(--code-accent);">待辦表格</span>
+   （任務 · 負責人 · 期限）
+4. 會後追蹤 Email 草稿
+
+【貼上素材】</div>
+      </div>
+    </div>
+    <div class="card accent" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--green);">適合沉澱成 Skill：</strong>每次會議都用同一個格式，一次設定好往後都套用。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 35: 雙循環 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 04 · 雙循環工作流</span>
+    <span class="pagenum"><b>35</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">CORE CONCEPT</div>
+    <h2>雙循環工作流</h2>
+    <div class="two-col" style="margin-top: 32px;">
+      <div class="card" style="border-top: 6px solid var(--green); padding: 32px;">
+        <h4 style="color: var(--green);">第一層：產出循環</h4>
+        <div class="flow" style="margin-top: 16px;">
+          <div class="flow-step"><span class="text">需求</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="text">上下文</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="text">初稿</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step highlight"><span class="text">成品</span></div>
+        </div>
+      </div>
+      <div class="card" style="border-top: 6px solid var(--red); padding: 32px;">
+        <h4 style="color: var(--red);">第二層：檢查循環</h4>
+        <div class="flow" style="margin-top: 16px;">
+          <div class="flow-step"><span class="text">事實查證</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="text">角色審查</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="text">風險檢查</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step" style="background: var(--red); color: var(--paper); border-color: var(--red);"><span class="text" style="color: var(--paper);">人工確認</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="quote" style="margin-top: 32px;">
+      AI 可以幫你完成，也可以幫你檢查；<br><span style="color: var(--green); font-style: normal; font-weight: 600;">但最後負責的人，仍然是你。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 36: PART 5 DIVIDER -->
+<!-- ============================== -->
+<section class="slide divider">
+  <div class="slide-header">
+    <span>PART 05 · 求職實戰</span>
+    <span class="pagenum"><b>36</b> / 50</span>
+  </div>
+  <div class="part-number">05</div>
+  <div style="position: relative; z-index: 1;">
+    <div class="label">Part 05 · 40 min · 重點段落</div>
+    <h1>進職場之前，<br>用 AI 準備求職</h1>
+    <div class="summary">同樣的工作流邏輯，搬到求職場景。這是離開教室後，你下週就能用上的部分。</div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 37: 求職常見錯誤 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 05 · 求職常見錯誤</span>
+    <span class="pagenum"><b>37</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">最容易踩的坑</div>
+    <h2>不要一開始就叫 AI<br>「<span style="color: var(--red);">幫我改履歷</span>」</h2>
+    <div class="code bad" style="margin-top: 28px;">請幫我修改這份履歷，讓它看起來更專業。</div>
+    <p style="margin-top: 32px; font-size: 26px; max-width: 1100px; color: var(--ink); line-height: 1.55;">
+      AI 會幫你把文字變漂亮，<br>
+      <span style="color: var(--red); font-weight: 700;">但它不知道你做過什麼、想投哪家公司、那家公司要什麼。</span>
+    </p>
+    <div class="card accent" style="margin-top: 32px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--green);">做履歷前，要先收集兩種上下文：</strong><br>
+        <span>① <strong>公司的上下文</strong>——這間公司做什麼、需要什麼人？</span><br>
+        <span>② <strong>自己的上下文</strong>——你做過什麼、擅長什麼、有什麼成果？</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 38: 求職工作流 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 05 · 求職工作流</span>
+    <span class="pagenum"><b>38</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">JOB SEARCH WORKFLOW</div>
+    <h2>從公司研究到面試模擬</h2>
+    <div class="flow" style="margin: 24px auto; max-width: 800px;">
+      <div class="flow-step"><span class="num">01</span><span class="text">選定公司 / 職缺</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="num">02</span><span class="text">收集公司資料、職缺資訊</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="num">03</span><span class="text">整理求職上下文表</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="num">04</span><span class="text">AI 訪談自己，建立履歷素材庫</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="num">05</span><span class="text">比對公司需求 vs 個人素材</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="num">06</span><span class="text">產出客製化履歷草稿</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="num">07</span><span class="text">HR / 主管 / 面試官三角審查</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step highlight"><span class="num">08</span><span class="text">面試問題預演 + 回答演練</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 39: 公司研究 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 05 · 公司研究</span>
+    <span class="pagenum"><b>39</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">求職 STEP 01-02</div>
+    <h2>公司與職缺研究</h2>
+    <div class="code good small" style="margin-top: 24px;">我想應徵以下公司與職缺，<span style="color: var(--code-accent);">先不要幫我改履歷</span>。
+
+請先整理求職前置上下文：
+1. 這間公司主要在做什麼
+2. 可能的產品、服務或商業模式
+3. 這個職缺可能重視哪些能力
+4. 公司可能偏好的候選人特質
+5. 我履歷中應該優先凸顯哪些經驗
+6. 哪些資訊需要再查證或補充
+
+公司資料：【貼上官網、徵才頁、新聞】
+職缺說明：【貼上職缺內容】</div>
+    <div class="card warn" style="margin-top: 24px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--red);">注意：</strong>有 web search 或 Deep Research 的 AI 可幫你抓公司近期動態。但<strong>數字、招募條件這些關鍵資訊，一定要對照公司官方</strong>。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 40: AI 訪談自己 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 05 · AI 訪談自己</span>
+    <span class="pagenum"><b>40</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">求職 STEP 03-04</div>
+    <h2>讓 AI 訪談你，<br>建立履歷素材庫</h2>
+    <p class="lead" style="margin-top: 16px;">不要直接貼舊履歷，讓 AI 一個個問你。</p>
+    <div class="code good small" style="margin-top: 24px;">我想應徵【職務名稱】，但還沒整理好履歷素材。
+請扮演一位職涯顧問，<span style="color: var(--code-accent);">透過提問</span>協助我整理。
+
+請<span style="color: var(--code-accent);">一次只問 3 到 5 個問題</span>，問題要具體、容易回答。
+依序整理：
+1. 基本背景：科系、學歷、語言、工具、證照
+2. 想應徵的職務與原因
+3. 相關課程、專案、社團、實習
+4. 在每段經驗中負責什麼、解決什麼問題
+5. 可量化成果（人數、金額、成長率）
+6. 可和職缺連結的能力或特質
+
+回答後，整理成「履歷素材庫」，<span style="color: var(--code-accent);">先不要直接寫履歷</span>。</div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 41: 履歷素材庫 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 05 · 履歷素材庫</span>
+    <span class="pagenum"><b>41</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <h2>「自己的上下文」<br>要收集什麼？</h2>
+    <table style="margin-top: 24px;">
+      <thead>
+        <tr>
+          <th>類型</th>
+          <th>要收集的內容</th>
+          <th>用途</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>基本資料</td><td>學歷、語言、工具、證照</td><td>履歷基本欄位</td></tr>
+        <tr><td>專長能力</td><td>寫作、設計、分析、行銷、程式</td><td>對應職缺需求</td></tr>
+        <tr><td>專案經驗</td><td>課程專案、社團、實習、打工</td><td>轉化成履歷亮點</td></tr>
+        <tr><td>成果證據</td><td>數字、作品、得獎、活動人數</td><td>讓履歷可信</td></tr>
+        <tr><td>個人特質</td><td>細心、主動、抗壓、學習快</td><td>摘要與面試</td></tr>
+      </tbody>
+    </table>
+    <div class="card accent" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--green);">一次做，永久用：</strong>之後投不同公司，從同一個素材庫<strong>挑出對應的重點</strong>，不必每次重做。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 42: 三角審查 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 05 · 三角審查</span>
+    <span class="pagenum"><b>42</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">求職 STEP 07</div>
+    <h2>履歷三角審查</h2>
+    <p class="lead" style="margin-top: 16px;">同一份履歷，三個角色看到的問題完全不同。</p>
+    <div class="three-col" style="margin-top: 32px;">
+      <div class="card" style="border-top: 6px solid var(--green);">
+        <h4 style="color: var(--green);">01 · HR</h4>
+        <div class="card-title">人資視角</div>
+        <p style="margin-top: 10px;">格式是否清楚、是否容易篩選、是否符合條件。</p>
+        <p class="note" style="margin-top: 12px;">會不會 30 秒就被刷掉？</p>
+      </div>
+      <div class="card" style="border-top: 6px solid var(--red);">
+        <h4 style="color: var(--red);">02 · 用人主管</h4>
+        <div class="card-title">主管視角</div>
+        <p style="margin-top: 10px;">能不能上手、是否有實際能力與成果。</p>
+        <p class="note" style="margin-top: 12px;">這個人來了，能讓團隊變強嗎？</p>
+      </div>
+      <div class="card" style="border-top: 6px solid #8B6F1F;">
+        <h4 style="color: #8B6F1F;">03 · 面試官</h4>
+        <div class="card-title">面試視角</div>
+        <p style="margin-top: 10px;">哪些經歷要追問、哪些描述太空泛。</p>
+        <p class="note" style="margin-top: 12px;">要追問什麼才能驗證？</p>
+      </div>
+    </div>
+    <div class="code good small" style="margin-top: 28px;">分別扮演 HR、用人主管、面試官三角色，審查履歷。
+列表：<span style="color: var(--code-accent);">角色 · 亮點 · 主要疑慮 · 建議修改 · 可能追問</span></div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 43: 面試模擬 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 05 · 面試模擬</span>
+    <span class="pagenum"><b>43</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">求職 STEP 08</div>
+    <h2>讓 AI 當你的面試官</h2>
+    <div class="code good small" style="margin-top: 24px;">你現在是這間公司的面試官，我正在應徵以下職缺。
+根據公司、職缺與我的履歷，<span style="color: var(--code-accent);">一次只問我一題</span>。
+
+我回答後，請根據以下標準回饋：
+1. 是否回應問題      2. 是否具體
+3. 是否和職缺有關    4. 是否能看出能力
+5. 是否需要補充公司脈絡
+
+接著再追問下一題。
+
+【公司與職缺上下文】
+【履歷內容】</div>
+    <div class="card accent" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--green);">為什麼有用：</strong>
+        AI 模擬比朋友模擬更直接——不會給「人情面子」，會直接指出哪裡含糊、哪裡會被追問。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 44: 實作 3 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 05 · 動手練習</span>
+    <span class="pagenum"><b>44</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="practice">
+      <div class="number">03</div>
+      <h3>用你想投的公司跑一次</h3>
+      <p style="margin: 14px 0;">今天最有立即價值的練習：</p>
+      <ol style="color: rgba(245,241,232,0.92); padding-left: 28px; line-height: 1.85; font-size: 21px;">
+        <li>挑一間你<strong style="color: var(--yellow);">真的想應徵</strong>的公司</li>
+        <li>找出他們現在徵的職缺說明</li>
+        <li>請 AI 整理這間公司的求職上下文</li>
+        <li>讓 AI 訪談你，建立履歷素材庫</li>
+        <li>請 AI 給你建議的履歷重點調整方向</li>
+      </ol>
+      <span class="duration">12 MIN · 個人</span>
+    </div>
+    <div class="card accent" style="margin-top: 28px;">
+      <p style="color: var(--ink);">
+        <strong>離開教室的成果：</strong>一份真實可用的履歷素材庫 + 一家公司的求職上下文表。回家可繼續做客製化履歷。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 45: 多公司投遞 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 05 · 多公司投遞</span>
+    <span class="pagenum"><b>45</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow green">SCALING THE WORKFLOW</div>
+    <h2>投 10 家公司怎麼辦？</h2>
+    <p class="lead" style="margin-top: 16px;">每次重做太累，但用同一份履歷又沒針對性。</p>
+    <table style="margin-top: 24px;">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>是否重複</th>
+          <th>說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>履歷素材庫</td><td><span style="color: var(--green); font-weight: 700;">不必每次</span></td><td>基本資料可長期累積</td></tr>
+        <tr><td>公司研究</td><td><span style="color: var(--red); font-weight: 700;">每間都要</span></td><td>產品、文化、需求不同</td></tr>
+        <tr><td>履歷重點排序</td><td><span style="color: var(--red); font-weight: 700;">每間調整</span></td><td>同經歷可凸顯不同能力</td></tr>
+        <tr><td>求職信</td><td><span style="color: var(--red); font-weight: 700;">每間客製</span></td><td>需連結公司與職缺</td></tr>
+        <tr><td>面試題準備</td><td><span style="color: var(--red); font-weight: 700;">每間生成</span></td><td>根據公司與履歷弱點</td></tr>
+      </tbody>
+    </table>
+    <div class="quote" style="margin-top: 28px; font-size: 32px;">
+      不是一份履歷投全部公司，<br>
+      <span style="color: var(--green); font-style: normal; font-weight: 600;">而是用同一份素材庫，<br>根據不同公司重新組裝。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 46: PART 6 DIVIDER -->
+<!-- ============================== -->
+<section class="slide divider">
+  <div class="slide-header">
+    <span>PART 06 · 進階概念</span>
+    <span class="pagenum"><b>46</b> / 50</span>
+  </div>
+  <div class="part-number">06</div>
+  <div style="position: relative; z-index: 1;">
+    <div class="label">Part 06 · 5 min</div>
+    <h1>Prompt · Agent ·<br>Skill · Gem · GPTs</h1>
+    <div class="summary">不要去背定義。學會的是判斷邏輯——什麼任務適合用哪一種方式。</div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 47: 一句話區分 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 06 · 一句話區分</span>
+    <span class="pagenum"><b>47</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <h2>四種使用方式，<br>各一句話搞懂</h2>
+    <table style="margin-top: 24px;">
+      <thead>
+        <tr>
+          <th>方式</th>
+          <th>一句話理解</th>
+          <th>適合情境</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag green">Prompt</span></td>
+          <td>這次要 AI 幫我做什麼</td>
+          <td>單次任務、短任務</td>
+        </tr>
+        <tr>
+          <td><span class="tag red">Agent</span></td>
+          <td>接手任務，自己規劃步驟、逐步完成</td>
+          <td>多步驟、需要研究與判斷</td>
+        </tr>
+        <tr>
+          <td><span class="tag yellow">GPTs / Gem</span></td>
+          <td>做成固定角色的 AI 助理</td>
+          <td>反覆互動、角色穩定</td>
+        </tr>
+        <tr>
+          <td><span class="tag">Skill</span></td>
+          <td>把固定流程與檢查標準存下來</td>
+          <td>重複性高、流程固定</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="quote" style="margin-top: 28px; font-size: 30px;">
+      不要問「用 Agent、Skill 還是 GPTs？」<br>
+      <span style="color: var(--green); font-style: normal; font-weight: 600;">先問：這任務是一次性、多步驟、<br>互動型，還是可重複標準化？</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 48: 三家免費版 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 06 · 三家免費版實況</span>
+    <span class="pagenum"><b>48</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">2026 年 5 月實況</div>
+    <h2>免費版可以做什麼？</h2>
+    <table class="tier-table" style="margin-top: 24px;">
+      <thead>
+        <tr>
+          <th>功能</th>
+          <th>ChatGPT 免費</th>
+          <th>Gemini 免費</th>
+          <th>Claude 免費</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>使用內建 GPTs / Gem</td>
+          <td><span class="yes">✓</span> GPT Store</td>
+          <td><span class="yes">✓</span> 內建 Gems</td>
+          <td><span class="yes">✓</span> Projects</td>
+        </tr>
+        <tr>
+          <td><strong>建立自己的</strong> GPT / Gem / Skill</td>
+          <td><span class="no">✕</span></td>
+          <td><span class="yes">✓</span></td>
+          <td><span class="yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>獨立 Agent Mode</td>
+          <td><span class="no">✕</span></td>
+          <td><span class="partial">⚠ Deep Research 5/月</span></td>
+          <td><span class="no">✕</span></td>
+        </tr>
+        <tr>
+          <td>建立 Word / Excel / PPT</td>
+          <td><span class="no">✕</span></td>
+          <td><span class="partial">⚠ Canvas</span></td>
+          <td><span class="yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>網路搜尋、檔案上傳</td>
+          <td><span class="yes">✓</span></td>
+          <td><span class="yes">✓</span></td>
+          <td><span class="yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>訊息上限</td>
+          <td>10 則 / 5 小時</td>
+          <td>~30 / 天</td>
+          <td>15-40 / 5 小時</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="card accent" style="margin-top: 24px;">
+      <p style="color: var(--ink);">
+        <strong style="color: var(--green);">建議：</strong>想建 Skill / Gem，<strong>Claude 或 Gemini 免費版都做得到</strong>（ChatGPT 免費版需要 Plus）。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 49: 實作 4 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>PART 06 · 動手練習</span>
+    <span class="pagenum"><b>49</b> / 50</span>
+  </div>
+  <div class="slide-body">
+    <div class="practice">
+      <div class="number">04</div>
+      <h3>建立你的「履歷教練」Gem 或 Skill</h3>
+      <p style="margin: 14px 0;">把今天學的求職工作流，<strong style="color: var(--yellow);">沉澱成可重用的助理</strong>。</p>
+      <p style="line-height: 1.8;">
+        <strong style="color: var(--yellow);">Claude：</strong>Projects 新增「求職準備」，放入素材庫 + instructions<br>
+        <strong style="color: var(--yellow);">Gemini：</strong>gemini.google.com → Gems Manager → New Gem<br>
+        <strong style="color: var(--yellow);">ChatGPT 免費：</strong>把 Prompt 存成記事本，每次貼用
+      </p>
+      <p style="margin-top: 14px; font-style: italic; color: rgba(245,241,232,0.78);">
+        指令範例：「你是我的求職教練。每次貼公司資料和職缺，幫我跑公司研究 → 比對素材庫 → 履歷建議 → 三角審查 → 面試題。」
+      </p>
+      <span class="duration">5 MIN · 示範為主</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- SLIDE 50: 結尾 -->
+<!-- ============================== -->
+<section class="slide">
+  <div class="slide-header">
+    <span>EPILOGUE · 收尾</span>
+    <span class="pagenum"><b>50</b> / 50</span>
+  </div>
+  <div class="slide-body" style="justify-content: center;">
+    <div class="eyebrow green">最後一頁</div>
+    <div class="giant-quote" style="font-size: 60px;">
+      AI 不是幫你<em>跳過思考</em>，<br>
+      而是幫你<span class="green-em">更快進入思考</span>、<br>
+      整理與修正。
+    </div>
+    <div class="two-col" style="margin-top: 50px;">
+      <div>
+        <h4>學完今天，你帶走的</h4>
+        <ul class="check">
+          <li>六元素 Prompt 公式</li>
+          <li>10 步驟工作流</li>
+          <li>產出 + 審查的雙循環</li>
+          <li>求職完整流程</li>
+          <li>Agent / Skill / Gem 判斷邏輯</li>
+        </ul>
+      </div>
+      <div>
+        <h4>本週可以做的三件事</h4>
+        <ul class="fancy">
+          <li>用今天素材庫，完成一份完整客製化履歷</li>
+          <li>挑一家想投的公司，跑完整套求職工作流</li>
+          <li>把最常做的任務做成 Gem 或 Project</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top: 50px; text-align: center;">
+      <div class="cover-eyebrow" style="text-align: center; margin-bottom: 16px;">Q & A · 謝謝大家</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="nav">
+  <button onclick="prevSlide()" aria-label="上一頁">←</button>
+  <span class="counter"><b id="current">1</b> / <span id="total">50</span></span>
+  <button onclick="nextSlide()" aria-label="下一頁">→</button>
+</div>
+<div class="help-hint">← → 切換　·　F 全螢幕　·　Home / End 起末</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+document.getElementById('total').textContent = slides.length;
+
+function show(idx) {
+  slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+  document.getElementById('current').textContent = idx + 1;
+  window.scrollTo({top: 0, behavior: 'instant'});
+  history.replaceState(null, '', '#' + (idx + 1));
+}
+
+function nextSlide() {
+  if (current < slides.length - 1) {
+    current++;
+    show(current);
+  }
+}
+
+function prevSlide() {
+  if (current > 0) {
+    current--;
+    show(current);
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+    e.preventDefault();
+    nextSlide();
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault();
+    prevSlide();
+  } else if (e.key === 'f' || e.key === 'F') {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen();
+    }
+  } else if (e.key === 'Home') {
+    current = 0; show(current);
+  } else if (e.key === 'End') {
+    current = slides.length - 1; show(current);
+  } else if (/^\d$/.test(e.key)) {
+    const target = Math.floor(slides.length * parseInt(e.key) / 10);
+    current = Math.min(target, slides.length - 1);
+    show(current);
+  }
+});
+
+let wheelCooldown = false;
+document.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  if (wheelCooldown) return;
+  wheelCooldown = true;
+  if (e.deltaY > 0) {
+    nextSlide();
+  } else if (e.deltaY < 0) {
+    prevSlide();
+  }
+  setTimeout(() => { wheelCooldown = false; }, 600);
+}, { passive: false });
+
+const hash = window.location.hash.replace('#', '');
+if (hash && !isNaN(hash)) {
+  current = Math.max(0, Math.min(slides.length - 1, parseInt(hash) - 1));
+  show(current);
+}
+</script>
+
+</body>
+</html>
