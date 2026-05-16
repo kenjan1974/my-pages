@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>活動宣傳文字生成 GPT 實作</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F1E8;
+  --bg-dark: #1C1C1C;
+  --ink: #1A1A1A;
+  --ink-soft: #3A3A3A;
+  --ink-muted: #6F685B;
+  --paper: #FBF8F1;
+  --rule: #C9C2B3;
+  --green: #0F4C3A;
+  --red: #C9472F;
+  --yellow: #D4A943;
+  --code-bg: #1F1B14;
+  --code-text: #F0EBDD;
+  --code-accent: #F0C25F;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans TC', -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.slide {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 56px 72px;
+  display: none;
+  flex-direction: column;
+  position: relative;
+  page-break-after: always;
+}
+
+.slide.active {
+  display: flex;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border-bottom: 1.5px solid var(--rule);
+  padding-bottom: 16px;
+  margin-bottom: 44px;
+  font-weight: 500;
+}
+
+.slide-header .pagenum b {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+h1 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 700;
+  font-size: 86px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 700;
+  font-size: 62px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 28px;
+  color: var(--ink);
+}
+
+h4 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--green);
+}
+
+p, li {
+  font-size: 22px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+strong { color: var(--ink); font-weight: 700; }
+
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.lead {
+  font-size: 28px;
+  color: var(--ink-soft);
+  max-width: 1000px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  padding: 26px 28px;
+  border-radius: 4px;
+}
+
+.card.accent { border-left: 6px solid var(--green); }
+.card.warn { border-left: 6px solid var(--red); }
+
+.code {
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-family: 'JetBrains Mono', 'Noto Sans TC', monospace;
+  font-size: 18px;
+  line-height: 1.58;
+  padding: 24px 28px;
+  border-radius: 4px;
+  border-left: 5px solid var(--yellow);
+  white-space: pre-wrap;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+}
+
+.code-accent { color: var(--code-accent); }
+
+.divider {
+  background: var(--bg-dark);
+  color: var(--paper);
+  justify-content: center;
+}
+
+.divider .slide-header {
+  border-bottom-color: rgba(245, 241, 232, 0.25);
+  color: rgba(245, 241, 232, 0.75);
+  position: absolute;
+  top: 56px;
+  left: 72px;
+  right: 72px;
+}
+
+.divider h1 { color: var(--paper); }
+
+.divider .summary {
+  font-size: 28px;
+  line-height: 1.55;
+  color: rgba(245, 241, 232, 0.9);
+  max-width: 1040px;
+  margin-top: 28px;
+}
+
+.part-number {
+  font-family: 'Fraunces', serif;
+  font-size: 260px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1;
+  color: rgba(245, 241, 232, 0.12);
+  position: absolute;
+  right: 72px;
+  bottom: 40px;
+}
+
+.label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  color: var(--yellow);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+ol.steps {
+  padding-left: 32px;
+  margin-top: 18px;
+}
+
+ol.steps li {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+
+.nav {
+  position: fixed;
+  bottom: 24px;
+  right: 28px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: rgba(28, 28, 28, 0.92);
+  color: var(--paper);
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+.nav button {
+  background: none;
+  border: none;
+  color: var(--paper);
+  font-family: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 2px 8px;
+}
+
+.nav button:hover { color: var(--yellow); }
+.nav .counter b { color: var(--yellow); font-weight: 700; }
+
+.help-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--ink-muted);
+  z-index: 1000;
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<section class="slide divider active">
+  <div class="slide-header">
+    <span>GPT 補充說明 · Event Promo</span>
+    <span class="pagenum"><b>01</b> / 07</span>
+  </div>
+  <div class="part-number">G</div>
+  <div style="position: relative; z-index: 1;">
+    <div class="label">Custom GPT Example</div>
+    <h1>把常用 Prompt<br>變成專屬 GPT</h1>
+    <div class="summary">不用每次重貼長 Prompt。把規則先寫進 GPT，以後只要貼企劃案，它就固定產出 IG、Email、系辦公告。</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="slide-header">
+    <span>CREATE GPT</span>
+    <span class="pagenum"><b>02</b> / 07</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">建立 GPT</div>
+    <h2>從 GPTs 區域建立</h2>
+    <div class="two-col" style="margin-top: 20px;">
+      <div class="card accent">
+        <h4>操作路徑</h4>
+        <ol class="steps">
+          <li>ChatGPT → Explore GPTs</li>
+          <li>選擇 <strong>Create</strong></li>
+          <li>用對話建立，或直接進入設定頁編輯</li>
+        </ol>
+      </div>
+      <div class="card warn">
+        <h4 style="color: var(--red);">使用限制</h4>
+        <p style="color: var(--ink);">建立與編輯目前限網頁版；建立 GPT 需要付費方案，或工作區授權。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="slide-header">
+    <span>CONFIGURATION</span>
+    <span class="pagenum"><b>03</b> / 07</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">設定 GPT</div>
+    <h2>先填基本欄位</h2>
+    <div class="three-col" style="margin-top: 24px;">
+      <div class="card accent">
+        <h4>名稱</h4>
+        <p>活動宣傳文案助手</p>
+      </div>
+      <div class="card accent">
+        <h4>說明</h4>
+        <p>貼上企劃案，自動產出三種宣傳文字。</p>
+      </div>
+      <div class="card accent">
+        <h4>開場提示</h4>
+        <p>請根據以下企劃案產出宣傳文字。</p>
+      </div>
+    </div>
+    <div class="card warn" style="margin-top: 30px;">
+      <p style="color: var(--ink);"><strong style="color: var(--red);">關鍵：</strong>真正的規則要放在 Instructions，不要只寫在名稱或說明裡。</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="slide-header">
+    <span>INSTRUCTIONS PROMPT</span>
+    <span class="pagenum"><b>04</b> / 07</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">Instructions 範例</div>
+    <h2>把固定規則寫進 GPT</h2>
+    <div class="code" style="margin-top: 12px;">你是「活動宣傳文案助手」。
+
+當使用者貼上活動企劃案時，請自動產出三種宣傳文字：
+1. Instagram 貼文：語氣活潑，150 字以內
+2. Email 通知：語氣正式清楚，250 字以內
+3. 系辦公告：語氣簡潔，條列式
+
+每種版本都必須包含：
+- 活動亮點
+- 適合對象
+- 報名呼籲
+
+若企劃案缺少時間、地點、報名方式等關鍵資訊，請標示【需要補充】，不要自行編造。</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="slide-header">
+    <span>KNOWLEDGE / CAPABILITIES</span>
+    <span class="pagenum"><b>05</b> / 07</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">可加入的能力</div>
+    <h2>先做好 Instructions，<br>再決定要不要加工具</h2>
+    <div class="three-col" style="margin-top: 26px;">
+      <div class="card accent">
+        <h4>Knowledge</h4>
+        <p>上傳過往活動文案、品牌語氣指南、常用格式。</p>
+      </div>
+      <div class="card accent">
+        <h4>Capabilities</h4>
+        <p>視需要開啟搜尋、圖片生成、Canvas 或資料分析。</p>
+      </div>
+      <div class="card warn">
+        <h4 style="color: var(--red);">Actions</h4>
+        <p>進階可串接外部 API；但 apps 和 actions 不能同時使用。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="slide-header">
+    <span>USE GPT</span>
+    <span class="pagenum"><b>06</b> / 07</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">使用方式</div>
+    <h2>開啟 GPT，貼上新企劃案</h2>
+    <div class="code" style="margin-top: 16px;">以下是我們系上的期末成果展企劃案，請幫我產出三種宣傳文字：
+
+活動名稱：2025 資管系期末成果展
+時間：6 月 20 日 14:00-17:00
+地點：電腦教室 B201
+內容：學生專題展示、業界評審回饋、最佳專題頒獎
+對象：在校師生、系友、對資訊科技有興趣的高中生
+報名：表單連結 forms.gle/xxx</div>
+    <div class="card accent" style="margin-top: 24px;">
+      <p style="color: var(--ink);">也可以在一般 ChatGPT 對話中輸入 <strong>@</strong> 呼叫 GPT，讓下一則訊息交給它處理。</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="slide-header">
+    <span>SHARE / MANAGE</span>
+    <span class="pagenum"><b>07</b> / 07</span>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">分享與管理</div>
+    <h2>把一次性 Prompt<br>變成可重複使用的 GPT</h2>
+    <div class="two-col" style="margin-top: 20px;">
+      <div class="card accent">
+        <h4>分享層級</h4>
+        <p>可依方案與工作區設定，選擇私人、連結分享、工作區分享或發布到 GPT Store。</p>
+      </div>
+      <div class="card accent">
+        <h4>權限層級</h4>
+        <p>可設定能聊天、能檢視設定、能編輯。公開連結與 GPT Store 通常只支援聊天。</p>
+      </div>
+    </div>
+    <div class="card warn" style="margin-top: 32px;">
+      <p style="color: var(--ink);"><strong style="color: var(--red);">一句話結論：</strong>把一次性的 Prompt 變成可重複使用的 GPT，讓每份企劃案都能一鍵產出標準化宣傳內容。</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="nav">
+  <button onclick="prevSlide()" aria-label="上一頁">←</button>
+  <span class="counter"><b id="current">1</b> / <span id="total">7</span></span>
+  <button onclick="nextSlide()" aria-label="下一頁">→</button>
+</div>
+<div class="help-hint">← → 切換　·　F 全螢幕　·　Home / End 起末</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+document.getElementById('total').textContent = slides.length;
+
+function show(idx) {
+  slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+  document.getElementById('current').textContent = idx + 1;
+  window.scrollTo({top: 0, behavior: 'instant'});
+  history.replaceState(null, '', '#' + (idx + 1));
+}
+
+function nextSlide() {
+  if (current < slides.length - 1) {
+    current++;
+    show(current);
+  }
+}
+
+function prevSlide() {
+  if (current > 0) {
+    current--;
+    show(current);
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+    e.preventDefault();
+    nextSlide();
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault();
+    prevSlide();
+  } else if (e.key === 'f' || e.key === 'F') {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen();
+    }
+  } else if (e.key === 'Home') {
+    e.preventDefault();
+    current = 0; show(current);
+  } else if (e.key === 'End') {
+    e.preventDefault();
+    current = slides.length - 1; show(current);
+  }
+});
+
+const hash = window.location.hash.replace('#', '');
+if (hash && !isNaN(hash)) {
+  current = Math.max(0, Math.min(slides.length - 1, parseInt(hash) - 1));
+  show(current);
+}
+</script>
+
+</body>
+</html>
