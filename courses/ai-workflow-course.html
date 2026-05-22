@@ -2513,9 +2513,23 @@ ul.plain li::before {
         <strong style="color: var(--yellow);">ChatGPT：</strong>使用 GPT 建立「求職準備」工作流
         <a class="inline-link" style="color: var(--yellow); border-bottom-color: var(--paper); margin-left: 12px;" href="chatgpt-job-gpt.html" target="_blank" rel="noopener noreferrer">示範投影片 ↗</a>
       </p>
-      <p style="margin-top: 14px; font-style: italic; color: rgba(245,241,232,0.78);">
-        指令範例：「你是我的求職教練。每次貼公司資料和職缺，幫我跑公司研究 → 比對素材庫 → 履歷建議 → 三角審查 → 面試題。」
-      </p>
+      <div class="code good small" style="margin-top: 14px; font-size: 14px; line-height: 1.45; padding: 18px 20px;">
+請建立一個「求職教練」skill：
+階段一：
+以後我貼上公司與職缺資訊後，你會根據最下面我提供的履歷素材幫我跑公司研究，然後根據我的履歷素材庫幫我把履歷重點排序生成一份符合該公司與職缺的履歷初稿。
+
+階段二：
+分別扮演 HR、用人主管、面試官三角色，審查履歷初稿，並將審查意見輸出列表：角色 · 亮點 · 主要疑慮 · 建議修改 · 可能追問。
+最後提供一份完整的履歷修改建議。
+
+階段三：
+請扮演該公司的用人主管與面試官，提供面試題讓我可以練習。對於我的回答，請提供改善建議。然後再進行下一題。
+
+&lt;履歷素材&gt;
+...
+&lt;/履歷素材&gt;
+
+若有需要調整，請提供意見給我修改。</div>
       <span class="duration">5 MIN · 示範為主</span>
     </div>
   </div>
@@ -2552,7 +2566,7 @@ ul.plain li::before {
         <ul class="fancy">
           <li>用今天素材庫，完成一份完整客製化履歷</li>
           <li>挑一家想投的公司，跑完整套求職工作流</li>
-          <li>把最常做的任務做成 Gem 或 Project</li>
+          <li>把最常做的任務做成 skill 或 GPT</li>
         </ul>
       </div>
     </div>
