@@ -222,6 +222,40 @@ p, li {
   padding-left: 24px;
 }
 
+.cover-columns {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 40px;
+}
+
+.cover-columns .cover-main {
+  flex: 1;
+  margin-top: 0;
+}
+
+.cover-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.cover-qr img {
+  width: 280px;
+  height: 280px;
+  display: block;
+  border-radius: 8px;
+}
+
+.cover-qr span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+}
+
 .cover-bottom {
   display: flex;
   justify-content: space-between;
@@ -963,13 +997,19 @@ ul.plain li::before {
     <span>樹德科技大學 · 電算中心</span>
     <span>3 HOURS · WORKSHOP · 2026</span>
   </div>
-  <div class="cover-main">
-    <div class="cover-eyebrow">給即將進入職場的你</div>
-    <h1>從學生到職場<br><span style="color: var(--green);">AI 工作流</span>與<br>求職實戰課</h1>
-    <div class="sub">
-      不教你背 Prompt 咒語。<br>
-      教你把一個模糊任務，<br>
-      轉成 AI 可以協助完成的工作流。
+  <div class="cover-columns">
+    <div class="cover-main">
+      <div class="cover-eyebrow">給即將進入職場的你</div>
+      <h1>從學生到職場<br><span style="color: var(--green);">AI 工作流</span>與<br>求職實戰課</h1>
+      <div class="sub">
+        不教你背 Prompt 咒語。<br>
+        教你把一個模糊任務，<br>
+        轉成 AI 可以協助完成的工作流。
+      </div>
+    </div>
+    <div class="cover-qr">
+      <img src="images/ai_workflow_course_qr_stu_logo.png" alt="課程網址 QR Code">
+      <span>掃描查看課程頁面</span>
     </div>
   </div>
   <div class="cover-bottom">
