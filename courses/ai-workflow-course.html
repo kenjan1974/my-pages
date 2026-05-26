@@ -2570,7 +2570,7 @@ ul.plain li::before {
   <div class="slide-body">
     <div class="practice">
       <div class="number">04</div>
-      <h3>建立你的「履歷教練」Skill / GPT</h3>
+      <h3>建立你的「求職工作流」Skill / GPT</h3>
       <p style="margin: 14px 0;">把今天學的求職工作流，<strong style="color: var(--yellow);">沉澱成可重用的助理</strong>。</p>
       <p style="line-height: 1.8;">
         <strong style="color: var(--yellow);">Claude：</strong>Projects + Skill 建立「求職準備」工作流
@@ -2580,10 +2580,11 @@ ul.plain li::before {
         <a class="inline-link" style="color: var(--yellow); border-bottom-color: var(--paper); margin-left: 12px;" href="chatgpt-job-gpt.html" target="_blank" rel="noopener noreferrer">示範投影片 ↗</a>
       </p>
       <div class="code good small" style="margin-top: 14px; font-size: 16px; line-height: 1.42; padding: 18px 20px;">
-請建立一個「求職教練」skill。
+請建立一個「求職工作流」skill，協助我把公司研究、履歷客製、履歷審查與面試練習，變成可重複執行的流程。
 
 使用規則：
-當我貼上公司與職缺資訊後，請依照以下三個階段協助我。若資訊不足，請先提出需要補充的問題。不得編造我沒有提供的經歷、數字、成果或技能。
+每次執行時，請先確認我這次要投的公司、職缺與可用履歷素材，不要沿用上一間公司的假設。
+若資訊不足，請先提出需要補充的問題。不得編造我沒有提供的經歷、數字、成果或技能。
 
 階段一：公司研究與履歷初稿
 請根據公司、職缺資訊，以及最下方的履歷素材，完成：
@@ -2592,15 +2593,15 @@ ul.plain li::before {
 3. 我的履歷素材中最適合強調的重點排序
 4. 一份符合該公司與職缺的履歷初稿
 
-階段二：三角色履歷審查
-請分別扮演 HR、用人主管、面試官三種角色，審查履歷初稿。
+階段二：HR 10 秒 / ATS-AI / 用人主管三角審查
+請分別從 HR 快速掃描、ATS/AI 解析、用人主管判斷三種角度審查履歷初稿。
 請用表格輸出：
-角色 · 亮點 · 主要疑慮 · 建議修改 · 可能追問
+檢查角度 · 亮點 · 主要疑慮 · 建議修改 · 可加入的職缺關鍵字 · 可能追問
 
 最後請提供一份完整的履歷修改建議。
 
 階段三：面試練習
-請扮演該公司的用人主管與面試官，提供面試題讓我練習。
+請扮演該公司的用人主管與面試官，先問 5 題常見大魔王問題，並用 STAR 檢查我的回答。
 一次只問我一題。
 我回答後，請提供改善建議，再進行下一題。
 
@@ -2643,14 +2644,14 @@ ul.plain li::before {
       </div>
       <div style="display: flex; flex-direction: column; gap: 18px;">
         <div class="code good" style="font-size: 22px; line-height: 1.55; margin: 0; padding: 24px 28px;">
-請依照「求職教練」skill，
-幫我跑完整流程。
+請依照「求職工作流」skill，
+幫我跑這間公司的完整求職流程。
         </div>
         <div class="flow" style="max-width: none; gap: 10px;">
           <div class="flow-step"><span class="num">01</span><span class="text">公司研究與職缺重點摘要</span></div>
           <div class="flow-step"><span class="num">02</span><span class="text">履歷素材排序與客製化初稿</span></div>
           <div class="flow-step"><span class="num">03</span><span class="text">HR 10 秒 · ATS/AI · 主管三角審查</span></div>
-          <div class="flow-step highlight"><span class="num">04</span><span class="text">面試題練習：一次一題，回答後修正</span></div>
+          <div class="flow-step highlight"><span class="num">04</span><span class="text">大魔王面試題練習：STAR 回答後修正</span></div>
         </div>
       </div>
     </div>
